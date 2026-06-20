@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<!--
+  ════════════════════════════════════════════════════════════════
+  MEETA DAVE — BENTO PORTFOLIO ("Schematic")
+  Single-file, no build step. Deploy: commit as index.html to a
+  GitHub Pages repo. All client-side.
+  ────────────────────────────────────────────────────────────────
+  EDIT POINTS (search for these):
+    • [LINKS]   — résumé file, GitHub, LinkedIn, email, Formspree id
+    • I18N      — every UI string (en + de) in the script
+    • PROJECTS  — your projects, stacks, architecture nodes, repos
+  ════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meeta Dave — AI / ML &amp; Data</title>
+<meta name="description" content="Meeta Dave — AI/ML and data engineer. Python, SQL, BI, dashboards, and applied ML." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* drifting aurora behind the blueprint grid */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    z-index: -1;                /* sits above the grid, behind all content */
+    pointer-events: none;
+    background:
+      radial-gradient(38% 38% at 22% 28%, rgba(29,111,165,0.16), transparent 60%),
+      radial-gradient(34% 34% at 80% 22%, rgba(239,98,64,0.12),  transparent 60%),
+      radial-gradient(40% 40% at 72% 80%, rgba(29,111,165,0.14), transparent 60%),
+      radial-gradient(36% 36% at 25% 78%, rgba(76,195,138,0.12), transparent 60%);
+    background-size: 200% 200%;
+    filter: blur(34px);
+    animation: aurora 32s ease-in-out infinite alternate;
+  }
+  @keyframes aurora {
+    0%   { background-position: 0% 0%,   100% 0%,   100% 100%, 0% 100%; }
+    100% { background-position: 30% 20%, 70% 30%,   60% 70%,  40% 80%; }
+  }
+  :root {
+    --bg:       #f6efe2;   /* Crisp Linen (lightened) — page paper */
+    --grid:     #e7dcc6;   /* warm sand grid lines */
+    --card:     #fdfaf3;   /* near-white warm tile */
+    --ink:      #3a4a48;   /* deep eucalyptus-charcoal — text */
+    --muted:    #6f817c;   /* muted eucalyptus-grey */
+    --line:     #e6ddcb;   /* soft border */
+    --accent:   #5f8f93;   /* deepened Swimming Pool — primary accent */
+    --accent-d: #4a7276;   /* darker teal for hovers */
+    --signal:   #f1a805;   /* Limoncello — the pop / CTA colour */
+    --console:  #2f3f3d;   /* dark eucalyptus console panel */
+    --console-2:#26332f;   /* deeper inset */
+    --ok:       #6f9a86;   /* soft green — success / "open to work" */
+    --gold:     #f2d6a1;   /* Lemonade — extra soft accent if wanted */
+    --display:  "Space Grotesk", system-ui, sans-serif;
+    --body:     "Inter", system-ui, sans-serif;
+    --mono:     "JetBrains Mono", ui-monospace, monospace;
+    --radius:   16px;
+    --shadow:   0 1px 2px rgba(58,74,72,.05), 0 8px 24px -12px rgba(58,74,72,.22);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--accent); color:#fff; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2.5rem); }
+
+  /* eyebrow / mono labels */
+  .lbl { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
+
+  /* ── NAV ─────────────────────────────────────── */
+  nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        border-bottom: 1px solid var(--line); }
+  nav .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+             padding: 0.9rem clamp(1rem, 4vw, 2.5rem); max-width: 1180px; margin: 0 auto; }
+  nav .brand { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; display:flex; align-items:center; gap:0.55rem; }
+  nav .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal) 20%, transparent); }
+  nav .navlinks { display: flex; align-items: center; gap: clamp(0.8rem, 2vw, 1.8rem); }
+  nav .navlinks a { font-family: var(--mono); font-size: 0.78rem; text-decoration: none; color: var(--muted); transition: color .2s; white-space: nowrap; }
+  nav .navlinks a:hover { color: var(--ink); }
+  @media (max-width: 600px){ nav .navlinks a.hide-sm { display: none; } }
+
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
+  .lang button { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.72rem; font-weight: 500; padding: 0.32rem 0.62rem; color: var(--muted); transition: background .2s, color .2s; }
+  .lang button.on { background: var(--accent); color: #fff; }
+
+  /* ── BENTO GRID ──────────────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 0 0; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+          padding: clamp(1.25rem, 2.5vw, 1.9rem); box-shadow: var(--shadow); min-width: 0;
+          transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s; }
+  .tile:hover { transform: translateY(-3px); box-shadow: 0 1px 2px rgba(22,36,46,.04), 0 18px 40px -16px rgba(22,36,46,.28); }
+  .span-2 { grid-column: span 2; }
+  .span-4 { grid-column: span 4; }
+  .row-2 { grid-row: span 2; }
+
+  @media (max-width: 860px){
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .span-2, .span-4 { grid-column: span 2; }
+  }
+  @media (max-width: 540px){
+    .bento { grid-template-columns: 1fr; }
+    .span-2, .span-4 { grid-column: span 1; }
+    .row-2 { grid-row: auto; }
+  }
+
+  /* ── HERO TILE ───────────────────────────────── */
+  .hero { display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 4.4vw, 3.1rem); line-height: 1.04; letter-spacing: -0.02em; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero p.sub { color: var(--muted); max-width: 46ch; font-size: clamp(0.98rem, 1.6vw, 1.08rem); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 0.4rem; }
+  .btn { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; text-decoration: none;
+         display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.1rem; border-radius: 10px;
+         border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer;
+         transition: transform .15s, background .2s, border-color .2s, color .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--signal); border-color: var(--signal); color: #fff; }
+  .btn.primary:hover { background: #d8552f; border-color: #d8552f; }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── API CONSOLE TILE (signature) ────────────── */
+  .console { background: var(--console); border-color: #1d3742; color: #cfe0e8; display: flex; flex-direction: column; gap: 0.9rem; }
+  .console:hover { transform: translateY(-3px); }
+  .console .bar { display: flex; align-items: center; gap: 0.45rem; }
+  .console .bar i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .console .bar .r{background:#ff5f56}.console .bar .y{background:#ffbd2e}.console .bar .g{background:#27c93f}
+  .console .bar .path { font-family: var(--mono); font-size: 0.72rem; color: #6f8b97; margin-left: 0.4rem; }
+  .console h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: #fff; }
+  .console .hint { font-family: var(--mono); font-size: 0.72rem; color: #7fa0ad; }
+  .endpoints { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ep { font-family: var(--mono); font-size: 0.76rem; cursor: pointer; padding: 0.5rem 0.7rem; border-radius: 8px;
+        background: var(--console-2); border: 1px solid #21404c; color: #bcd6e0; transition: border-color .2s, color .2s, background .2s; }
+  .ep:hover { border-color: var(--signal); color: #fff; }
+  .ep b { color: var(--ok); font-weight: 700; }
+  .out { font-family: var(--mono); font-size: 0.78rem; background: var(--console-2); border: 1px solid #1d3742;
+         border-radius: 10px; padding: 0.9rem; min-height: 132px; overflow: auto; color: #cfe0e8; }
+  .out .ln { white-space: pre-wrap; word-break: break-word; }
+  .out .req { color: #7fa0ad; }
+  .out .status { color: var(--ok); }
+  .out .key { color: #7cc7f0; }
+  .out .str { color: #f0a868; }
+  .cursor-blink::after { content: "▋"; color: var(--signal); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── SECTION HEADERS inside tiles ────────────── */
+  .tile .head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .tile .head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.2rem, 2.4vw, 1.6rem); letter-spacing: -0.01em; }
+
+  /* ── TECH STACK ──────────────────────────────── */
+  .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+  @media (max-width: 760px){ .stack-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 420px){ .stack-grid { grid-template-columns: 1fr; } }
+  .stack-col h4 { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 0.7rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .chip { font-family: var(--mono); font-size: 0.76rem; padding: 0.34rem 0.6rem; border-radius: 7px; background: color-mix(in srgb, var(--accent) 7%, var(--card)); border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line)); color: var(--ink); }
+
+  /* ── PROJECT CARDS ───────────────────────────── */
+  .proj { cursor: pointer; display: flex; flex-direction: column; gap: 0.6rem; position: relative; overflow: hidden; }
+  .proj .tag { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; background: var(--accent); align-self: flex-start; padding: 0.2rem 0.5rem; border-radius: 6px; }
+  .proj h3 { font-family: var(--display); font-weight: 600; font-size: 1.18rem; line-height: 1.15; }
+  .proj .pdesc { color: var(--muted); font-size: 0.9rem; }
+  .proj .more { font-family: var(--mono); font-size: 0.76rem; color: var(--accent); display: inline-flex; align-items: center; gap: 0.35rem; margin-top: auto; }
+  .proj:hover .more { gap: 0.6rem; }
+
+  /* ── MODAL ───────────────────────────────────── */
+  .modal-bg { position: fixed; inset: 0; background: rgba(16,37,48,.55); backdrop-filter: blur(3px); z-index: 100; display: none; align-items: flex-end; justify-content: center; padding: 0; }
+  .modal-bg.open { display: flex; }
+  @media (min-width: 700px){ .modal-bg { align-items: center; padding: 2rem; } }
+  .modal { background: var(--card); width: 100%; max-width: 760px; max-height: 92vh; overflow: auto; border-radius: 20px 20px 0 0; padding: clamp(1.4rem, 4vw, 2.4rem); animation: slideup .35s cubic-bezier(.2,.7,.2,1); }
+  @media (min-width: 700px){ .modal { border-radius: 20px; } }
+  @keyframes slideup { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal .x { float: right; background: none; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-family: var(--mono); font-size: 0.78rem; padding: 0.4rem 0.7rem; color: var(--muted); }
+  .modal .x:hover { color: var(--ink); border-color: var(--ink); }
+  .modal h3 { font-family: var(--display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.9rem); letter-spacing: -0.01em; }
+  .modal .mtag { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+  .modal .mdesc { color: var(--muted); margin: 0.7rem 0 1.4rem; }
+
+  /* architecture flow */
+  .arch-title { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.8rem; }
+  .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0.5rem; }
+  .node { flex: 1 1 120px; min-width: 110px; border: 1px solid var(--line); border-radius: 12px; padding: 0.8rem; cursor: pointer; background: var(--card); transition: border-color .2s, background .2s, transform .15s; text-align: left; font: inherit; }
+  .node:hover, .node.sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--card)); transform: translateY(-2px); }
+  .node .nk { font-family: var(--mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+  .node .nn { font-family: var(--display); font-weight: 600; font-size: 0.95rem; margin-top: 0.15rem; }
+  .arrow { align-self: center; color: var(--muted); font-family: var(--mono); padding: 0 0.1rem; }
+  @media (max-width: 560px){ .arrow { display: none; } .node { flex-basis: 100%; } }
+  .node-info { margin-top: 1rem; padding: 0.9rem 1.1rem; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--card)); border-radius: 0 10px 10px 0; font-size: 0.9rem; min-height: 3.2rem; }
+  .node-info .ni-k { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .mstack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.4rem 0; }
+
+  /* ── ABOUT + CONTACT ─────────────────────────── */
+  .about p { color: var(--muted); margin-bottom: 0.8rem; max-width: 60ch; }
+  .about p:last-child { margin-bottom: 0; }
+  .contact form { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.4rem; }
+  .contact input, .contact textarea { font-family: var(--body); font-size: 0.92rem; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); width: 100%; resize: vertical; }
+  .contact input:focus, .contact textarea:focus { outline: none; border-color: var(--accent); }
+  .contact .copy-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.2rem; }
+  .copy-email { font-family: var(--mono); }
+  .toast { font-family: var(--mono); font-size: 0.76rem; color: var(--ok); opacity: 0; transition: opacity .3s; }
+  .toast.show { opacity: 1; }
+
+  footer.foot { text-align: center; padding: 2rem 0 3rem; color: var(--muted); font-family: var(--mono); font-size: 0.74rem; }
+
+  /* ── ABOUT (polished) ── */
+  .about-flex { display: flex; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .about-photo-wrap { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; padding: 0.6rem 1.4rem 0; border-radius: 20px;
+    background: radial-gradient(115% 78% at 50% 94%, color-mix(in srgb, var(--accent) 14%, var(--card)) 0%, transparent 72%); }
+  .about-photo { display: block; width: auto; height: clamp(240px, 32vw, 340px); object-fit: contain; filter: drop-shadow(0 18px 22px rgba(22,36,46,.20)); }
+  .about-text { min-width: 0; flex: 1; }
+  .about-lead { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.4vw, 1.55rem); color: var(--ink); margin-bottom: 1rem; }
+  .about-lead .wave { display: inline-block; transform-origin: 70% 70%; animation: wave 2.6s ease-in-out infinite; }
+  @keyframes wave { 0%,60%,100%{transform:rotate(0deg)} 10%{transform:rotate(16deg)} 20%{transform:rotate(-8deg)} 30%{transform:rotate(16deg)} 40%{transform:rotate(-4deg)} 50%{transform:rotate(10deg)} }
+  .about-meta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.3rem; }
+  .about-badge { font-family: var(--mono); font-size: 0.74rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.8rem; border-radius: 999px; color: var(--ink);
+    background: color-mix(in srgb, var(--ok) 12%, var(--card)); border: 1px solid color-mix(in srgb, var(--ok) 38%, var(--line)); }
+  .about-badge .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: pulse 2.2s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent)} 70%{box-shadow:0 0 0 7px transparent} 100%{box-shadow:0 0 0 0 transparent} }
+  .about-langs { font-family: var(--mono); font-size: 0.74rem; display: inline-flex; align-items: center; padding: 0.45rem 0.8rem; border-radius: 999px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+  @media (max-width: 620px){ .about-flex { flex-direction: column; align-items: center; text-align: center; } .about-photo { height: clamp(220px, 60vw, 300px); } .about-meta { justify-content: center; } .about p { margin-left: auto; margin-right: auto; } }
+
+  /* ── SEPARATE SECTIONS (projects / about+contact) ── */
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: 2.4rem 0 1rem; }
+  .section-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 2.6vw, 1.8rem); letter-spacing: -0.01em; }
+
+  .proj-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  @media (max-width: 860px){ .proj-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px){ .proj-grid { grid-template-columns: 1fr; } }
+
+  .duo { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0 4rem; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="row">
+      <div class="brand"><span class="dot"></span> Meeta Dave</div>
+      <div class="navlinks">
+        <a href="#projects" class="hide-sm" data-i18n="nav_projects">Projects</a>
+        <a href="#stack" class="hide-sm" data-i18n="nav_stack">Stack</a>
+        <a href="#contact" class="hide-sm" data-i18n="nav_contact">Contact</a>
+        <span class="lang" role="group" aria-label="Language">
+          <button data-lang="en" class="on">EN</button>
+          <button data-lang="de">DE</button>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="bento">
+
+      <!-- HERO -->
+      <section class="tile hero span-2 row-2">
+        <span class="lbl" data-i18n="hero_eyebrow">AI &amp; Data engineer</span>
+        <h1 data-i18n="hero_title">I turn <span class="hl">messy data</span> into models, dashboards, and decisions.</h1>
+        <p class="sub" data-i18n="hero_sub">Currently pursuing a Master's in Web Engineering at TU Chemnitz — I like turning data into exciting projects with real-world use.</p>
+        <div class="cta-row">
+          <!-- [LINKS] résumé file — drop Meeta_Dave_CV.pdf in the repo -->
+          <a class="btn primary" href="https://github.com/davemeeta" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn primary" href="https://www.linkedin.com/in/meetadave/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </section>
+
+      <!-- API CONSOLE (signature) -->
+      <section class="tile console span-2 row-2" aria-label="API console">
+        <div class="bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="path">meeta.dev / api</span></div>
+        <h3 data-i18n="console_title">API console</h3>
+        <p class="hint" data-i18n="console_hint">Click an endpoint to run it.</p>
+        <div class="endpoints">
+          <button class="ep" data-ep="summary"><b>GET</b> /summary</button>
+          <button class="ep" data-ep="projects"><b>GET</b> /projects</button>
+          <button class="ep" data-ep="ping"><b>POST</b> /ping</button>
+        </div>
+        <div class="out" id="consoleOut" aria-live="polite"><span class="ln req" data-i18n="console_idle">// awaiting request…</span></div>
+      </section>
+
+      <!-- TECH STACK -->
+      <section class="tile span-4" id="stack">
+        <div class="head"><h2 data-i18n="stack_title">Tech stack</h2><span class="lbl" data-i18n="stack_note">Skills earned by working on live projects</span></div>
+        <div class="stack-grid" id="stackGrid"></div>
+      </section>
+
+    </div><!-- /.bento -->
+
+    <!-- PROJECTS (own grid, always full rows) -->
+    <section id="projects">
+      <div class="section-head">
+        <h2 data-i18n="projects_title">Projects</h2>
+        <span class="lbl" data-i18n="projects_note">click a card for the architecture</span>
+      </div>
+      <!-- project cards injected here -->
+      <div class="proj-grid" id="projectGrid"></div>
+    </section>
+
+    <!-- ABOUT + CONTACT (kept together, separate from projects) -->
+    <div class="duo">
+      <!-- ABOUT -->
+      <section class="tile about">
+        <div class="head"><h2 data-i18n="about_title">About</h2></div>
+        <div class="about-flex">
+          <div class="about-photo-wrap">
+            <img class="about-photo" src="avatar.png" alt="Illustration of Meeta Dave" />
+          </div>
+          <div class="about-text">
+            <p class="about-lead" data-i18n="about_greeting">Hello! Super nice to meet you <span class="wave">👋</span></p>
+            <p data-i18n="about_p1">I work end-to-end — from raw, messy data to clean analysis, clear dashboards, and machine-learning models that actually hold up outside a notebook. What I enjoy most is the moment a chart or a prediction changes what a team decides to do next.</p>
+            <p data-i18n="about_p2">My recent projects span applied ML (RAG systems with local LLMs, time-series forecasting, and real-time anomaly detection) and the visualization layer that makes it usable — Tableau, Grafana, and live React/D3 dashboards, with Python, SQL, FastAPI, and MLflow underneath.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="tile contact" id="contact">
+        <div class="head"><h2 data-i18n="contact_title">Contact</h2></div>
+        <div class="copy-row">
+          <!-- [LINKS] email -->
+          <button class="btn ghost copy-email" id="copyEmail" data-email="davemeeta12@gmail.com" data-i18n="contact_copy">Copy email</button>
+          <span class="toast" id="copyToast" data-i18n="contact_copied">Copied!</span>
+        </div>
+        <!-- [LINKS] Formspree -->
+        <form action="https://formspree.io/f/mrevneyy" method="POST">
+          <input type="text" name="name" data-i18n-ph="form_name" placeholder="Name" required />
+          <input type="email" name="email" data-i18n-ph="form_email" placeholder="Email" required />
+          <textarea name="message" rows="3" data-i18n-ph="form_msg" placeholder="Message" required></textarea>
+          <button type="submit" class="btn primary" data-i18n="form_send" style="align-self:flex-start;">Send message</button>
+        </form>
+      </section>
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <span>© <span id="yr"></span> Meeta Dave · <span data-i18n="foot">built with ❤️ &amp; hosted on GitHub Pages</span></span>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal" role="dialog" aria-modal="true" id="modal"></div>
+  </div>
+
+<script>
+/* ════════════════════════════════ I18N ════════════════════════════════ */
+const I18N = {
+  en: {
+    nav_projects: "Projects", nav_stack: "Stack", nav_contact: "Contact",
+    hero_eyebrow: "AI &amp; Data engineer",
+    hero_title: 'I turn <span class="hl">messy data</span> into models, dashboards, and decisions.',
+    hero_sub: "Currently pursuing a Master's in Web Engineering at TU Chemnitz — I like turning data into exciting projects with real-world use.",
+    console_title: "API console", console_hint: "Click an endpoint to run it.",
+    console_idle: "// awaiting request…",
+    stack_title: "Tech stack", stack_note: "Skills earned by working on live projects",
+    projects_title: "Projects", projects_note: "click a card for the architecture",
+    about_title: "About",
+    about_greeting: 'Hello! Super nice to meet you',
+    about_p1: "I work end-to-end — from raw, messy data to clean analysis, clear dashboards, and machine-learning models that actually hold up outside a notebook. What I enjoy most is the moment a chart or a prediction changes what a team decides to do next.",
+    about_p2: "My recent projects span applied ML (RAG systems with local LLMs, time-series forecasting, and real-time anomaly detection) and the visualization layer that makes it usable — Tableau, Grafana, and live React/D3 dashboards, with Python, SQL, FastAPI, and MLflow underneath.",
+    contact_title: "Contact", contact_copy: "Copy email", contact_copied: "Copied!",
+    form_name: "Name", form_email: "Email", form_msg: "Message", form_send: "Send message",
+    foot: "built with ❤️ &amp; hosted on GitHub Pages",
+    modal_arch: "Architecture", modal_stack: "Tech stack", modal_code: "View code on GitHub", modal_close: "Close",
+    node_hint: "Click a node to see its role.",
+    con_running: "running", con_pong: "pong — open to Werkstudent &amp; junior roles", con_scroll: "see the Projects section ↓"
+  },
+  de: {
+    nav_projects: "Projekte", nav_stack: "Stack", nav_contact: "Kontakt",
+    hero_eyebrow: "KI- &amp; Data-Engineer",
+    hero_title: 'Ich mache aus <span class="hl">unübersichtlichen Daten</span> Modelle, Dashboards und Entscheidungen.',
+    hero_sub: "Aktuell Master in Web Engineering an der TU Chemnitz — ich verwandle Daten gern in spannende Projekte mit echtem Praxisnutzen.",
+    console_title: "API-Konsole", console_hint: "Klick einen Endpunkt, um ihn auszuführen.",
+    console_idle: "// warte auf Anfrage…",
+    stack_title: "Tech-Stack", stack_note: "Durch die Arbeit an Live-Projekten erworbene Fähigkeiten",
+    projects_title: "Projekte", projects_note: "Karte anklicken für die Architektur",
+    about_title: "Über mich",
+    about_greeting: 'Hallo! Schön, dich kennenzulernen',
+    about_p1: "Ich arbeite end-to-end — von rohen, unübersichtlichen Daten über saubere Analysen und klare Dashboards bis zu Machine-Learning-Modellen, die auch außerhalb eines Notebooks bestehen. Am meisten mag ich den Moment, in dem ein Diagramm oder eine Vorhersage verändert, was ein Team als Nächstes entscheidet.",
+    about_p2: "Meine aktuellen Projekte reichen von angewandtem ML (RAG-Systeme mit lokalen LLMs, Zeitreihenprognosen und Echtzeit-Anomalieerkennung) bis zur Visualisierungsebene, die das nutzbar macht — Tableau, Grafana und Live-Dashboards mit React/D3, mit Python, SQL, FastAPI und MLflow im Hintergrund.",
+    contact_title: "Kontakt", contact_copy: "E-Mail kopieren", contact_copied: "Kopiert!",
+    form_name: "Name", form_email: "E-Mail", form_msg: "Nachricht", form_send: "Nachricht senden",
+    foot: "erstellt mit ❤️ &amp; gehostet auf GitHub Pages",
+    modal_arch: "Architektur", modal_stack: "Tech-Stack", modal_code: "Code auf GitHub ansehen", modal_close: "Schließen",
+    node_hint: "Knoten anklicken, um seine Rolle zu sehen.",
+    con_running: "läuft", con_pong: "pong — offen für Werkstudenten- &amp; Junior-Stellen", con_scroll: "siehe Abschnitt Projekte ↓"
+  }
+};
+
+/* ════════════════════════════ TECH STACK ════════════════════════════ */
+/* Edit freely. Categories render in order. */
+const STACK = [
+  { cat: { en: "Programming & Backend", de: "Programmierung & Backend" }, items: ["Python", "SQL", "FastAPI", "WebSocket", "REST APIs"] },
+  { cat: { en: "AI & Machine Learning", de: "KI & Machine Learning" }, items: ["PyTorch", "TensorFlow", "scikit-learn", "LangChain", "RAG", "Ollama · LLaMA 3", "Prophet", "MLflow"] },
+  { cat: { en: "Data & Visualization", de: "Daten & Visualisierung" }, items: ["Pandas", "Tableau", "Grafana", "D3.js", "Leaflet", "React", "Streamlit"] },
+  { cat: { en: "Data Eng & DevOps", de: "Data-Eng & DevOps" }, items: ["Kafka", "MQTT", "TimescaleDB", "InfluxDB", "Vector DB", "Docker", "Git & GitHub"] }
+];
+
+/* ════════════════════════════ PROJECTS ════════════════════════════ */
+/* node kinds: client / api / data / ml / auth / ext  */
+const PROJECTS = [
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/Attribute-Equivalency-Checker",
+    title: "Attribute Equivalency Checker",
+    desc: {
+      en: "A semantic column-grouping tool that uses a locally-run LLM to detect when differently-named CSV columns mean the same thing — e.g. \u201Cfname\u201D, \u201Cfirst_name\u201D, \u201CgivenName\u201D — where plain string matching fails.",
+      de: "Ein Tool zur semantischen Spaltengruppierung, das ein lokal laufendes LLM nutzt, um zu erkennen, wann unterschiedlich benannte CSV-Spalten dasselbe bedeuten \u2014 z.\u00A0B. \u201Efname\u201C, \u201Efirst_name\u201C, \u201EgivenName\u201C \u2014 wo einfacher String-Vergleich scheitert."
+    },
+    stack: ["Python", "Streamlit", "Ollama", "LLaMA 3", "Pandas", "Regex"],
+    arch: [
+      { k: "Client", n: "Streamlit UI", info: { en: "Web interface to upload a CSV file; grouped results are shown in the browser and can be exported as CSV.", de: "Web-Oberfläche zum Hochladen einer CSV-Datei; gruppierte Ergebnisse werden im Browser angezeigt und können als CSV exportiert werden." } },
+      { k: "Prep", n: "Normalize", info: { en: "Extracts column names and normalizes them with Pandas and regex — handling abbreviations, typos, and case variations.", de: "Extrahiert Spaltennamen und normalisiert sie mit Pandas und Regex — inklusive Abkürzungen, Tippfehlern und Groß-/Kleinschreibung." } },
+      { k: "ML", n: "Local LLM (LLaMA 3)", info: { en: "LLaMA 3 via Ollama runs entirely on-device and groups columns that mean the same thing semantically — so no data ever leaves the machine.", de: "LLaMA 3 über Ollama läuft vollständig lokal und gruppiert Spalten, die semantisch dasselbe bedeuten — so verlassen keine Daten das Gerät." } },
+      { k: "Output", n: "JSON + CSV", info: { en: "Produces structured JSON output and exports the grouped result as a downloadable CSV.", de: "Erzeugt strukturierte JSON-Ausgabe und exportiert das gruppierte Ergebnis als herunterladbare CSV." } }
+    ]
+  },
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/AI-Powered-Document-Intelligence-Platform",
+    title: "AI-Powered Document Intelligence Platform",
+    desc: {
+      en: "Ask questions about any PDF and get accurate, cited answers instantly — built on a retrieval-augmented (RAG) architecture so every answer is grounded in the source document.",
+      de: "Stell Fragen zu beliebigen PDFs und erhalte sofort genaue, mit Quellen belegte Antworten — auf einer RAG-Architektur, sodass jede Antwort im Quelldokument verankert ist."
+    },
+    stack: ["Python", "FastAPI", "RAG", "LangChain", "Vector DB", "React"],
+    arch: [
+      { k: "Client", n: "Ask UI", info: { en: "React interface to upload a PDF and ask questions about it in natural language.", de: "React-Oberfläche, um ein PDF hochzuladen und in natürlicher Sprache Fragen dazu zu stellen." } },
+      { k: "API", n: "FastAPI", info: { en: "Handles uploads, chunks and embeds the text, and orchestrates retrieval plus the LLM call.", de: "Verarbeitet Uploads, zerlegt und bettet den Text ein und orchestriert Retrieval und LLM-Aufruf." } },
+      { k: "Data", n: "Vector store", info: { en: "Stores document embeddings and returns the most relevant chunks for each question.", de: "Speichert Dokument-Embeddings und liefert die relevantesten Abschnitte zu jeder Frage." } },
+      { k: "ML", n: "LLM + LangChain", info: { en: "LangChain builds the prompt from the retrieved chunks; the LLM generates an answer with citations back to the source.", de: "LangChain baut den Prompt aus den abgerufenen Abschnitten; das LLM erzeugt eine Antwort mit Quellenverweisen auf das Dokument." } }
+    ]
+  },
+  {
+    tag: "Data / BI",
+    repo: "https://github.com/davemeeta/Tableau-Sales-Performance-Dashboard",
+    title: "Tableau Sales Performance Dashboard",
+    desc: {
+      en: "Interactive Tableau dashboard on the Superstore dataset — surfacing pricing inefficiencies, regional profitability, customer segments, and seasonal demand.",
+      de: "Interaktives Tableau-Dashboard auf dem Superstore-Datensatz — zeigt Preisineffizienzen, regionale Rentabilität, Kundensegmente und saisonale Nachfrage."
+    },
+    stack: ["Tableau", "Business Intelligence", "Data Visualization", "Data Analysis"],
+    arch: [
+      { k: "Source", n: "Superstore data", info: { en: "Raw sales records — orders, products, regions, and customer segments — as the input dataset.", de: "Rohe Verkaufsdaten — Bestellungen, Produkte, Regionen und Kundensegmente — als Eingabedatensatz." } },
+      { k: "Prep", n: "Clean & model", info: { en: "Cleaning, joins, and calculated fields (margins, segment splits) to shape the data for analysis.", de: "Bereinigung, Joins und berechnete Felder (Margen, Segment-Aufteilungen), um die Daten für die Analyse aufzubereiten." } },
+      { k: "Data", n: "Tableau model", info: { en: "Relationships and measures defined once and reused across every view.", de: "Beziehungen und Kennzahlen einmal definiert und in jeder Ansicht wiederverwendet." } },
+      { k: "Client", n: "Dashboard", info: { en: "Interactive filters surface the findings: Technology and Office Supplies run ~17% margins while Furniture sits near 2.5%, the Consumer segment drives the most revenue, some high-revenue products show pricing inefficiencies, and demand rises toward year-end.", de: "Interaktive Filter zeigen die Erkenntnisse: Technology und Office Supplies erreichen ~17% Marge, während Furniture bei ~2,5% liegt, das Consumer-Segment den meisten Umsatz bringt, einige umsatzstarke Produkte Preisineffizienzen aufweisen und die Nachfrage zum Jahresende steigt." } }
+    ]
+  },
+  {
+    tag: "Full Stack · ML",
+    repo: "https://github.com/davemeeta/Smart-Energy-Consumption-Monitoring-Anomaly-Detection-Platform",
+    title: "Smart Energy Monitoring & Anomaly Detection",
+    desc: {
+      en: "A real-time IoT energy platform: it streams household power data over MQTT, flags anomalous consumption with an ML ensemble, and tracks CO\u2082 and cost using German grid factors — on live React and Grafana dashboards.",
+      de: "Eine Echtzeit-IoT-Energieplattform: Sie streamt Haushaltsstromdaten über MQTT, markiert anomalen Verbrauch mit einem ML-Ensemble und verfolgt CO\u2082 und Kosten anhand deutscher Netzfaktoren — auf Live-Dashboards mit React und Grafana."
+    },
+    stack: ["Python", "FastAPI", "WebSocket", "scikit-learn", "PyTorch", "MQTT", "InfluxDB", "React", "Grafana", "Docker"],
+    arch: [
+      { k: "Source", n: "IoT · MQTT", info: { en: "Streams a real household-energy dataset (2M+ UCI readings) over an Eclipse Mosquitto MQTT broker, simulating three live sensors — kitchen, HVAC, and laundry.", de: "Streamt einen echten Haushaltsenergie-Datensatz (über 2 Mio. UCI-Messwerte) über einen Eclipse-Mosquitto-MQTT-Broker und simuliert drei Live-Sensoren — Küche, HLK und Wäsche." } },
+      { k: "ML", n: "Anomaly ensemble", info: { en: "A Python subscriber runs an Isolation Forest (scikit-learn) and a PyTorch autoencoder; both must agree before flagging an anomaly, which cuts false positives. A calculator converts kWh to CO\u2082 and € using German grid factors.", de: "Ein Python-Subscriber kombiniert einen Isolation Forest (scikit-learn) und einen PyTorch-Autoencoder; beide müssen übereinstimmen, bevor eine Anomalie markiert wird, was Fehlalarme reduziert. Ein Rechner wandelt kWh in CO\u2082 und € um — mit deutschen Netzfaktoren." } },
+      { k: "Data", n: "InfluxDB", info: { en: "All time-series readings and results are stored in InfluxDB 2.7 for historical analysis and dashboard queries.", de: "Alle Zeitreihen-Messwerte und Ergebnisse werden in InfluxDB 2.7 für historische Analysen und Dashboard-Abfragen gespeichert." } },
+      { k: "API", n: "FastAPI + WS", info: { en: "FastAPI exposes a REST API and a WebSocket that streams live readings and anomaly events to the frontend in real time.", de: "FastAPI stellt eine REST-API und einen WebSocket bereit, der Live-Messwerte und Anomalie-Ereignisse in Echtzeit an das Frontend streamt." } },
+      { k: "Client", n: "React + Grafana", info: { en: "A React + Recharts dashboard updates every 500ms with live kWh and an anomaly feed; Grafana panels cover the ops views — CO\u2082 trends, anomaly events, and cost per sensor.", de: "Ein React-+-Recharts-Dashboard aktualisiert sich alle 500 ms mit Live-kWh und einem Anomalie-Feed; Grafana-Panels decken die Ops-Ansichten ab — CO\u2082-Trends, Anomalie-Ereignisse und Kosten pro Sensor." } }
+    ]
+  },
+  {
+    tag: "Full Stack · ML",
+    repo: "https://github.com/davemeeta/Real-Time-City-Traffic-Mobility-Dashboard",
+    title: "Real-Time City Traffic & Mobility Dashboard",
+    desc: {
+      en: "Live congestion forecasting and a what-if road-closure simulator for Stuttgart and Munich — streams real traffic + weather data, forecasts 30/60 min ahead with LSTM and Prophet, and renders it on an interactive Leaflet + D3 map.",
+      de: "Live-Stauprognosen und ein Was-wäre-wenn-Simulator für Straßensperrungen in Stuttgart und München — streamt echte Verkehrs- und Wetterdaten, prognostiziert 30/60 Min. voraus mit LSTM und Prophet und stellt es auf einer interaktiven Leaflet-+-D3-Karte dar."
+    },
+    stack: ["Python", "Kafka", "TimescaleDB", "FastAPI", "TensorFlow", "Prophet", "MLflow", "Leaflet", "D3", "Docker"],
+    arch: [
+      { k: "Source", n: "Open data APIs", info: { en: "Polls MobiData BW (real Stuttgart / Baden-Württemberg incidents) and Open-Meteo (weather) every 60 seconds, alongside realistic loop-detector readings.", de: "Fragt MobiData BW (echte Vorfälle in Stuttgart / Baden-Württemberg) und Open-Meteo (Wetter) alle 60 Sekunden ab, ergänzt durch realistische Schleifendetektor-Messwerte." } },
+      { k: "Stream", n: "Kafka → TimescaleDB", info: { en: "A Kafka producer/consumer pipeline publishes readings; TimescaleDB stores them in a hypertable partitioned by day and compressed after 7 days.", de: "Eine Kafka-Producer/Consumer-Pipeline veröffentlicht Messwerte; TimescaleDB speichert sie in einer nach Tagen partitionierten Hypertable, die nach 7 Tagen komprimiert wird." } },
+      { k: "ML", n: "LSTM + Prophet", info: { en: "Two forecasters predict congestion 30 and 60 min ahead — Prophet handles German holidays and weather regressors; both tracked in MLflow. MAE lands around 0.11–0.15 on a 0–1 scale.", de: "Zwei Modelle prognostizieren Stau 30 und 60 Min. voraus — Prophet berücksichtigt deutsche Feiertage und Wetter-Regressoren; beide in MLflow getrackt. MAE liegt bei etwa 0,11–0,15 auf einer 0–1-Skala." } },
+      { k: "API", n: "FastAPI + WS", info: { en: "Async FastAPI serves REST + a WebSocket live feed; a physics-based BPR simulator redistributes traffic for road-closure what-ifs in ~200 ms.", de: "Async-FastAPI liefert REST + einen WebSocket-Live-Feed; ein physikbasierter BPR-Simulator verteilt den Verkehr für Straßensperrungs-Szenarien in ~200 ms um." } },
+      { k: "Client", n: "Leaflet + D3", info: { en: "An interactive map updates sensor colours live; clicking a sensor opens a hand-built D3 chart with history and a 30/60 min forecast confidence band.", de: "Eine interaktive Karte aktualisiert Sensorfarben live; ein Klick auf einen Sensor öffnet ein selbst gebautes D3-Diagramm mit Verlauf und einem 30/60-Min-Prognoseband." } }
+    ]
+  }
+];
+
+/* ════════════════════════════ STATE + RENDER ════════════════════════════ */
+let lang = "en";
+const t = (k) => (I18N[lang][k] ?? I18N.en[k] ?? k);
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+function renderStack(){
+  document.getElementById("stackGrid").innerHTML = STACK.map(col => `
+    <div class="stack-col">
+      <h4>${col.cat[lang] || col.cat.en}</h4>
+      <div class="chips">${col.items.map(i => `<span class="chip">${i}</span>`).join("")}</div>
+    </div>`).join("");
+}
+
+function renderProjects(){
+  document.getElementById("projectGrid").innerHTML = PROJECTS.map((p, i) => `
+    <article class="tile proj" data-proj="${i}" tabindex="0" role="button" aria-label="${p.title}">
+      <span class="tag">${p.tag}</span>
+      <h3>${p.title}</h3>
+      <p class="pdesc">${p.desc[lang] || p.desc.en}</p>
+      <span class="more">${t("modal_arch")} →</span>
+    </article>`).join("");
+  document.querySelectorAll(".proj").forEach(el => {
+    const open = () => openModal(+el.dataset.proj);
+    el.addEventListener("click", open);
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
+}
+
+/* ════════════════════════════ MODAL ════════════════════════════ */
+const modalBg = document.getElementById("modalBg");
+const modal = document.getElementById("modal");
+
+function openModal(i){
+  const p = PROJECTS[i];
+  modal.innerHTML = `
+    <button class="x" id="modalClose">${t("modal_close")} ✕</button>
+    <span class="mtag">${p.tag}</span>
+    <h3>${p.title}</h3>
+    <p class="mdesc">${p.desc[lang] || p.desc.en}</p>
+    <div class="arch-title">${t("modal_arch")}</div>
+    <div class="flow" id="flow">
+      ${p.arch.map((n, idx) => `
+        <button class="node${idx===0?' sel':''}" data-node="${idx}">
+          <div class="nk">${n.k}</div><div class="nn">${n.n}</div>
+        </button>${idx < p.arch.length-1 ? '<span class="arrow">→</span>' : ''}`).join("")}
+    </div>
+    <div class="node-info" id="nodeInfo">
+      <div class="ni-k">${p.arch[0].k}</div>${p.arch[0].info[lang] || p.arch[0].info.en}
+    </div>
+    <div class="mstack">${p.stack.map(s => `<span class="chip">${s}</span>`).join("")}</div>
+    <a class="btn primary" href="${p.repo}" target="_blank" rel="noopener">${t("modal_code")} ↗</a>
+  `;
+  modalBg.classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("modalClose").onclick = closeModal;
+  modal.querySelectorAll(".node").forEach(node => {
+    node.addEventListener("click", () => {
+      const n = p.arch[+node.dataset.node];
+      modal.querySelectorAll(".node").forEach(x => x.classList.remove("sel"));
+      node.classList.add("sel");
+      document.getElementById("nodeInfo").innerHTML = `<div class="ni-k">${n.k}</div>${n.info[lang] || n.info.en}`;
+    });
+  });
+}
+function closeModal(){ modalBg.classList.remove("open"); document.body.style.overflow = ""; }
+modalBg.addEventListener("click", e => { if (e.target === modalBg) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+/* ════════════════════════════ API CONSOLE ════════════════════════════ */
+const out = document.getElementById("consoleOut");
+function line(html, cls=""){ const d = document.createElement("div"); d.className = "ln " + cls; d.innerHTML = html; out.appendChild(d); out.scrollTop = out.scrollHeight; return d; }
+function runEndpoint(ep){
+  out.innerHTML = "";
+  const method = ep === "ping" ? "POST" : "GET";
+  line(`<span class="req">→ ${method} /${ep} … ${t("con_running")}</span>`);
+  setTimeout(() => {
+    if (ep === "summary"){
+      const SUM = {
+        en: {
+          hi: "Hi there! My name is Meeta Dave.",
+          looking: "I'm actively looking for working-student roles and internships in AI / ML and Data Science.",
+          langs: "Deutsch und Englisch beherrsche ich fließend — in Wort und Schrift.",
+          techHead: "// tech I've worked with",
+          genres: "My projects span RAG & local-LLM tools, semantic data tooling, real-time anomaly detection, time-series forecasting, and interactive BI dashboards.",
+          contact: "Like what you see? Scroll down to Contact — I'd love to hear from you."
+        },
+        de: {
+          hi: "Hallo! Mein Name ist Meeta Dave.",
+          looking: "Ich suche aktiv Werkstudenten-Stellen und Praktika in den Bereichen KI / ML und Data Science.",
+          langs: "Deutsch und Englisch beherrsche ich fließend — in Wort und Schrift.",
+          techHead: "// Technologien, mit denen ich gearbeitet habe",
+          genres: "Meine Projekte reichen von RAG- und lokalen LLM-Tools über semantische Daten-Tools bis zu Echtzeit-Anomalieerkennung, Zeitreihenprognosen und interaktiven BI-Dashboards.",
+          contact: "Gefällt dir, was du siehst? Scroll runter zum Kontakt — ich freue mich, von dir zu hören."
+        }
+      };
+      const s = SUM[lang] || SUM.en;
+      line(`<span class="status">200 OK</span>`);
+      line(`<span class="str">${s.hi}</span>`);
+      line(s.looking);
+      line(s.langs);
+      line(`&nbsp;`);
+      line(`<span class="req">${s.techHead}</span>`);
+      STACK.forEach(c => line(`  <span class="key">${c.cat[lang] || c.cat.en}</span>: ${c.items.slice(0, 4).join(", ")}`));
+      line(`&nbsp;`);
+      line(s.genres);
+      line(`&nbsp;`);
+      line(`<span class="req">// ${s.contact}</span>`);
+      out.scrollTop = out.scrollHeight;
+    } else if (ep === "projects"){
+      line(`<span class="status">200 OK</span>  { <span class="key">"count"</span>: ${PROJECTS.length} }`);
+      PROJECTS.forEach((p, i) => line(`  <span class="key">[${i}]</span> <span class="str">"${p.title}"</span>`));
+      line(`<span class="req">// ${t("con_scroll")}</span>`);
+      document.getElementById("projects").scrollIntoView({ behavior: "smooth" });
+    } else if (ep === "ping"){
+      const ms = (Math.random()*40 + 8).toFixed(0);
+      line(`<span class="status">200 OK</span>  { <span class="key">"latency"</span>: <span class="str">"${ms}ms"</span> }`);
+      line(`<span class="req">// ${t("con_pong")}</span>`);
+    }
+    const last = out.lastElementChild; if (last) last.classList.add("cursor-blink");
+  }, 480);
+}
+document.querySelectorAll(".ep").forEach(b => b.addEventListener("click", () => runEndpoint(b.dataset.ep)));
+
+/* ════════════════════════════ COPY EMAIL ════════════════════════════ */
+const copyBtn = document.getElementById("copyEmail");
+copyBtn.addEventListener("click", async () => {
+  const email = copyBtn.dataset.email;
+  try { await navigator.clipboard.writeText(email); }
+  catch(e){ const ta = document.createElement("textarea"); ta.value = email; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+  const toast = document.getElementById("copyToast"); toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1600);
+});
+
+/* ════════════════════════════ LANGUAGE ════════════════════════════ */
+function applyLang(){
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
+  document.documentElement.lang = lang;
+  renderStack();
+  renderProjects();
+}
+function setLang(l){ lang = l; try { localStorage.setItem("portfolioLang", l); } catch(e){} applyLang(); }
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+try { const saved = localStorage.getItem("portfolioLang"); if (saved && I18N[saved]) lang = saved; } catch(e){}
+applyLang();
+</script>
+</body>
+</html>
