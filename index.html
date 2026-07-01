@@ -409,10 +409,10 @@ const I18N = {
 /* ════════════════════════════ TECH STACK ════════════════════════════ */
 /* Edit freely. Categories render in order. */
 const STACK = [
-  { cat: { en: "Programming & Backend", de: "Programmierung & Backend" }, items: ["Python", "SQL", "FastAPI", "WebSocket", "REST APIs"] },
-  { cat: { en: "AI & Machine Learning", de: "KI & Machine Learning" }, items: ["PyTorch", "TensorFlow", "scikit-learn", "LangChain", "RAG", "Ollama · LLaMA 3", "Prophet", "MLflow"] },
-  { cat: { en: "Data & Visualization", de: "Daten & Visualisierung" }, items: ["Pandas", "Tableau", "Grafana", "D3.js", "Leaflet", "React", "Streamlit"] },
-  { cat: { en: "Data Eng & DevOps", de: "Data-Eng & DevOps" }, items: ["Kafka", "MQTT", "TimescaleDB", "InfluxDB", "Vector DB", "Docker", "Git & GitHub"] }
+  { cat: { en: "Programming & Backend", de: "Programmierung & Backend" }, items: ["Python", "TypeScript", "SQL", "FastAPI", "REST APIs", "OpenAPI", "WebSocket"] },
+  { cat: { en: "AI & Machine Learning", de: "KI & Machine Learning" }, items: ["PyTorch", "TensorFlow", "scikit-learn", "NumPy", "Computer Vision", "LangChain", "RAG", "Ollama · LLaMA 3", "Prophet", "MLflow"] },
+  { cat: { en: "Data & Visualization", de: "Daten & Visualisierung" }, items: ["Pandas", "Tableau", "Grafana", "D3.js", "Leaflet", "Recharts", "React", "Streamlit", "Matplotlib"] },
+  { cat: { en: "Data Eng & DevOps", de: "Data-Eng & DevOps" }, items: ["Kafka", "MQTT", "SQLite", "TimescaleDB", "InfluxDB", "Vector DB", "Docker", "Git & GitHub"] }
 ];
 
 /* ════════════════════════════ PROJECTS ════════════════════════════ */
@@ -498,6 +498,56 @@ const PROJECTS = [
       { k: "ML", n: "LSTM + Prophet", info: { en: "Two forecasters predict congestion 30 and 60 min ahead — Prophet handles German holidays and weather regressors; both tracked in MLflow. MAE lands around 0.11–0.15 on a 0–1 scale.", de: "Zwei Modelle prognostizieren Stau 30 und 60 Min. voraus — Prophet berücksichtigt deutsche Feiertage und Wetter-Regressoren; beide in MLflow getrackt. MAE liegt bei etwa 0,11–0,15 auf einer 0–1-Skala." } },
       { k: "API", n: "FastAPI + WS", info: { en: "Async FastAPI serves REST + a WebSocket live feed; a physics-based BPR simulator redistributes traffic for road-closure what-ifs in ~200 ms.", de: "Async-FastAPI liefert REST + einen WebSocket-Live-Feed; ein physikbasierter BPR-Simulator verteilt den Verkehr für Straßensperrungs-Szenarien in ~200 ms um." } },
       { k: "Client", n: "Leaflet + D3", info: { en: "An interactive map updates sensor colours live; clicking a sensor opens a hand-built D3 chart with history and a 30/60 min forecast confidence band.", de: "Eine interaktive Karte aktualisiert Sensorfarben live; ein Klick auf einen Sensor öffnet ein selbst gebautes D3-Diagramm mit Verlauf und einem 30/60-Min-Prognoseband." } }
+    ]
+  }
+  ,{
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/Secom-Virtual-Metrology",
+    title: "Semi-Supervised Virtual Metrology",
+    desc: {
+      en: "A data-driven surrogate model for a semiconductor manufacturing process, built to study accurate yield prediction under limited reference data — the central challenge in data-based methods for semiconductor process control.",
+      de: "Ein datengetriebenes Surrogatmodell für einen Halbleiter-Fertigungsprozess, entwickelt, um genaue Yield-Vorhersagen bei begrenzten Referenzdaten zu untersuchen — die zentrale Herausforderung datenbasierter Methoden in der Halbleiter-Prozesssteuerung."
+    },
+    stack: ["Python", "scikit-learn", "Pandas", "Streamlit", "Matplotlib"],
+    arch: [
+      { k: "Source", n: "SECOM data", info: { en: "Real UCI SECOM process data: 1,567 wafer runs and 590 in-line sensor signals with a pass/fail label and a heavy ~14:1 class imbalance.", de: "Reale UCI-SECOM-Prozessdaten: 1.567 Wafer-Durchläufe und 590 In-line-Sensorsignale mit Pass/Fail-Label und starkem ~14:1-Klassenungleichgewicht." } },
+      { k: "Prep", n: "Preprocess", info: { en: "Drops the timestamp, maps pass/fail to 0/1, removes constant and near-constant columns, and median-imputes missing values.", de: "Entfernt den Zeitstempel, bildet Pass/Fail auf 0/1 ab, entfernt konstante und nahezu konstante Spalten und imputiert fehlende Werte per Median." } },
+      { k: "ML", n: "Supervised baseline", info: { en: "Gradient-boosted trees with balanced class weights, evaluated with PR-AUC and failure-class recall rather than accuracy, which is meaningless at 14:1.", de: "Gradient-Boosted Trees mit ausgeglichenen Klassengewichten, bewertet mit PR-AUC und Recall der Ausfallklasse statt mit Accuracy, die bei 14:1 wenig aussagekräftig ist." } },
+      { k: "ML", n: "Semi-supervised", info: { en: "Reveals only f% of training labels and compares a supervised model against a self-training model that also exploits the unlabelled runs, sweeping f and averaging over seeds.", de: "Gibt nur f% der Trainingslabels frei und vergleicht ein Supervised-Modell mit einem Self-Training-Modell, das zusätzlich die ungelabelten Durchläufe nutzt — f wird variiert und über Seeds gemittelt." } },
+      { k: "Feature", n: "Process stages", info: { en: "Groups the 590 anonymised signals into process stages by their missing-value signature, then summarises each stage per run (mean/std/min/max/range) and tests raw vs. domain features head-to-head.", de: "Gruppiert die 590 anonymisierten Signale anhand ihrer Fehlwert-Signatur in Prozessstufen, fasst jede Stufe pro Durchlauf zusammen (Mittel/Std/Min/Max/Spanne) und vergleicht Roh- gegen Domänen-Merkmale direkt." } }
+    ]
+  },
+  {
+    tag: "Full Stack · Data",
+    repo: "https://github.com/davemeeta/German-Accident-Open-Data-Platform",
+    title: "German Accident Open Data Platform",
+    desc: {
+      en: "A data-integration platform that harmonises official German road-accident open data across nine annual releases (2016–2024) into a single canonical database, exposed through a documented REST API and an interactive React dashboard.",
+      de: "Eine Datenintegrations-Plattform, die offizielle deutsche Open Data zu Straßenverkehrsunfällen aus neun Jahresausgaben (2016–2024) in einer einzigen kanonischen Datenbank harmonisiert — bereitgestellt über eine dokumentierte REST-API und ein interaktives React-Dashboard."
+    },
+    stack: ["Python", "FastAPI", "SQLite", "Pandas", "React", "Vite", "TypeScript", "Tailwind CSS", "Leaflet", "Recharts"],
+    arch: [
+      { k: "Source", n: "Open data 2016–2024", info: { en: "Official German road-accident open data published as nine separate annual releases, each with its own quirks and schema drift.", de: "Offizielle deutsche Open Data zu Straßenverkehrsunfällen, veröffentlicht als neun separate Jahresausgaben mit jeweils eigenen Eigenheiten und Schema-Abweichungen." } },
+      { k: "ETL", n: "Harmonise (pandas)", info: { en: "A pandas pipeline reconciles the differing yearly schemas — column names, codes, and types — into one consistent canonical format.", de: "Eine pandas-Pipeline gleicht die unterschiedlichen Jahresschemata — Spaltennamen, Codes und Typen — zu einem konsistenten kanonischen Format ab." } },
+      { k: "Data", n: "SQLite", info: { en: "The harmonised records land in a single SQLite database that serves as the canonical source for the API.", de: "Die harmonisierten Datensätze landen in einer einzigen SQLite-Datenbank, die als kanonische Quelle für die API dient." } },
+      { k: "API", n: "FastAPI", info: { en: "FastAPI exposes the data as a documented REST API, with OpenAPI/Swagger docs auto-generated at /docs.", de: "FastAPI stellt die Daten als dokumentierte REST-API bereit, mit automatisch generierter OpenAPI/Swagger-Dokumentation unter /docs." } },
+      { k: "Client", n: "React + Leaflet", info: { en: "A React + Vite + TypeScript dashboard (Tailwind) maps accidents with Leaflet and charts trends with Recharts.", de: "Ein React-+-Vite-+-TypeScript-Dashboard (Tailwind) kartiert Unfälle mit Leaflet und visualisiert Trends mit Recharts." } }
+    ]
+  },
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/Multispectral-Land-Cover-Classification-on-Sentinel-2",
+    title: "EuroSAT Land-Cover Classification",
+    desc: {
+      en: "A computer-vision pipeline that classifies multi-spectral Sentinel-2 satellite imagery into land-cover types (forest, crops, water, built-up, and more) using a convolutional neural network — including the NDVI vegetation index, the core signal behind vegetation and deforestation monitoring.",
+      de: "Eine Computer-Vision-Pipeline, die multispektrale Sentinel-2-Satellitenbilder mit einem Convolutional Neural Network in Landbedeckungsklassen (Wald, Ackerland, Wasser, bebaut und mehr) klassifiziert — inklusive NDVI-Vegetationsindex, dem zentralen Signal hinter Vegetations- und Entwaldungs-Monitoring."
+    },
+    stack: ["Python", "CNN", "NumPy", "GeoTIFF", "scikit-learn", "Matplotlib"],
+    arch: [
+      { k: "Source", n: "Sentinel-2 imagery", info: { en: "13-band multi-spectral Sentinel-2 satellite tiles in .tif raster format, labelled by land-cover type (the EuroSAT benchmark).", de: "13-Band-multispektrale Sentinel-2-Kacheln im .tif-Rasterformat, nach Landbedeckungstyp gelabelt (EuroSAT-Benchmark)." } },
+      { k: "Prep", n: "Bands + NDVI", info: { en: "Reads the .tif rasters, stacks the spectral bands, and computes the NDVI vegetation index as an extra signal for vegetation and deforestation cues.", de: "Liest die .tif-Raster, stapelt die Spektralbänder und berechnet den NDVI-Vegetationsindex als zusätzliches Signal für Vegetations- und Entwaldungshinweise." } },
+      { k: "ML", n: "CNN classifier", info: { en: "A convolutional neural network learns to map the multi-spectral image patches to land-cover classes.", de: "Ein Convolutional Neural Network lernt, die multispektralen Bildausschnitte auf Landbedeckungsklassen abzubilden." } },
+      { k: "Eval", n: "Per-class metrics", info: { en: "Evaluated with per-class precision and recall rather than overall accuracy alone, so minority land-cover types are judged fairly.", de: "Bewertet mit Precision und Recall pro Klasse statt nur mit Gesamt-Accuracy, damit seltene Landbedeckungstypen fair beurteilt werden." } }
     ]
   }
 ];
