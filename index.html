@@ -1,1301 +1,833 @@
-<!doctype html>
+<!DOCTYPE html>
+<!--
+  ════════════════════════════════════════════════════════════════
+  MEETA DAVE — DARK BENTO / LEDGER PORTFOLIO
+  Single-file, no build step. Deploy anywhere static (Vercel,
+  Netlify, Cloudflare Pages, ...). All client-side.
+  ────────────────────────────────────────────────────────────────
+  EDIT POINTS (search for these):
+    • [LINKS]      — résumé file, GitHub, LinkedIn, email, Formspree id
+    • EXPERIENCE   — roles / education for the ledger timeline
+    • PROJECTS     — your projects, stacks, architecture nodes, repos
+    • COMMANDS     — entries in the ⌘K command palette
+  ════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Meeta Dave</title>
-<meta name="description" content="Meeta Dave, AI/ML engineer in Chemnitz. GenAI and agentic systems that check their own work.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meeta Dave — AI / ML &amp; Data</title>
+<meta name="description" content="Meeta Dave — AI/ML and data engineer. Python, SQL, BI, dashboards, and applied ML." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
-:root{
-  color-scheme:dark;
-  --bg:#050505; --surface:#101010; --ink:#EDEDEA; --muted:#9A9A94; --line:#232323;
-  --accent:#8AA3FF; --accent-soft:#1A2140; --on-accent:#0A0D1A;
-  --mark:#4F4817; --ok:#63CF98; --ok-soft:#10261A; --warn:#E6B35C; --warn-soft:#2A1F0E;
-  --heat0:#1B1B1B; --shadow:0 1px 2px rgba(0,0,0,.5),0 10px 30px -12px rgba(0,0,0,.9);
-  --grain-op:.14; --grain-blend:screen;
-  --display:"Bricolage Grotesque",ui-rounded,"Segoe UI",system-ui,sans-serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --c-guardian:#4FD1BC; --c-routelens:#B69BFF; --c-atlas:#FF8FAA; --c-traffic:#FFAA5E; --c-moe:#8AA3FF; --c-secom:#A9D66B; --c-pv:#F2D45C;
-}
+  /* faint warm haze on the paper background */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(30% 30% at 15% 10%, rgba(47,95,214,0.07), transparent 60%),
+      radial-gradient(30% 30% at 85% 15%, rgba(217,138,43,0.08),  transparent 60%),
+      radial-gradient(34% 34% at 80% 90%, rgba(63,148,85,0.07), transparent 60%);
+    background-size: 200% 200%;
+    animation: aurora 40s ease-in-out infinite alternate;
+  }
+  @keyframes aurora {
+    0%   { background-position: 0% 0%,   100% 0%,   100% 100%; }
+    100% { background-position: 25% 15%, 70% 25%,   55% 70%; }
+  }
+  :root {
+    --bg:       #f2ecdd;   /* warm cream paper */
+    --grid:     #e8e0c8;   /* faint paper line */
+    --card:     #faf7ee;   /* raised paper card */
+    --ink:      #17140f;   /* near-black ink */
+    --muted:    #756e5c;   /* warm grey-brown */
+    --line:     #ddd3b6;   /* soft warm border */
+    --accent:   #2f5fd6;   /* bold blue — primary accent */
+    --accent-d: #1f45a8;   /* darker blue for hovers */
+    --signal:   #d98a2b;   /* mustard/orange — the pop / CTA colour */
+    --console:  #17140f;   /* near-black "stamped" panel for contrast */
+    --console-2:#0d0b08;   /* deeper inset */
+    --ok:       #3f9455;   /* green block accent */
+    --display:  "Space Grotesk", system-ui, sans-serif;
+    --body:     "Inter", system-ui, sans-serif;
+    --mono:     "JetBrains Mono", ui-monospace, monospace;
+    --radius:   14px;
+    --shadow:   0 1px 2px rgba(23,20,15,.05), 0 10px 26px -16px rgba(23,20,15,.22);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--accent); color:#fff; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:64px}
-body{overflow-x:clip;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;padding-inline:20px;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1080px;margin-inline:auto}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
-h1,h2,h3,h4{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
-p{margin:0}
-.mono{font-family:var(--mono)}
-.hl{background:linear-gradient(transparent 58%,var(--mark) 58%);padding-inline:.1em}
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2.5rem); }
 
-/* nav */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);margin-inline:-20px;padding:12px 20px}
-.top .wrap{display:flex;align-items:center;gap:20px;justify-content:space-between}
-.brand{font-family:var(--display);font-weight:800;font-size:18px;text-decoration:none;letter-spacing:-.01em}
-.brand span{color:var(--accent)}
-.navlinks{display:flex;gap:18px;flex-wrap:wrap}
-.navlinks a{font-family:var(--mono);font-size:13px;text-decoration:none;color:var(--muted)}
-.navlinks a:hover{color:var(--ink)}
-@media (max-width:720px){.navlinks{display:none}}
+  .lbl { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
 
-/* hero */
-.hero{padding-block:56px 44px}
-.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--ok);background:var(--ok-soft);padding:5px 11px;border-radius:999px}
-.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2.4s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
-.hero h1{font-size:clamp(44px,7.5vw,88px);font-weight:800;letter-spacing:-.035em;margin-block:18px 8px}
-.hero .role{font-family:var(--mono);font-size:14px;color:var(--muted)}
-.thesis{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.25;letter-spacing:-.01em;margin-top:22px;max-width:26ch}
-.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:10px;border:1px solid var(--line);background:var(--surface);text-decoration:none;font-size:14.5px;font-weight:500;color:var(--ink);transition:transform .15s,border-color .15s;cursor:pointer;font-family:var(--body)}
-.btn:hover{transform:translateY(-1px);border-color:var(--ink)}
-.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.btn svg{width:16px;height:16px}
+  /* small solid color-block accent (blue/mustard/green squares) */
+  .mark-block { display: inline-block; width: 12px; height: 12px; flex: 0 0 auto; }
+  .mark-blue { background: var(--accent); }
+  .mark-mustard { background: var(--signal); }
+  .mark-green { background: var(--ok); }
 
-/* verified numbers */
-.v{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;cursor:help;border-bottom:1.5px dotted var(--ok);padding-inline:1px}
-.v::after{content:"✓";font-size:.68em;color:var(--ok);margin-left:2px;vertical-align:super;font-weight:700}
-#tip{position:fixed;z-index:50;max-width:300px;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.45;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
-#tip.show{opacity:1;transform:none}
-#tip .t{font-family:var(--mono);font-size:11px;opacity:.7;display:block;margin-bottom:3px}
+  /* ── NAV ─────────────────────────────────────── */
+  nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 85%, transparent);
+        border-bottom: 1px solid var(--line); }
+  nav .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+             padding: 0.9rem clamp(1rem, 4vw, 2.5rem); max-width: 1180px; margin: 0 auto; }
+  nav .brand { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; display:flex; align-items:center; gap:0.6rem; }
+  nav .navlinks { display: flex; align-items: center; gap: clamp(0.8rem, 2vw, 1.6rem); }
+  nav .navlinks a { font-family: var(--mono); font-size: 0.78rem; text-decoration: none; color: var(--muted); transition: color .2s; white-space: nowrap; }
+  nav .navlinks a:hover { color: var(--ink); }
+  @media (max-width: 640px){ nav .navlinks a.hide-sm { display: none; } }
 
-/* sections */
-section{padding-block:56px;border-top:1px solid var(--line)}
-.sechead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px 32px;margin-bottom:30px}
-.sechead h2{font-size:clamp(28px,3.6vw,40px);font-weight:800;letter-spacing:-.02em}
-.sechead p{color:var(--muted);max-width:52ch}
-.eyebrow{font-family:var(--mono);font-size:12.5px;color:var(--accent);display:block;margin-bottom:10px}
+  .cmdk-btn { font-family: var(--mono); font-size:0.76rem; display:inline-flex; align-items:center; gap:0.3rem;
+              padding:0.4rem 0.6rem; border-radius:4px; border:1px solid var(--ink); background:var(--card);
+              color:var(--ink); cursor:pointer; transition:background .2s, color .2s; }
+  .cmdk-btn:hover, .cmdk-btn:focus-visible { background: var(--ink); color: var(--bg); }
+  .cmdk-btn kbd { font-family:var(--mono); font-size:0.68rem; background:transparent; border:none; padding:0; }
 
-/* about */
-.about{display:grid;grid-template-columns:1.5fr 1fr;gap:56px;align-items:start}
-@media (max-width:840px){.about{grid-template-columns:1fr;gap:32px}}
-.about .prose{display:grid;gap:16px;font-size:17px;max-width:62ch}
-.about .prose p:first-child{font-family:var(--display);font-size:clamp(21px,2.4vw,25px);font-weight:600;line-height:1.35;letter-spacing:-.005em}
-.habits{display:grid;gap:0;margin-top:28px;border-top:1px solid var(--line)}
-.habit{display:grid;grid-template-columns:130px 1fr;gap:16px;padding-block:14px;border-bottom:1px solid var(--line);font-size:15px}
-.habit b{font-family:var(--mono);font-weight:500;font-size:12.5px;color:var(--accent);padding-top:2px}
-@media (max-width:480px){.habit{grid-template-columns:1fr;gap:4px}}
-.facts{display:grid;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
-.facts div{display:grid;gap:2px}
-.facts .k{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.facts .val{font-size:15px}
+  /* ── BENTO GRID ──────────────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 0 0; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+          padding: clamp(1.25rem, 2.5vw, 1.9rem); box-shadow: var(--shadow); min-width: 0;
+          transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s; }
+  .tile:hover { transform: translateY(-3px); box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 40px -16px rgba(0,0,0,.6); }
+  .span-2 { grid-column: span 2; }
+  .span-4 { grid-column: span 4; }
+  .row-2 { grid-row: span 2; }
 
-/* experience */
-.jobs{display:grid;gap:0}
-.job{display:grid;grid-template-columns:240px 1fr;gap:28px;padding-block:24px;border-top:1px solid var(--line)}
-.job:first-child{border-top:0;padding-top:0}
-@media (max-width:760px){.job{grid-template-columns:1fr;gap:10px}}
-.job h3{font-size:19px;font-weight:600}
-.job .when{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:6px}
-.job ul{margin:0;padding-left:18px;display:grid;gap:7px;font-size:15.5px}
-.edu{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px}
-@media (max-width:640px){.edu{grid-template-columns:1fr}}
-.edu div{padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.edu h4{font-size:16px;font-weight:600}
-.edu p{font-size:14px;color:var(--muted);margin-top:4px}
+  @media (max-width: 860px){
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .span-2, .span-4 { grid-column: span 2; }
+  }
+  @media (max-width: 540px){
+    .bento { grid-template-columns: 1fr; }
+    .span-2, .span-4 { grid-column: span 1; }
+    .row-2 { grid-row: auto; }
+  }
 
-/* role switch */
-.roles{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:22px}
-.roles .lbl{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-right:6px}
-.seg{display:flex;flex-wrap:wrap;gap:6px}
-.seg button{font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
-.seg button:hover{border-color:var(--ink)}
-.seg button[aria-pressed=true],.seg.small button[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.seg.small button{font-family:var(--mono);font-size:12px;padding:5px 10px;background:var(--bg)}
+  /* ── HERO TILE ───────────────────────────────── */
+  .hero { display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 4.4vw, 3.1rem); line-height: 1.04; letter-spacing: -0.02em; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero p.sub { color: var(--muted); max-width: 46ch; font-size: clamp(0.98rem, 1.6vw, 1.08rem); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 0.4rem; }
+  .btn { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; text-decoration: none;
+         display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.1rem; border-radius: 10px;
+         border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer;
+         transition: transform .15s, background .2s, border-color .2s, color .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--signal); border-color: var(--signal); color: #1c1300; }
+  .btn.primary:hover { background: #ffbe33; border-color: #ffbe33; }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-/* projects */
-.projects{display:flex;flex-direction:column;gap:22px}
-.proj{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;display:grid;grid-template-columns:220px 1fr;gap:18px 28px}
-.proj>*{min-width:0}
-@media (max-width:760px){.proj{grid-template-columns:1fr;padding:20px}}
-.proj.dim{opacity:.7}
-.proj .meta h3{font-size:24px;font-weight:800;letter-spacing:-.01em}
-.proj .meta .kicker{color:var(--muted);font-size:14px;margin-top:6px}
-.fit{display:flex;gap:4px;margin-top:14px;align-items:center;min-height:6px}
-.fit i{width:18px;height:6px;border-radius:3px;background:var(--heat0)}
-.fit i.f{background:var(--accent)}
-.fit span{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-left:6px}
-.gh{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:12.5px;color:var(--accent);text-decoration:none}
-.gh:hover{text-decoration:underline}
-.lead{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.35}
-.lead .for{display:block;font-family:var(--mono);font-weight:400;font-size:12px;color:var(--accent);margin-bottom:6px}
-.proj ul{margin:14px 0 0;padding-left:18px;display:grid;gap:7px}
-.proj li::marker{color:var(--muted)}
-.proj ul.routed li:not(.rel){opacity:.55}
-.proj li.rel::marker{color:var(--accent)}
-.proj ul.routed li.rel{font-weight:500}
-.scope{margin-top:14px;display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--warn);background:var(--warn-soft);padding:8px 12px;border-radius:9px}
-.scope b{font-family:var(--mono);font-weight:500;font-size:12px;white-space:nowrap;padding-top:1px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-.chips span{font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:6px;background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+  /* ── API CONSOLE TILE (signature) ────────────── */
+  .console { background: var(--console); border-color: var(--line); color: #cfe0e8; display: flex; flex-direction: column; gap: 0.9rem; }
+  .console:hover { transform: translateY(-3px); }
+  .console .bar { display: flex; align-items: center; gap: 0.45rem; }
+  .console .bar i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .console .bar .r{background:#ff5f56}.console .bar .y{background:#ffbd2e}.console .bar .g{background:#27c93f}
+  .console .bar .path { font-family: var(--mono); font-size: 0.72rem; color: #6f8b97; margin-left: 0.4rem; }
+  .console h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: #fff; }
+  .console .hint { font-family: var(--mono); font-size: 0.72rem; color: #7fa0ad; }
+  .endpoints { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ep { font-family: var(--mono); font-size: 0.76rem; cursor: pointer; padding: 0.5rem 0.7rem; border-radius: 8px;
+        background: var(--console-2); border: 1px solid var(--line); color: #bcd6e0; transition: border-color .2s, color .2s, background .2s; }
+  .ep:hover { border-color: var(--signal); color: #fff; }
+  .ep b { color: var(--ok); font-weight: 700; }
+  .out { font-family: var(--mono); font-size: 0.78rem; background: var(--console-2); border: 1px solid var(--line);
+         border-radius: 10px; padding: 0.9rem; min-height: 132px; overflow: auto; color: #cfe0e8; }
+  .out .ln { white-space: pre-wrap; word-break: break-word; }
+  .out .req { color: #7fa0ad; }
+  .out .status { color: var(--ok); }
+  .out .key { color: #7cc7f0; }
+  .out .str { color: #f0a868; }
+  .cursor-blink::after { content: "▋"; color: var(--signal); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
 
-/* demo area */
-.demo{grid-column:1/-1;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
-.demo-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.demo-h h4{font-size:18px;font-weight:700}
-.demo-h .try{font-family:var(--mono);font-size:11.5px;color:var(--on-accent);background:var(--accent);padding:2px 8px;border-radius:5px;margin-right:8px;vertical-align:2px}
-.demo .sub{color:var(--muted);font-size:14px;max-width:70ch}
-.note{font-family:var(--mono);font-size:11.5px;color:var(--warn);background:var(--warn-soft);padding:6px 10px;border-radius:8px}
-.ctl{display:flex;gap:14px 22px;flex-wrap:wrap;align-items:end}
-.field{display:flex;flex-direction:column;gap:6px;min-width:0}
-.field.grow{flex:1;min-width:180px}
-.field label,.field .fl{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.field input[type=text]{font:inherit;font-size:15px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
-.field input[type=range]{accent-color:var(--accent);width:100%}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media (max-width:760px){.two{grid-template-columns:1fr}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:10px;align-content:start;min-width:0}
-.card .k{font-family:var(--mono);font-size:11.5px;color:var(--accent)}
-.readout{font-size:14.5px}
-.readout b{font-family:var(--mono);font-weight:500}
-.chart{width:100%;height:auto;display:block}
-.chart text{font-family:var(--mono);font-size:10px;fill:var(--muted)}
-.bars{display:grid;gap:8px}
-.bars .b{display:grid;grid-template-columns:96px 1fr 64px;gap:10px;align-items:center;font-size:13px}
-.bars .b span:first-child{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.bars .b span:last-child{font-family:var(--mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
-.track{height:12px;border-radius:6px;background:var(--heat0);position:relative;overflow:hidden}
-.track i{position:absolute;top:0;bottom:0;left:0;background:var(--accent);border-radius:6px;transition:width .5s cubic-bezier(.2,.7,.2,1),left .5s}
-.track i.alt{background:color-mix(in srgb,var(--accent) 45%,var(--heat0))}
-.track i.range{background:repeating-linear-gradient(90deg,var(--accent) 0 3px,color-mix(in srgb,var(--accent) 45%,var(--heat0)) 3px 6px)}
+  /* ── SECTION HEADERS inside tiles ────────────── */
+  .tile .head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .tile .head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.2rem, 2.4vw, 1.6rem); letter-spacing: -0.01em; }
 
-/* guardian */
-.gate{display:grid;gap:8px}
-.gate .flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-family:var(--mono);font-size:12px}
-.gate .flow span{padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:var(--bg)}
-.gate .flow span.on{border-color:var(--accent);color:var(--accent)}
-.gate .flow span.act{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.gate .flow span.hum{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
-.gate .flow em{font-style:normal;color:var(--muted)}
-pre.log{margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.5;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;max-height:120px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+  /* ── TECH STACK ──────────────────────────────── */
+  .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+  @media (max-width: 760px){ .stack-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 420px){ .stack-grid { grid-template-columns: 1fr; } }
+  .stack-col h4 { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 0.7rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .chip { font-family: var(--mono); font-size: 0.76rem; padding: 0.34rem 0.6rem; border-radius: 7px; background: color-mix(in srgb, var(--accent) 10%, var(--card)); border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line)); color: var(--ink); }
 
-/* routelens */
-.sent{display:flex;flex-wrap:wrap;gap:6px}
-.sent span{font-family:var(--mono);font-size:13.5px;padding:5px 9px;border-radius:7px;border:1px solid var(--line);background:color-mix(in srgb,var(--accent) calc(var(--imp)*55%),var(--surface));transition:background .3s}
-.sent span.frozen{box-shadow:inset 0 0 0 2px var(--ink)}
-.sent span.frozen::before{content:"🔒";font-size:10px;margin-right:4px}
-.sent span.edit{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
-.pred{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14.5px}
-.pred .word{font-family:var(--mono);font-weight:500;padding:3px 10px;border-radius:7px;background:var(--ok-soft);color:var(--ok)}
-.pred .word.flip{background:var(--warn-soft);color:var(--warn)}
+  /* ── PROJECT CARDS (image-led feed) ──────────── */
+  .proj-card { cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+               overflow: hidden; box-shadow: var(--shadow); transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s; }
+  .proj-card:hover { transform: translateY(-3px); box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 40px -16px rgba(0,0,0,.6); }
+  .proj-media { aspect-ratio: 16 / 8.2; background: var(--console-2); border-bottom: 1px solid var(--line); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .proj-media img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .proj-media-empty { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+  .proj-body { padding: clamp(1.1rem, 2.5vw, 1.6rem); display: flex; flex-direction: column; gap: 0.6rem; }
+  .proj-eyebrow { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+  .proj-body h3 { font-family: var(--display); font-weight: 600; font-size: 1.3rem; line-height: 1.2; }
+  .status-pill { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.68rem;
+                 text-transform: uppercase; letter-spacing: 0.08em; color: var(--ok); width: fit-content;
+                 background: color-mix(in srgb, var(--ok) 14%, var(--card)); border: 1px solid color-mix(in srgb, var(--ok) 30%, var(--line));
+                 padding: 0.25rem 0.6rem; border-radius: 999px; }
+  .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+  .proj-body .pdesc { color: var(--muted); font-size: 0.92rem; max-width: 72ch; }
+  .proj-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 0.2rem; }
+  .proj-foot .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .view-link { font-family: var(--mono); font-size: 0.82rem; color: var(--accent); background: none; border: none; padding: 0;
+               cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
+  .view-link:hover { gap: 0.55rem; }
 
-/* moe */
-.moe-scroll{overflow-x:auto;max-width:100%}
-.moe{display:grid;gap:3px;font-family:var(--mono);font-size:12px;min-width:300px}
-.moe .h{color:var(--muted);text-align:center;font-size:11px}
-.moe .tok{padding:0 8px 0 0;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
-.moe .tok.drop{text-decoration:line-through;color:var(--warn)}
-.moe .c{height:26px;border-radius:5px;background:color-mix(in srgb,var(--accent) calc(var(--p)*100%),var(--heat0));display:flex;align-items:center;justify-content:center;font-size:10.5px;color:transparent;transition:background .3s}
-.moe .c.pick{box-shadow:inset 0 0 0 2px var(--ink);color:var(--on-accent)}
-.moe .c.pick.cut{box-shadow:inset 0 0 0 2px var(--warn);background:repeating-linear-gradient(45deg,var(--warn-soft) 0 4px,var(--heat0) 4px 8px);color:var(--warn)}
-.util{display:grid;gap:6px}
-.util div{display:grid;grid-template-columns:34px 1fr 50px;gap:8px;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-.util .bar{height:8px;border-radius:4px;background:var(--heat0);position:relative;overflow:hidden}
-.util .bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:4px;transition:width .3s}
-.util .bar b{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--warn)}
+  /* ── MODAL (shared look for project + command palette) ── */
+  .modal-bg { position: fixed; inset: 0; background: rgba(2,6,7,.65); backdrop-filter: blur(3px); z-index: 100; display: none; align-items: flex-end; justify-content: center; padding: 0; }
+  .modal-bg.open { display: flex; }
+  @media (min-width: 700px){ .modal-bg { align-items: center; padding: 2rem; } }
+  .modal { background: var(--card); width: 100%; max-width: 760px; max-height: 92vh; overflow: auto; border-radius: 20px 20px 0 0; padding: clamp(1.4rem, 4vw, 2.4rem); animation: slideup .35s cubic-bezier(.2,.7,.2,1); border: 1px solid var(--line); }
+  @media (min-width: 700px){ .modal { border-radius: 20px; } }
+  @keyframes slideup { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal .x { float: right; background: none; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-family: var(--mono); font-size: 0.78rem; padding: 0.4rem 0.7rem; color: var(--muted); }
+  .modal .x:hover { color: var(--ink); border-color: var(--ink); }
+  .modal h3 { font-family: var(--display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.9rem); letter-spacing: -0.01em; }
+  .modal .mtag { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+  .modal .mdesc { color: var(--muted); margin: 0.7rem 0 1.4rem; }
 
-/* atlas */
-.pipe{display:flex;align-items:center;flex-wrap:wrap;row-gap:8px}
-.pipe button{all:unset;cursor:pointer;font-family:var(--mono);font-size:11.5px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
-.pipe button:focus-visible{outline:2px solid var(--accent)}
-.pipe button.done{color:var(--ink);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
-.pipe button.cur{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.pipe button.bad{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
-.pipe .arr{width:14px;height:1.5px;background:var(--line);margin-inline:2px}
-.stage{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-height:160px;display:flex;flex-direction:column;gap:8px}
-.stage .k{font-family:var(--mono);font-size:11.5px;color:var(--accent)}
-.stage p{font-size:14.5px}
-.stage pre{margin:0;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
-.ok{color:var(--ok)} .no{color:var(--warn)}
-.stepbtns{display:flex;justify-content:space-between;gap:8px}
-.stepbtns button{font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
-.stepbtns button:disabled{opacity:.4;cursor:default}
+  /* architecture flow */
+  .arch-title { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.8rem; }
+  .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0.5rem; }
+  .node { flex: 1 1 120px; min-width: 110px; border: 1px solid var(--line); border-radius: 12px; padding: 0.8rem; cursor: pointer; background: var(--card); transition: border-color .2s, background .2s, transform .15s; text-align: left; font: inherit; color: var(--ink); }
+  .node:hover, .node.sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--card)); transform: translateY(-2px); }
+  .node .nk { font-family: var(--mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+  .node .nn { font-family: var(--display); font-weight: 600; font-size: 0.95rem; margin-top: 0.15rem; }
+  .arrow { align-self: center; color: var(--muted); font-family: var(--mono); padding: 0 0.1rem; }
+  @media (max-width: 560px){ .arrow { display: none; } .node { flex-basis: 100%; } }
+  .node-info { margin-top: 1rem; padding: 0.9rem 1.1rem; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--card)); border-radius: 0 10px 10px 0; font-size: 0.9rem; min-height: 3.2rem; }
+  .node-info .ni-k { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
 
-/* secom */
-.sensors{display:flex;gap:2px;align-items:flex-end;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
-.sensors .s{display:grid;grid-template-rows:repeat(10,7px);gap:1px;width:7px;flex:none;transition:margin .4s}
-.sensors .s i{border-radius:1.5px;background:var(--accent)}
-.sensors .s i.m{background:var(--heat0);box-shadow:inset 0 0 0 1px var(--line)}
-.sensors .s.gap{margin-left:12px}
-.sensors .s.gap::before{content:""}
-.stagelbl{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.stagelbl span{padding:2px 6px;border-radius:5px;background:var(--surface);border:1px solid var(--line)}
-.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.cmp div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.cmp .k{font-family:var(--mono);font-size:11px;color:var(--muted);display:block}
-.cmp .n{font-family:var(--display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+  .mstack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.4rem 0; }
 
+  /* ── EXPERIENCE LEDGER ───────────────────────── */
+  .ledger { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0 3rem; }
+  .ledger-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .ledger-role { font-family: var(--display); font-weight: 600; font-size: 1.15rem; }
+  .ledger-org { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); margin-top: 0.2rem; }
+  .ledger-meta { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); text-align: right; white-space: nowrap; }
+  .ledger-stats { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 1.1rem 0; }
+  .stat-tile { background: var(--console-2); border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.95rem; text-align: center; min-width: 84px; }
+  .stat-tile .num { font-family: var(--mono); font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+  .stat-tile .slbl { font-family: var(--mono); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.2rem; }
+  .ledger-body { color: var(--muted); font-size: 0.92rem; max-width: 70ch; margin-bottom: 0.9rem; }
+  .ledger-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  @media (max-width: 620px){ .ledger-meta { text-align: left; } }
 
-/* per-project colour */
-#p-guardian{--pc:var(--c-guardian)} #p-routelens{--pc:var(--c-routelens)} #p-atlas{--pc:var(--c-atlas)}
-#p-traffic{--pc:var(--c-traffic)} #p-pv{--pc:var(--c-pv)} #p-moe{--pc:var(--c-moe)} #p-secom{--pc:var(--c-secom)}
-.proj{--accent:var(--pc);--accent-soft:color-mix(in srgb,var(--pc) 14%,var(--surface));border-top:5px solid var(--pc);background:linear-gradient(180deg,color-mix(in srgb,var(--pc) 6%,var(--surface)) 0,var(--surface) 180px)}
-.proj .meta h3{color:var(--pc);display:flex;align-items:center;gap:10px}
-.proj .meta h3::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--pc);flex:none;transform:rotate(45deg)}
-.proj .chips span{border-color:color-mix(in srgb,var(--pc) 35%,var(--line));color:color-mix(in srgb,var(--pc) 70%,var(--ink))}
-.proj .demo{background:color-mix(in srgb,var(--pc) 7%,var(--bg));border-color:color-mix(in srgb,var(--pc) 30%,var(--line))}
-.proj .card,.proj .stage{border-color:color-mix(in srgb,var(--pc) 22%,var(--line))}
-.jump{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.jump a{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;text-decoration:none;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
-.jump a i{width:9px;height:9px;border-radius:2px;background:var(--pc);transform:rotate(45deg)}
-.jump a:hover{border-color:var(--pc)}
-.evidence li[style]{border-left:4px solid var(--pc)}
-.evidence li[style] a{color:var(--pc)}
-.entry[style]{border-top:4px solid var(--pc)}
+  /* ── COMMAND PALETTE ─────────────────────────── */
+  .cmdk-bg { position: fixed; inset: 0; background: rgba(2,6,7,.65); backdrop-filter: blur(3px); z-index: 200; display: none; align-items: flex-start; justify-content: center; padding: 12vh 1rem 0; }
+  .cmdk-bg.open { display: flex; }
+  .cmdk-panel { width: 100%; max-width: 560px; background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+                box-shadow: 0 24px 60px -20px rgba(0,0,0,.7); overflow: hidden; animation: slideup .22s cubic-bezier(.2,.7,.2,1); }
+  .cmdk-input-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--line); }
+  .cmdk-input-row .pfx { color: var(--muted); font-family: var(--mono); }
+  .cmdk-input { flex: 1; background: none; border: none; outline: none; color: var(--ink); font-family: var(--body); font-size: 0.95rem; }
+  .cmdk-input::placeholder { color: var(--muted); }
+  .cmdk-list { max-height: 50vh; overflow-y: auto; padding: 0.4rem; }
+  .cmdk-item { display: flex; justify-content: space-between; align-items: center; gap: 1rem; width: 100%; text-align: left;
+               background: none; border: none; padding: 0.6rem 0.7rem; border-radius: 8px; color: var(--ink);
+               font-family: var(--body); font-size: 0.88rem; cursor: pointer; }
+  .cmdk-item .hint { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
+  .cmdk-item.sel, .cmdk-item:hover { background: color-mix(in srgb, var(--accent) 16%, var(--card)); }
+  .cmdk-empty { padding: 1.2rem; text-align: center; color: var(--muted); font-family: var(--mono); font-size: 0.82rem; }
 
+  /* ── ABOUT + CONTACT ─────────────────────────── */
+  .about p { color: var(--muted); margin-bottom: 0.8rem; max-width: 60ch; }
+  .about p:last-child { margin-bottom: 0; }
+  .contact form { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.4rem; }
+  .contact input, .contact textarea { font-family: var(--body); font-size: 0.92rem; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); width: 100%; resize: vertical; }
+  .contact input:focus, .contact textarea:focus { outline: none; border-color: var(--accent); }
+  .contact .copy-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.2rem; }
+  .copy-email { font-family: var(--mono); }
+  .toast { font-family: var(--mono); font-size: 0.76rem; color: var(--ok); opacity: 0; transition: opacity .3s; }
+  .toast.show { opacity: 1; }
 
-.pm{color:var(--pc);font-weight:600;text-decoration:none;border-bottom:1.5px solid color-mix(in srgb,var(--pc) 40%,transparent);white-space:nowrap}
-.pm::before{content:"";display:inline-block;width:.45em;height:.45em;border-radius:1.5px;background:var(--pc);transform:rotate(45deg);margin-right:.35em;vertical-align:.12em}
-.pm:hover{border-bottom-color:var(--pc)}
-.entry .where .pm{font-weight:500;border:0}
-.sk .pd{display:inline-flex;gap:3px}
-.sk .pd i{width:7px;height:7px;border-radius:1.5px;background:var(--pc);transform:rotate(45deg)}
-.sk button[aria-pressed=true] .pd i{box-shadow:0 0 0 1.5px var(--on-accent);background:var(--pc)}
+  footer.foot { text-align: center; padding: 2rem 0 3rem; color: var(--muted); font-family: var(--mono); font-size: 0.74rem; }
 
-/* process value */
-.arc{display:flex;flex-wrap:wrap;gap:6px}
-.arc button{font:inherit;font-family:var(--mono);font-size:12px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
-.arc button.done{color:var(--ink);border-color:color-mix(in srgb,var(--pc) 45%,var(--line))}
-.arc button[aria-pressed=true]{background:var(--pc);color:var(--on-accent);border-color:var(--pc)}
-.pvstage{background:var(--surface);border:1px solid color-mix(in srgb,var(--pc) 22%,var(--line));border-radius:12px;padding:16px;display:grid;gap:12px;min-height:210px;align-content:start}
-.pvstage h5{margin:0;font-family:var(--display);font-size:17px;font-weight:700}
-.pvstage p{font-size:14.5px}
-.tagc{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:1px}
-.tagc.no{background:var(--heat0);color:var(--muted)} .tagc.yes{background:color-mix(in srgb,var(--pc) 22%,transparent);color:var(--pc)}
-.outs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media (max-width:640px){.outs{grid-template-columns:1fr}}
-.outs div{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg)}
-.outs b{display:block;font-family:var(--display);font-size:15px}
-.outs span{font-size:13px;color:var(--muted)}
+  /* ── ABOUT (polished) ── */
+  .about-flex { display: flex; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .about-photo-wrap { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; padding: 0.6rem 1.4rem 0; border-radius: 20px;
+    background: radial-gradient(115% 78% at 50% 94%, color-mix(in srgb, var(--accent) 20%, var(--card)) 0%, transparent 72%); }
+  .about-photo { display: block; width: auto; height: clamp(240px, 32vw, 340px); object-fit: contain; filter: drop-shadow(0 18px 22px rgba(0,0,0,.45)); }
+  .about-text { min-width: 0; flex: 1; }
+  .about-lead { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.4vw, 1.55rem); color: var(--ink); margin-bottom: 1rem; }
+  .about-lead .wave { display: inline-block; transform-origin: 70% 70%; animation: wave 2.6s ease-in-out infinite; }
+  @keyframes wave { 0%,60%,100%{transform:rotate(0deg)} 10%{transform:rotate(16deg)} 20%{transform:rotate(-8deg)} 30%{transform:rotate(16deg)} 40%{transform:rotate(-4deg)} 50%{transform:rotate(10deg)} }
+  @media (max-width: 620px){ .about-flex { flex-direction: column; align-items: center; text-align: center; } .about-photo { height: clamp(220px, 60vw, 300px); } .about p { margin-left: auto; margin-right: auto; } }
 
-/* brag videos */
-.vplayer{grid-column:1/-1;display:grid;gap:8px}
-.vplayer video{width:100%;aspect-ratio:16/9;border-radius:14px;background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--pc) 40%,#000),#050505 75%);display:block;border:1px solid color-mix(in srgb,var(--pc) 35%,var(--line))}
-.vcap{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.gh-end{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;border:1px solid color-mix(in srgb,var(--pc) 40%,var(--line));color:var(--pc);text-decoration:none;font-family:var(--mono);font-size:14px;transition:background .2s}
-.gh-end:hover{background:color-mix(in srgb,var(--pc) 12%,transparent)}
-.gh-end b{font-size:18px}
+  /* ── SEPARATE SECTIONS (experience / stack / projects / about+contact) ── */
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: 2.4rem 0 1rem; }
+  .section-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 2.6vw, 1.8rem); letter-spacing: -0.01em; }
 
-/* more */
-.more{display:grid;grid-template-columns:repeat(3,1fr);margin-top:34px;border-top:1px solid var(--line)}
-@media (max-width:900px){.more{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:560px){.more{grid-template-columns:1fr}}
-.mini{padding:20px 20px 20px 0;border-bottom:1px solid var(--line);transition:background .3s}
-.mini h4{font-size:17px;font-weight:600;margin:0 0 6px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-.mini p{font-size:14.5px;color:var(--muted)}
-.mini .tag{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--warn);background:var(--warn-soft);padding:1px 7px;border-radius:5px}
-.mini a{font-family:var(--mono);font-size:12px;color:var(--accent);text-decoration:none;display:inline-block;margin-top:8px}
-.flash{animation:flash 1.4s}
-@keyframes flash{0%,40%{box-shadow:0 0 0 3px var(--pc,var(--accent))}100%{box-shadow:0 0 0 0 transparent}}
+  .proj-feed { display: flex; flex-direction: column; gap: 1.6rem; margin: 1rem 0 3rem; }
 
-/* skills */
-.skillmap{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:start}
-@media (max-width:840px){.skillmap{grid-template-columns:1fr}}
-.sgroups{display:grid;gap:16px}
-.sgroup .k{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:block;margin-bottom:8px}
-.sgroup .sk{display:flex;flex-wrap:wrap;gap:6px}
-.sk button{font:inherit;font-size:14px;padding:6px 11px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
-.sk button:hover{border-color:var(--ink)}
-.sk button small{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
-.sk button[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.sk button[aria-pressed=true] small{color:var(--on-accent);opacity:.8}
-.evidence{position:sticky;top:76px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);display:grid;gap:14px}
-.evidence h3{font-size:26px;font-weight:800}
-.evidence .cnt{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.evidence ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.evidence li{display:grid;gap:2px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
-.evidence li a{font-family:var(--mono);font-size:12.5px;color:var(--accent);text-decoration:none}
-.evidence li a:hover{text-decoration:underline}
-.evidence li span{font-size:14.5px}
+  .duo { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0 4rem; }
 
-/* wrong log */
-.log2{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:18px}
-.entry{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
-.entry .where{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.entry .was{font-family:var(--display);font-size:18px;font-weight:600;line-height:1.3;text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--ink) 45%,transparent);text-decoration-thickness:1.5px}
-.entry .now{font-size:14.5px}
-.entry .now b{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ok);display:block;margin-bottom:3px}
-
-/* contact */
-.contact{padding-block:64px 72px}
-.contact h2{font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:-.025em;max-width:18ch}
-.contact p{color:var(--muted);margin-top:14px;max-width:52ch}
-footer{padding-block:24px 40px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
-
-
-/* paper grain */
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .35 0 0 0 0 .25 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:240px 240px;opacity:var(--grain-op);mix-blend-mode:var(--grain-blend)}
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,transparent 55%,rgba(0,0,0,.6) 100%)}
-
-/* token cursor */
-.tok-cursor,.tok-cursor *{cursor:none!important}
-.tok-cursor input[type=text]{cursor:text!important}
-#tokc{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:100}
-
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
 </style>
-
 </head>
 <body>
 
-<header class="top">
+  <nav>
+    <div class="row">
+      <div class="brand"><span class="mark-block mark-mustard"></span> <span id="typeBrand"></span><span class="cursor-blink"></span></div>
+      <div class="navlinks">
+        <a href="#experience" class="hide-sm">Experience</a>
+        <a href="#projects" class="hide-sm">Projects</a>
+        <a href="#stack" class="hide-sm">Stack</a>
+        <a href="#contact" class="hide-sm">Contact</a>
+        <button class="cmdk-btn" id="cmdkBtn" aria-label="Open command palette"><kbd>⌘</kbd><kbd>K</kbd></button>
+      </div>
+    </div>
+  </nav>
+
   <div class="wrap">
-    <a class="brand" href="#top">meeta<span>.</span>dave</a>
-    <nav class="navlinks" aria-label="Sections">
-      <a href="#about">about</a><a href="#experience">experience</a><a href="#work">projects</a><a href="#skills">skills</a><a href="#wrong">got wrong</a><a href="#contact">contact</a>
-    </nav>
-  </div>
-</header>
+    <div class="bento">
 
-<main class="wrap" id="top">
-  <div class="hero">
-    <span class="status"><i></i>Open to AI/ML roles in Germany</span>
-    <h1>Meeta Dave</h1>
-    <p class="role">AI/ML Engineer · GenAI &amp; agentic systems · M.Sc. Web Engineering, TU Chemnitz</p>
-    <p class="thesis">I build AI systems that <span class="hl">have to show their work.</span></p>
-    <div class="links">
-      <a class="btn primary" href="#work">Try the projects ↓</a>
-      <a class="btn" href="https://github.com/davemeeta" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>GitHub</a>
-      <a class="btn" href="https://linkedin.com/in/meetadave" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 1.15C0 .52.52 0 1.17 0h13.66C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.17 1.15H1.17C.52 16 0 15.48 0 14.85V1.15Zm4.94 12.24V6.17H2.54v7.22h2.4ZM3.74 5.18c.84 0 1.36-.55 1.36-1.25-.02-.71-.52-1.25-1.35-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.02Zm4.9 8.21V9.36c0-.22.02-.43.08-.59.18-.43.57-.87 1.23-.87.87 0 1.21.66 1.21 1.63v3.86h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.84.7-2.16 1.19V6.17h-2.4c.03.68 0 7.22 0 7.22h2.4Z"/></svg>LinkedIn</a>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="about">
-      <div>
-        <span class="eyebrow">about me</span>
-        <div class="prose">
-          <p>I'm Meeta, an AI/ML engineer doing my M.Sc. in Web Engineering at TU Chemnitz. I like taking an idea all the way from raw data to something people can actually use.</p>
-          <p>Before my master's I spent almost a year and a half at Goldenbird Automations, building data pipelines and deploying computer-vision and LLM services for smart-automation products. Since then I've been building my own systems, mostly around GenAI and agents: <a class="pm" href="#p-guardian" style="--pc:var(--c-guardian)">Guardian</a>, a retraining agent for jet-engine models; <a class="pm" href="#p-routelens" style="--pc:var(--c-routelens)">RouteLens</a>, an auditor for AI explanations; and <a class="pm" href="#p-atlas" style="--pc:var(--c-atlas)">Atlas</a>, a chat agent over nine years of German accident data.</p>
-          <p>Along the way I picked up a few habits that show up in everything I build.</p>
+      <!-- HERO -->
+      <section class="tile hero span-2 row-2">
+        <span class="lbl">AI &amp; Data engineer</span>
+        <h1>I turn <span class="hl">messy data</span> into models, dashboards, and decisions.</h1>
+        <p class="sub">Currently pursuing a Master's in Web Engineering at TU Chemnitz — I like turning data into exciting projects with real-world use.</p>
+        <div class="cta-row">
+          <!-- [LINKS] GitHub / LinkedIn -->
+          <a class="btn primary" href="https://github.com/davemeeta" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn primary" href="https://www.linkedin.com/in/meetadave/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        <div class="habits">
-          <div class="habit"><b>whole path</b><span>I'm comfortable in every layer: ETL, modelling, APIs, agents and the interface on top, like in <a class="pm" href="#p-atlas" style="--pc:var(--c-atlas)">Atlas</a> and the <a class="pm" href="#p-traffic" style="--pc:var(--c-traffic)">Traffic Dashboard</a>. Handoffs between them rarely surprise me.</span></div>
-          <div class="habit"><b>checked results</b><span>I test my findings at a scale where they can fail. When one doesn't hold up, I say so and publish what does, as in <a class="pm" href="#p-routelens" style="--pc:var(--c-routelens)">RouteLens</a> and <a class="pm" href="#p-secom" style="--pc:var(--c-secom)">SECOM</a>.</span></div>
-          <div class="habit"><b>local first</b><span>When data is sensitive, I run LLMs on-premise with Ollama and log every decision, as in <a class="pm" href="#p-guardian" style="--pc:var(--c-guardian)">Guardian</a>. No cloud API needed.</span></div>
+      </section>
+
+      <!-- API CONSOLE (signature) -->
+      <section class="tile console span-2 row-2" aria-label="API console">
+        <div class="bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="path">meeta.dev / api</span></div>
+        <h3>API console</h3>
+        <p class="hint">Click an endpoint to run it. Or press ⌘K for the full command palette.</p>
+        <div class="endpoints">
+          <button class="ep" data-ep="summary"><b>GET</b> /summary</button>
+          <button class="ep" data-ep="projects"><b>GET</b> /projects</button>
+          <button class="ep" data-ep="ping"><b>POST</b> /ping</button>
         </div>
-      </div>
-      <aside class="facts" aria-label="Quick facts">
-        <div><span class="k">based in</span><span class="val">Chemnitz, Saxony</span></div>
-        <div><span class="k">open to</span><span class="val">On-site, hybrid or remote roles in Germany</span></div>
-        <div><span class="k">looking for</span><span class="val">AI/ML Engineer, GenAI &amp; agentic systems, MLOps, Data Engineering</span></div>
-        <div><span class="k">languages</span><span class="val">English (full professional), German (professional working)</span></div>
-        <div><span class="k">how to read this page</span><span class="val">Numbers marked <span class="v" tabindex="0" data-t="Like this" data-n="Hover or tap a marked number to see its exact scope and where it comes from.">✓</span> show their scope when you hover or tap them.</span></div>
-      </aside>
-    </div>
-  </section>
+        <div class="out" id="consoleOut" aria-live="polite"><span class="ln req">// awaiting request…</span></div>
+      </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="sechead"><h2>Experience</h2><p>Goldenbird Automations builds smart home, hotel and industrial IoT automation products.</p></div>
-    <div class="jobs">
-      <div class="job">
-        <div><h3>AI Developer<br>(Working Student)</h3><p class="when">Goldenbird Automations<br>06/2024 – 06/2025 · remote, India</p></div>
-        <ul>
-          <li>Built Python ETL pipelines (pandas, SQL) that structured 100k+ daily unstructured records, text and images, cutting training data-prep time by <span class="v" tabindex="0" data-t="Source" data-n="Figure reported by my senior at Goldenbird, not measured by me.">40%</span>.</li>
-          <li>Containerized YOLO computer vision and LLM inference as separate REST microservices.</li>
-          <li>Wrote validation scripts and unit tests in GitHub Actions CI to catch inference-service failures before production.</li>
-          <li>Worked with senior engineers on AWS Lambda and AWS IoT Core architecture for real-time inference.</li>
-        </ul>
-      </div>
-      <div class="job">
-        <div><h3>Software Developer<br>(Intern)</h3><p class="when">Goldenbird Automations<br>02/2024 – 05/2024 · India</p></div>
-        <ul>
-          <li>Refactored core SQL queries and added indexing, cutting average API response time by about <span class="v" tabindex="0" data-t="Source" data-n="Figure reported by my senior at Goldenbird, not measured by me.">30%</span>.</li>
-          <li>Built 10+ REST endpoints in Python and Node.js, and a Bash + arp-scan presence-detection daemon.</li>
-          <li>Wrote data-cleaning scripts that flagged anomalous records and missing values before they reached the database.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="edu">
-      <div><h4>M.Sc. Web Engineering</h4><p>Technische Universität Chemnitz · since Oct 2025</p></div>
-      <div><h4>B.E. Computer Science</h4><p>Gujarat Technological University · 2021 – 2025</p></div>
-    </div>
-  </section>
+    </div><!-- /.bento -->
 
-  <!-- PROJECTS -->
-  <section id="work">
-    <div class="sechead">
-      <h2>Projects you can try</h2>
-      <p>Each project has a small demo that walks you through what it achieves. Pick your role to reorder them by fit.</p>
-    </div>
-    <div class="roles"><span class="lbl">hiring for:</span><div class="seg" id="roles" role="group" aria-label="Role"></div></div>
-    <nav class="jump" id="jump" aria-label="Jump to project"></nav>
-    <div class="projects" id="projects"></div>
+    <!-- EXPERIENCE (ledger timeline) -->
+    <section id="experience">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <span class="lbl">real roles, real dates — no invented metrics</span>
+      </div>
+      <div class="ledger" id="ledgerList"></div>
+    </section>
 
-    <div class="more">
-      <div class="mini" id="m-docrag">
-        <h4>Document Intelligence RAG</h4>
-        <p>Ask questions about any PDF and get answers with page-accurate citations. ChromaDB, nomic-embed-text and Llama 3.1 8B, fully local.</p>
-        <a href="https://github.com/davemeeta/AI-Powered-Document-Intelligence-Platform" target="_blank" rel="noopener">github →</a>
+    <!-- TECH STACK -->
+    <section id="stack">
+      <div class="section-head">
+        <h2>Tech stack</h2>
+        <span class="lbl">Skills earned by working on live projects</span>
       </div>
-      <div class="mini" id="m-10k">
-        <h4>10-K RAG pipeline <span class="tag">in progress · phase 2/5</span></h4>
-        <p>Dagster-orchestrated ingestion over SEC filings with data-quality checks at every stage. Clean rebuild matched the baseline at exactly <span class="v" tabindex="0" data-t="Qdrant point count" data-n="1,812 indexed points across 6 companies after a from-scratch rebuild of all 24 stage/partition combos.">1,812</span> points.</p>
-        <a href="https://github.com/davemeeta/rag-system-with-orchestrated-ingestion" target="_blank" rel="noopener">github →</a>
+      <div class="tile">
+        <div class="stack-grid" id="stackGrid"></div>
       </div>
-      <div class="mini" id="m-kg">
-        <h4>Material Process Knowledge Graph <span class="tag">synthetic data</span></h4>
-        <p>RDF/OWL graph aligned to PMDco, BFO, SOSA/SSN and PROV-O, with six competency questions each answered by a working SPARQL query.</p>
-        <a href="https://github.com/davemeeta/Material-Process-Knowledge-Graph" target="_blank" rel="noopener">github →</a>
-      </div>
-      <div class="mini" id="m-energy">
-        <h4>Smart Energy Anomaly Detection <span class="tag">replayed dataset</span></h4>
-        <p>MQTT, InfluxDB and Grafana with an Isolation Forest plus autoencoder ensemble. Both models must agree before an anomaly fires.</p>
-        <a href="https://github.com/davemeeta/Smart-Energy-Consumption-Monitoring-Anomaly-Detection-Platform" target="_blank" rel="noopener">github →</a>
-      </div>
-      <div class="mini" id="m-sentinel">
-        <h4>Sentinel-2 Land Cover</h4>
-        <p>ResNet-18 adapted from 3 to 13 spectral input channels. <span class="v" tabindex="0" data-t="EuroSAT test accuracy" data-n="~27,000 Sentinel-2 patches, 10 classes. Also evaluated with per-class precision/recall/F1.">94.7%</span> test accuracy on EuroSAT.</p>
-        <a href="https://github.com/davemeeta/Multispectral-Land-Cover-Classification-on-Sentinel-2" target="_blank" rel="noopener">github →</a>
-      </div>
-      <div class="mini" id="m-askboard">
-        <h4>AskBoard</h4>
-        <p>Anonymous live Q&amp;A for lectures and meetings: join with a room code, upvote questions, and the host moderates. A MySQL <span class="mono">UNIQUE</span> constraint enforces one vote per person.</p>
-        <a href="https://github.com/davemeeta/TheStudentAskBoard" target="_blank" rel="noopener">github →</a>
-      </div>
-      <div class="mini" id="m-rsvp">
-        <h4>CampusRSVP</h4>
-        <p>Event sign-up platform with role-based access and a waitlist that can't overbook, using row-level locks (<span class="mono">SELECT … FOR UPDATE</span>).</p>
-        <a href="https://github.com/davemeeta/CampusRSVP" target="_blank" rel="noopener">github →</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="sechead"><h2>Skills, with receipts</h2><p>Pick a skill to see exactly where I used it. Click through to jump to that project.</p></div>
-    <div class="skillmap">
-      <div class="sgroups" id="sgroups"></div>
-      <aside class="evidence" id="evidence" aria-live="polite"></aside>
-    </div>
-  </section>
+    <!-- PROJECTS (image-led feed) -->
+    <section id="projects">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <span class="lbl">click a card for the architecture</span>
+      </div>
+      <div class="proj-feed" id="projectGrid"></div>
+    </section>
 
-  <!-- WRONG -->
-  <section id="wrong">
-    <div class="sechead">
-      <h2>Things I got wrong</h2>
-      <p>The times my first answer was wrong, and what I did about it.</p>
-    </div>
-    <div class="log2">
-      <article class="entry" style="--pc:var(--c-routelens)"><span class="where"><a class="pm" href="#p-routelens" style="--pc:var(--c-routelens)">RouteLens</a> · XAI evaluation</span><p class="was">"Attention explanations never flip."</p><p class="now"><b>what happened</b>True on 5 prompts. At 150 seeded runs attention flipped on 70–86% of prompts. I retracted it and kept the finding that replicated.</p></article>
-      <article class="entry" style="--pc:var(--c-routelens)"><span class="where"><a class="pm" href="#p-routelens" style="--pc:var(--c-routelens)">RouteLens</a> · second retraction</span><p class="was">"LIME is the most convincing explainer but the least faithful."</p><p class="now"><b>what happened</b>It looked true on 5 prompts but didn't replicate at 150 runs, so I retracted it. My own Router-Attribution Agreement metric also came out at roughly zero, and I reported that null result.</p></article>
-      <article class="entry" style="--pc:var(--c-guardian)"><span class="where"><a class="pm" href="#p-guardian" style="--pc:var(--c-guardian)">Guardian</a> · data augmentation</span><p class="was">"Synthetic failure data will help both models."</p><p class="now"><b>what happened</b>It cut LSTM error by 29%. It did not help the GBM at any of 21 configs. I reported both.</p></article>
-      <article class="entry" style="--pc:var(--c-atlas)"><span class="where"><a class="pm" href="#p-atlas" style="--pc:var(--c-atlas)">Atlas</a> · prompt design</span><p class="was">"More safety instructions make the agent safer."</p><p class="now"><b>what happened</b>A small local model stopped calling tools entirely. An A/B test traced it to prompt length, so smaller models now get a shorter instruction set.</p></article>
-      <article class="entry"><span class="where">10-K RAG · ingestion</span><p class="was">"Re-running a partition is safe."</p><p class="now"><b>what happened</b>A row-count check caught 270 chunks where 135 were expected. Deterministic UUID5 IDs fixed the duplicates.</p></article>
-      <article class="entry" style="--pc:var(--c-guardian)"><span class="where"><a class="pm" href="#p-guardian" style="--pc:var(--c-guardian)">Guardian</a> · evaluation</span><p class="was">"The test scores are clean."</p><p class="now"><b>what happened</b>I found a label clip leaking into the test set, normalization fit on validation data, and an unscaled LSTM that collapsed to RMSE 41.6. All fixed.</p></article>
-    </div>
-  </section>
+    <!-- ABOUT + CONTACT (kept together, separate from projects) -->
+    <div class="duo">
+      <!-- ABOUT -->
+      <section class="tile about">
+        <div class="head"><h2>About</h2></div>
+        <div class="about-flex">
+          <div class="about-photo-wrap">
+            <img class="about-photo" src="avatar.png" alt="Illustration of Meeta Dave" />
+          </div>
+          <div class="about-text">
+            <p class="about-lead">Hello! Super nice to meet you <span class="wave">👋</span></p>
+            <p>I work end-to-end — from raw, messy data to clean analysis, clear dashboards, and machine-learning models that actually hold up outside a notebook. What I enjoy most is the moment a chart or a prediction changes what a team decides to do next.</p>
+            <p>My recent projects span applied ML (RAG systems with local LLMs, time-series forecasting, and real-time anomaly detection) and the visualization layer that makes it usable — Tableau, Grafana, and live React/D3 dashboards, with Python, SQL, FastAPI, and MLflow underneath.</p>
+          </div>
+        </div>
+      </section>
 
-  <section class="contact" id="contact">
-    <h2>Let's build something that holds up.</h2>
-    <p>I'm based in Chemnitz and open to on-site, hybrid or remote roles across Germany. The fastest way to reach me is LinkedIn.</p>
-    <div class="links">
-      <a class="btn primary" href="https://linkedin.com/in/meetadave" target="_blank" rel="noopener">Message me on LinkedIn</a>
-      <a class="btn" href="https://github.com/davemeeta" target="_blank" rel="noopener">github.com/davemeeta</a>
+      <!-- CONTACT -->
+      <section class="tile contact" id="contact">
+        <div class="head"><h2>Contact</h2></div>
+        <div class="copy-row">
+          <!-- [LINKS] email -->
+          <button class="btn ghost copy-email" id="copyEmail" data-email="davemeeta12@gmail.com">Copy email</button>
+          <span class="toast" id="copyToast">Copied!</span>
+        </div>
+        <!-- [LINKS] Formspree -->
+        <form action="https://formspree.io/f/mrevneyy" method="POST">
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="message" rows="3" placeholder="Message" required></textarea>
+          <button type="submit" class="btn primary" style="align-self:flex-start;">Send message</button>
+        </form>
+      </section>
     </div>
-  </section>
-</main>
-<footer><div class="wrap">Meeta Dave · Chemnitz · demos run in your browser with sample data; results quoted are from the project repos</div></footer>
-<div id="tip" role="tooltip"></div>
+
+  </div>
+
+  <footer class="foot">
+    <span>© <span id="yr"></span> Meeta Dave · built with ❤️ &amp; hosted on Vercel</span>
+  </footer>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal" role="dialog" aria-modal="true" id="modal"></div>
+  </div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="cmdk-bg" id="cmdkBg">
+    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="cmdk-input-row">
+        <span class="pfx">⌘</span>
+        <input class="cmdk-input" id="cmdkInput" type="text" placeholder="Type a command or search projects…" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="cmdk-list" id="cmdkList"></div>
+    </div>
+  </div>
 
 <script>
-const V = (n,t,note) => `<span class="v" tabindex="0" data-t="${t}" data-n="${note}">${n}</span>`;
-const ROLES = [
-  {id:"all", name:"Everything"},
-  {id:"agentic", name:"Agentic AI"},
-  {id:"research", name:"ML Research"},
-  {id:"mlops", name:"MLOps"},
-  {id:"data", name:"Data Engineering"},
-  {id:"backend", name:"Backend"}
-];
+document.getElementById("yr").textContent = new Date().getFullYear();
 
-const P = [
-  {id:"guardian", name:"Guardian", video:"guardian", kicker:"Predictive maintenance that decides when to retrain itself",
-   gh:"https://github.com/davemeeta/guardian",
-   fit:{agentic:3,research:2,mlops:3,data:1,backend:2},
-   lead:{
-     all:"Predicts jet-engine remaining life, watches its own accuracy, and lets local LLM agents debate whether to retrain.",
-     agentic:"Four local LLM agents (Monitor, two Advocates, Judge) debate retraining. Unparseable output escalates to a human, never to an auto-approve.",
-     research:"A sweep of 21 augmentation configs showed synthetic data helped the LSTM and never helped the GBM. Both results are reported.",
-     mlops:"Drift z-scores, MLflow tracking, three Docker services and a CI workflow where retraining is gated on the Judge's verdict.",
-     data:"A physics-informed digital twin generates synthetic failure trajectories to augment scarce failure data.",
-     backend:"Three containerized FastAPI/Streamlit services with 35 unit tests and a stubbed, deterministic LLM."
-   },
-   bullets:[
-     [`Trained LightGBM and LSTM models on NASA C-MAPSS. Twin-based augmentation cut LSTM test RMSE by ${V("29%","Scope","LSTM only, FD001 test set, validation-selected config: 22.3 → 15.8. Not the GBM.")}.`,"research data"],
-     ["Evidence layer combines retrospective RMSE, sensor-drift z-scores and a digital-twin decline percentile.","mlops agentic"],
-     ["Every decision is logged with its full transcript to a JSONL audit trail. Zero cloud API calls, including in CI.","agentic mlops backend"]
-   ],
-   scope:"Agents were tested on three simulated drift scenarios with known ground truth. The CI workflow is built; it is not a production deployment.",
-   stack:["PyTorch","LightGBM","FastAPI","Ollama","MLflow","Docker"],
-   demo:{title:"Walk a decision through the fail-safe gate", sub:"First see what the synthetic failure data did to model error. Then pick what the Judge agent returns and watch what the pipeline does with it.", html:`
-     <div class="two">
-       <div class="card">
-         <span class="k">1 · did augmentation help?</span>
-         <div class="seg small" id="g-aug" role="group" aria-label="Augmentation"><button type="button" data-v="0" aria-pressed="true">real data only</button><button type="button" data-v="1" aria-pressed="false">+ digital-twin data</button></div>
-         <div class="bars">
-           <div class="b"><span>LSTM RMSE</span><span class="track"><i id="g-lstm" style="width:89%"></i></span><span id="g-lstmv">22.3</span></div>
-           <div class="b"><span>GBM</span><span class="track"><i class="alt" style="width:100%"></i></span><span>no gain</span></div>
-         </div>
-         <p class="readout" id="g-read"></p>
-       </div>
-       <div class="card gate">
-         <span class="k">2 · the Judge returns…</span>
-         <div class="seg small" id="g-judge" role="group" aria-label="Judge output">
-           <button type="button" data-v="approve" aria-pressed="false">auto_approve_retrain</button>
-           <button type="button" data-v="reject" aria-pressed="false">auto_reject</button>
-           <button type="button" data-v="escalate" aria-pressed="false">escalate_to_human</button>
-           <button type="button" data-v="garbled" aria-pressed="true">garbled output</button>
-         </div>
-         <div class="flow" id="g-flow"></div>
-         <p class="readout" id="g-act"></p>
-         <pre class="log" id="g-log" aria-label="Audit trail"></pre>
-       </div>
-     </div>
-     <p class="note">The flow follows Guardian's fail-safe rules. Action names and log lines are simplified samples. RMSE values are the real FD001 results.</p>`},
-   init:initGuardian},
-
-  {id:"routelens", name:"RouteLens", video:"routelens", kicker:`Multi-agent auditor for explainable AI, built on my <a class="pm" href="#p-moe" style="--pc:var(--c-moe)">MoE Transformer</a>`,
-   gh:"https://github.com/davemeeta/moe-transformer-from-scratch",
-   fit:{agentic:3,research:3,mlops:2,data:0,backend:2},
-   lead:{
-     all:"Checks whether SHAP, LIME and attention explanations are true, and tries to break the ones that aren't.",
-     agentic:"Six agents with a hand-rolled orchestrator (no LangGraph) including a conditional retry edge, plus a blind local-LLM judge.",
-     research:`A ${V("150-run","Design","50 seeded prompts × 3 checkpoints, bootstrap 95% CIs.")} seeded evaluation retracted two of my own early claims and confirmed one real finding.`,
-     mlops:`Reproducible seeds, ${V("118","Test suite","118 passing pytest tests.")} passing tests and zero API cost end to end.`,
-     data:"Batch evaluation with reproducible seeds and streaming JSONL output.",
-     backend:`${V("118","Test suite","118 passing pytest tests.")} passing tests, streaming JSONL output and a live Gradio dashboard.`
-   },
-   bullets:[
-     ["Scores explainers on deletion/insertion AUC and ERASER comprehensiveness/sufficiency.","research mlops"],
-     [`Every explainer broke under attack: SHAP on ${V("100%","Flip rate","Share of prompts where editing only 'unimportant' tokens flipped the prediction.")}, LIME 98%, attention 70–86% of prompts.`,"research agentic"],
-     [`Attention needs ${V("~2×","Replicated","Non-overlapping confidence intervals across all 3 checkpoints.")} as many edits to flip as SHAP or LIME.`,"research"]
-   ],
-   stack:["PyTorch","SHAP","LIME","SciPy","Ollama","Gradio","pytest"],
-   demo:{title:"Break an explanation", sub:"The explainer marks the tokens it thinks matter. The attack locks those and edits only the “unimportant” ones. If the prediction still flips, the explanation missed something.", html:`
-     <div class="ctl">
-       <div class="field"><span class="fl">explainer</span><div class="seg small" id="r-exp" role="group" aria-label="Explainer"><button type="button" data-v="shap" aria-pressed="true">SHAP</button><button type="button" data-v="lime" aria-pressed="false">LIME</button><button type="button" data-v="attn" aria-pressed="false">Attention</button></div></div>
-       <div class="field"><span class="fl">attack</span><div style="display:flex;gap:6px"><button class="btn" type="button" id="r-step">Edit one token</button><button class="btn" type="button" id="r-reset">Reset</button></div></div>
-     </div>
-     <div class="sent" id="r-sent"></div>
-     <div class="pred" id="r-pred"></div>
-     <div class="card">
-       <span class="k">real result across 150 runs · flip rate</span>
-       <div class="bars">
-         <div class="b"><span>SHAP</span><span class="track"><i style="width:100%"></i></span><span>100%</span></div>
-         <div class="b"><span>LIME</span><span class="track"><i style="width:98%"></i></span><span>98%</span></div>
-         <div class="b"><span>Attention</span><span class="track"><i class="range" style="left:70%;width:16%"></i><i style="width:70%"></i></span><span>70–86%</span></div>
-       </div>
-     </div>
-     <p class="note">Sentence, importances and edit counts are a sample to show the mechanism. The bars are the real evaluation results.</p>`},
-   init:initRouteLens},
-
-  {id:"atlas", name:"Unfallatlas + Atlas", video:"atlas", kicker:"German road-accident data platform with a grounded AI agent. Started as a TU Chemnitz module project.",
-   gh:"https://github.com/davemeeta/German-Accident-Open-Data-Platform",
-   fit:{agentic:3,research:1,mlops:2,data:3,backend:3},
-   lead:{
-     all:"Nine years of German accident data behind an API, a map dashboard, and a chat agent that can't make up numbers.",
-     agentic:"A separate checker verifies every number the agent says against real tool results. Unverifiable answers become honest refusals.",
-     research:"A controlled A/B test showed extra safety instructions made a small local model stop using tools. Shorter prompts restored the pass rate.",
-     mlops:"CI runs the grounding test suite on every change. Two LLM backends with automatic fallback.",
-     data:`${V("2,098,019","Unfallatlas","Accident records 2016–2024, harmonized with GENESIS regional stats and district geodata into a 6-table SQLite schema.")} records, a one-command ETL and ${V("15","Quality checks","14 pass, 1 expected warning, 0 fail.")} automated data-quality checks.`,
-     backend:"A 12-endpoint FastAPI with provenance endpoints, feeding a React/TypeScript dashboard and the agent through the same API."
-   },
-   bullets:[
-     ["Wrapped the API as 9 MCP tools plus fuzzy German place-name lookup (\"Muenchen\" → München).","agentic backend"],
-     [`A ${V("35-question","Eval suite","Normal, ambiguous, unanswerable and adversarial prompts. Cloud backend passed effectively all 35; the local backend never showed a fabricated number.")} evaluation suite includes adversarial "just guess" prompts.`,"agentic research mlops"],
-     ["Choropleth and hotspot maps in Leaflet, trends in Recharts.","backend data"]
-   ],
-   stack:["FastAPI","SQLite","MCP","React","TypeScript","Leaflet","Groq","Ollama"],
-   demo:{title:"Follow a number through Atlas", sub:"Atlas may only state numbers that came from a real tool result. Pick a question and step through what happens.", html:`
-     <div class="seg small" id="a-scen" role="group" aria-label="Scenario"></div>
-     <div class="pipe" id="a-pipe"></div>
-     <div class="stage" id="a-stage" aria-live="polite"></div>
-     <div class="stepbtns"><button type="button" id="a-prev">← back</button><button type="button" id="a-next">next →</button></div>
-     <p class="note">Walkthrough with sample values and simplified tool names, not real accident statistics. The live agent gets its numbers from the Unfallatlas API.</p>`},
-   init:initAtlas},
-
-
-  {id:"pv", name:"Process Value Copilot", video:"pv", kicker:"Process mining plus an LLM agent that turns findings into a stakeholder memo",
-   gh:"https://github.com/davemeeta/Understanding_Process_Value",
-   fit:{agentic:3,research:1,mlops:0,data:3,backend:1},
-   lead:{
-     all:"Mines a Purchase-to-Pay event log for the bottleneck actually worth fixing, simulates the fix, and has an agent write the memo.",
-     agentic:"A Gemini agent turns the mining results and a market brief into a one-page stakeholder memo. The sample memo in the repo is its unedited first pass.",
-     research:`The slowest step wasn't the one to fix. The real bottleneck traced to an uneven caseload, and a simulation projected a ${V("38.5%","What-if simulation","Approval wait time under a 50/50 caseload split vs. baseline. A projection from the generative model, not a statistical forecast.")} cut in approval wait.`,
-     mlops:"A seeded pipeline from event log to mining, simulation, memo and PDF, so re-running reproduces every number.",
-     data:"pm4py process discovery on a 600-case event log: variants, wait times, rework loops and a frequency-weighted process map.",
-     backend:"A Streamlit dashboard with the charts, the rendered memo and an in-app PDF preview."
-   },
-   bullets:[
-     ["Mine, triage, root-cause, quantify, package: a five-step arc that works for any process with an event log.","data research agentic"],
-     [`Found that one approver carries ${V("64.6%","Resource analysis","Share of Approve Requisition cases handled by one of the two approvers, who is also 106% slower per case.")} of the caseload, so the first fix is rebalancing the queue, not hiring.`,"research data"],
-     ["Same findings delivered three ways: dashboard, Markdown memo and a PDF leave-behind.","agentic backend"]
-   ],
-   scope:"Synthetic event log with deliberately engineered inefficiencies, so the analysis has ground truth. Cost figures in the memo are illustrative estimates.",
-   stack:["pm4py","pandas","Gemini API","Streamlit","Plotly","reportlab"],
-   demo:{title:"From event log to decision, in five steps", sub:"Step through how the pipeline goes from raw event data to a recommendation someone can approve.", html:`
-     <div class="arc" id="pv-arc" role="group" aria-label="Pipeline step"></div>
-     <div class="pvstage" id="pv-stage" aria-live="polite"></div>
-     <div class="stepbtns"><button type="button" id="pv-prev">← back</button><button type="button" id="pv-next">next →</button></div>
-     <p class="note">All figures come from the repo's seeded run on a synthetic 600-case log. The rebalanced wait time is derived from the reported −38.5%.</p>`},
-   init:initPV},
-
-  {id:"traffic", name:"City Traffic Dashboard", video:"traffic", kicker:"Streaming pipeline and forecasting for Stuttgart traffic",
-   gh:"https://github.com/davemeeta/Real-Time-City-Traffic-Mobility-Dashboard",
-   fit:{agentic:1,research:2,mlops:3,data:3,backend:3},
-   lead:{
-     all:"Kafka streaming, two forecasting models and a road-closure simulator on a live map.",
-     agentic:"A physics-based what-if simulator (BPR function) updates the live map in about 200 ms when a road closes.",
-     research:`LSTM beat Prophet at both horizons: MAE ${V("0.1101","30-min forecast","LSTM 0.1101 vs Prophet 0.1519 at 30 min; 0.1229 vs 0.1628 at 60 min. ~580k rows.")} vs 0.1519 at 30 minutes.`,
-     mlops:"Both models tracked in MLflow with params, metrics and artifacts per run. Whole stack in Docker Compose.",
-     data:"Kafka producer every 60 s into a TimescaleDB hypertable, partitioned by day and compressed after 7 days.",
-     backend:"REST and WebSocket API with async Postgres, and a D3 chart built from primitives with confidence bands."
-   },
-   bullets:[
-     ["Real incident data from MobiData BW and weather from Open-Meteo, polled every 60 seconds.","data mlops"],
-     ["Prophet model handles German public holidays and weather regressors.","research"],
-     ["Leaflet map with a live WebSocket feed, no page refresh.","backend"]
-   ],
-   scope:"Sensor-level readings are synthetic, seeded from real GPS locations and rush-hour patterns. Incidents and weather are live.",
-   stack:["Kafka","TimescaleDB","FastAPI","TensorFlow","Prophet","MLflow","D3.js"],
-   demo:{title:"Forecast the traffic, then close a road", sub:"Drag the clock, pick a model and horizon, and see the forecast with its error band. Then close a road and watch the detour slow down.", html:`
-     <div class="ctl">
-       <div class="field grow"><label for="t-now">time now: <span id="t-nowv">16:00</span></label><input id="t-now" type="range" min="6" max="20" step="0.25" value="16"></div>
-       <div class="field"><span class="fl">model</span><div class="seg small" id="t-model" role="group" aria-label="Model"><button type="button" data-v="lstm" aria-pressed="true">LSTM</button><button type="button" data-v="prophet" aria-pressed="false">Prophet</button></div></div>
-       <div class="field"><span class="fl">horizon</span><div class="seg small" id="t-h" role="group" aria-label="Horizon"><button type="button" data-v="30" aria-pressed="true">30 min</button><button type="button" data-v="60" aria-pressed="false">60 min</button></div></div>
-     </div>
-     <svg class="chart" id="t-chart" viewBox="0 0 640 220" role="img" aria-label="Traffic flow and forecast"></svg>
-     <div class="two">
-       <p class="readout" id="t-read"></p>
-       <div class="card">
-         <span class="k">what-if: road closure (BPR function)</span>
-         <button class="btn" type="button" id="t-close" aria-pressed="false">Close road A</button>
-         <div class="bars" id="t-bpr"></div>
-         <p class="readout mono" style="font-size:12px;color:var(--muted)">travel time = t₀ · (1 + 0.15 · (volume / capacity)⁴)</p>
-       </div>
-     </div>
-     <p class="note">Sample traffic curve and road volumes. The MAE values are the real test-set results for each model and horizon; the band is drawn for illustration.</p>`},
-   init:initTraffic},
-
-  {id:"moe", name:"MoE Transformer", video:"moe", kicker:"GPT-style transformer with a hand-built Mixture-of-Experts layer, raw PyTorch",
-   gh:"https://github.com/davemeeta/moe-transformer-from-scratch",
-   fit:{agentic:1,research:3,mlops:1,data:0,backend:1},
-   lead:{
-     all:"A GPT-style model built from primitives, with a Mixture-of-Experts layer that matched a dense baseline at equal active parameters.",
-     agentic:`The model <a class="pm" href="#p-routelens" style="--pc:var(--c-routelens)">RouteLens</a> audits. Built from primitives so every routing decision can be inspected.`,
-     research:`An ablation traced MoE's early deficit to capacity dropping and too little router training. With more capacity and twice the steps it matched dense: ${V("4.759 vs 4.755","Val loss, 600 steps, CPU","MoE 4.759 vs dense 4.755, within noise. Zero dropped tokens. 18.64M vs 16.28M total params at equal active params per token.")} val loss.`,
-     mlops:"Measured the real cost of routing: about 12% slower inference than dense on CPU (13,120 vs 14,845 tokens/sec).",
-     data:"Routing diagnostics: per-layer expert utilization and a per-token routing heatmap.",
-     backend:"A pytest suite aimed at MoE failure modes: renormalized weights, capacity drops, router gradients, collapse detection."
-   },
-   bullets:[
-     ["RMSNorm, RoPE and SwiGLU from scratch. No nn.Transformer, no HuggingFace model classes.","research"],
-     [`Routing stayed balanced: collapse scores under ${V("0.05","Collapse score","Measured per layer. Low values mean tokens spread across experts instead of collapsing onto one or two.")} in every layer.`,"research data"],
-     ["Tested a fixed-shape dispatch: it matched the real dispatch to within 7.45e-09 but ran 1.65× slower on CPU. Scoped the finding to CPU only.","research mlops backend"]
-   ],
-   stack:["PyTorch","tiktoken","Hydra","pytest","Plotly"],
-   demo:{title:"Route tokens to experts", sub:"Each token picks its top 2 of 4 experts. Every expert only has room for a fixed number of tokens. Lower the capacity and watch tokens get dropped.", html:`
-     <div class="ctl">
-       <div class="field grow"><label for="moe-in">your sentence</label><input id="moe-in" type="text" value="the judge escalates drift to a human reviewer" maxlength="80"></div>
-       <div class="field grow"><label for="moe-cap">capacity factor: <span id="moe-capv">1.00</span></label><input id="moe-cap" type="range" min="0.5" max="2" step="0.05" value="1"></div>
-     </div>
-     <div class="two">
-       <div class="moe-scroll"><div class="moe" id="moe"></div></div>
-       <div class="card"><span class="k">expert load (orange line = capacity)</span><div class="util" id="util"></div><p class="readout" id="moe-stat"></p></div>
-     </div>
-     <p class="note">Toy router with fixed pseudo-random weights, running in your browser. In the real model, raising capacity closed 64% of the gap to dense.</p>`},
-   init:initMoE},
-
-  {id:"secom", name:"SECOM Virtual Metrology", video:"secom", kicker:"How few labels does semiconductor yield prediction need?",
-   gh:"https://github.com/davemeeta/Secom-Virtual-Metrology",
-   fit:{agentic:0,research:3,mlops:1,data:2,backend:1},
-   lead:{
-     all:"A label-efficiency study on 590 sensor signals at 14:1 class imbalance, with results reported as they came out.",
-     agentic:"A label-efficiency study on 590 sensor signals at 14:1 class imbalance.",
-     research:"Self-training helped at the 20% and 80% label budgets and not at others. I report it as a real but inconsistent gain.",
-     mlops:"Evaluated with PR-AUC and failure-class recall, because accuracy is meaningless at 14:1 imbalance.",
-     data:"Grouped 590 anonymous sensors into 36 process stages by their missing-value signature.",
-     backend:"An interactive Streamlit dashboard for exploring label budgets and feature sets."
-   },
-   bullets:[
-     ["Sensors from the same manufacturing step go missing together, so the missing pattern reveals the process stage.","data research"],
-     ["Mutual-information view shows which signals carry the most yield information.","research"],
-     ["1,567 wafer runs, ~104 failures, ~42k missing values.","data"]
-   ],
-   stack:["scikit-learn","pandas","Streamlit"],
-   demo:{title:"Find the process stages hidden in missing data", sub:"Each column is a sensor, each square a production run. Grey squares are missing. Group the sensors by when they go missing, then compare the feature sets.", html:`
-     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="s-group">Group by missing pattern</button><button class="btn" type="button" id="s-shuffle">Shuffle</button></div>
-     <div class="sensors" id="s-grid" aria-label="Sensor missing-value grid"></div>
-     <div class="stagelbl" id="s-lbl"></div>
-     <div class="two">
-       <div class="card">
-         <span class="k">feature set</span>
-         <div class="seg small" id="s-feat" role="group" aria-label="Feature set"><button type="button" data-v="raw" aria-pressed="false">raw sensors</button><button type="button" data-v="dom" aria-pressed="true">process stages</button></div>
-         <div class="cmp" id="s-cmp"></div>
-       </div>
-       <div class="card">
-         <span class="k">label budget · PR-AUC</span>
-         <div class="seg small" id="s-bud" role="group" aria-label="Label budget"><button type="button" data-v="20" aria-pressed="true">20% labels</button><button type="button" data-v="80" aria-pressed="false">80% labels</button></div>
-         <div class="bars" id="s-bars"></div>
-         <p class="readout" style="font-size:13px;color:var(--muted)">At other budgets the two were roughly even, or self-training was slightly worse.</p>
-       </div>
-     </div>
-     <p class="note">The grid is a 48-sensor sample. Feature counts and scores are the real results.</p>`},
-   init:initSecom}
-];
-
-/* ---------- render projects ---------- */
-const box = document.getElementById("projects");
-box.innerHTML = P.map(p=>`
-  <article class="proj" id="p-${p.id}">
-    <div class="meta">
-      <h3>${p.name}</h3>
-      <p class="kicker">${p.kicker}</p>
-      <div class="fit" aria-hidden="true"></div>
-    </div>
-    <div>
-      <p class="lead"></p>
-      <ul>${p.bullets.map(b=>`<li data-tags="${b[1]}">${b[0]}</li>`).join("")}</ul>
-      ${p.scope?`<p class="scope"><b>scope</b><span>${p.scope}</span></p>`:""}
-      <div class="chips">${p.stack.map(s=>`<span>${s}</span>`).join("")}</div>
-    </div>
-    ${p.video?`<div class="vplayer"><video preload="none" controls playsinline poster="videos/${p.video}.jpg"><source src="videos/${p.video}.mp4" type="video/mp4"></video><p class="vcap">${p.name} in 20 seconds · press play, sound on</p></div>`:""}
-    <div class="demo">
-      <div class="demo-h"><h4><span class="try">try it</span>${p.demo.title}</h4></div>
-      <p class="sub">${p.demo.sub}</p>
-      ${p.demo.html}
-    </div>
-    ${p.gh?`<a class="gh-end" href="${p.gh}" target="_blank" rel="noopener"><span>View ${p.name} on GitHub</span><b>→</b></a>`:""}
-  </article>`).join("");
-P.forEach(p=>p.init());
-document.getElementById("jump").innerHTML = P.map(p=>`<a href="#p-${p.id}" style="--pc:var(--c-${p.id})"><i></i>${p.name}</a>`).join("");
-
-/* ---------- role switch ---------- */
-const rolesEl = document.getElementById("roles");
-rolesEl.innerHTML = ROLES.map(r=>`<button type="button" data-r="${r.id}">${r.name}</button>`).join("");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-function setRole(role, instant){
-  const R = ROLES.find(r=>r.id===role);
-  rolesEl.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.r===role));
-  const order = role==="all" ? P.slice() : P.slice().sort((a,b)=>b.fit[role]-a.fit[role]);
-  const first = new Map([...box.children].map(el=>[el, el.getBoundingClientRect().top]));
-  order.forEach(p=>{
-    const el = document.getElementById("p-"+p.id);
-    box.appendChild(el);
-    el.querySelector(".lead").innerHTML = (role!=="all"?`<span class="for">for ${R.name.toLowerCase()}:</span>`:"") + p.lead[role];
-    const f = role==="all" ? null : p.fit[role];
-    el.querySelector(".fit").innerHTML = f===null ? "" : [1,2,3].map(i=>`<i class="${i<=f?"f":""}"></i>`).join("") + `<span>${["low","some","strong","core"][f]} fit</span>`;
-    el.classList.toggle("dim", f===0);
-    const ul = el.querySelector("ul");
-    ul.classList.toggle("routed", role!=="all");
-    ul.querySelectorAll("li").forEach(li=>li.classList.toggle("rel", role!=="all" && li.dataset.tags.split(" ").includes(role)));
-  });
-  if(!reduce && !instant){
-    [...box.children].forEach(el=>{
-      const dy = first.get(el) - el.getBoundingClientRect().top;
-      if(dy) el.animate([{transform:`translateY(${dy}px)`},{transform:"none"}],{duration:450,easing:"cubic-bezier(.2,.7,.2,1)"});
-    });
-  }
-  try{ history.replaceState(null,"", role==="all" ? location.pathname : "#"+role); }catch(e){}
-}
-rolesEl.addEventListener("click", e=>{ const b=e.target.closest("button"); if(b) setRole(b.dataset.r); });
-const hash = (location.hash||"").slice(1);
-const startRole = ROLES.some(r=>r.id===hash && r.id!=="all") ? hash : "all";
-setRole(startRole, true);
-if(startRole!=="all") setTimeout(()=>document.getElementById("work").scrollIntoView(),50);
-
-function segHandler(id, cb){
-  const el = document.getElementById(id);
-  el.addEventListener("click", e=>{
-    const b = e.target.closest("button"); if(!b) return;
-    el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x===b));
-    cb(b.dataset.v);
-  });
-  return el.querySelector('[aria-pressed="true"]')?.dataset.v;
-}
-
-/* ---------- Guardian ---------- */
-function initGuardian(){
-  let aug = 0, n = 0;
-  const log = [];
-  function drawAug(){
-    const v = aug ? 15.8 : 22.3;
-    document.getElementById("g-lstm").style.width = (v/25*100)+"%";
-    document.getElementById("g-lstmv").textContent = v.toFixed(1);
-    document.getElementById("g-read").innerHTML = aug
-      ? `LSTM error drops <b>22.3 → 15.8</b> RMSE (−29%), enough to beat the GBM baseline. The GBM gained nothing at any of 21 configs, and I reported that too.`
-      : `Trained on real C-MAPSS data only. Lower RMSE is better.`;
-  }
-  const OUT = {
-    approve:{parse:true, verdict:"auto_approve_retrain", action:"retrain", cls:"act", text:"Valid approval from the Judge, so retraining starts."},
-    reject:{parse:true, verdict:"auto_reject", action:"keep_model", cls:"act", text:"Valid rejection. The current model stays in place and the reasoning is logged."},
-    escalate:{parse:true, verdict:"escalate_to_human", action:"notify_human", cls:"hum", text:"The Judge isn't sure, so a person decides. On the simulated drift scenario, this is what the Judge chose."},
-    garbled:{parse:false, verdict:"escalate_to_human", action:"notify_human", cls:"hum", text:"The output can't be parsed. The code defaults to a human, never to an unverified auto-approve."}
-  };
-  function drawGate(k){
-    const o = OUT[k];
-    document.getElementById("g-flow").innerHTML =
-      `<span class="on">Judge output</span><em>→</em><span class="${o.parse?"on":"hum"}">${o.parse?"parsed ✓":"parse failed ✗"}</span><em>→</em><span class="on">${o.verdict}</span><em>→</em><span class="${o.cls}">${o.action}</span>`;
-    document.getElementById("g-act").textContent = o.text;
-    n++;
-    const t = new Date(Date.UTC(2026,8,9,10,0,0) + n*37000).toISOString().slice(0,19)+"Z";
-    log.unshift(JSON.stringify({ts:t, judge_raw: o.parse? o.verdict : "{verdict: aprove_retrain…", parsed:o.parse, verdict:o.verdict, action:o.action}));
-    document.getElementById("g-log").textContent = log.slice(0,6).join("\n");
-  }
-  segHandler("g-aug", v=>{aug=+v; drawAug();});
-  const first = segHandler("g-judge", drawGate);
-  drawAug(); drawGate(first);
-}
-
-/* ---------- RouteLens ---------- */
-function initRouteLens(){
-  const TOK = ["The","engine","temperature","kept","rising","so","the","pilot","decided","to"];
-  const SUB = {The:"A",engine:"motor",temperature:"heat",kept:"was",rising:"climbing",so:"and",the:"a",pilot:"captain",decided:"chose",to:"to"};
-  const EX = {
-    shap:{imp:[.05,.3,.95,.2,.85,.25,.05,.4,.35,.1], order:[7,1,3,8,5,0,6], flip:3},
-    lime:{imp:[.05,.9,.4,.15,.35,.2,.05,.85,.3,.1], order:[2,4,8,3,5,0,6], flip:3},
-    attn:{imp:[.1,.35,.3,.15,.25,.2,.1,.9,.8,.3], order:[6,0,5,3,1,4,2], flip:6}
-  };
-  let ex = "shap", edits = 0;
-  function frozen(){ const imp = EX[ex].imp; return imp.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]).slice(0,2).map(x=>x[1]); }
-  function draw(){
-    const e = EX[ex], fz = frozen(), edited = e.order.slice(0,edits);
-    document.getElementById("r-sent").innerHTML = TOK.map((t,i)=>{
-      const ed = edited.includes(i);
-      return `<span class="${fz.includes(i)?"frozen":""} ${ed?"edit":""}" style="--imp:${e.imp[i]}" title="importance ${e.imp[i].toFixed(2)}">${ed?SUB[t]:t}</span>`;
-    }).join("") + `<span style="--imp:0;border-style:dashed">___</span>`;
-    const flipped = edits >= e.flip;
-    const conf = flipped ? 0.41 : 0.62 - edits*(0.62-0.44)/e.flip;
-    document.getElementById("r-pred").innerHTML =
-      `<span>next token:</span><span class="word ${flipped?"flip":""}">${flipped?"wait":"land"}</span><span class="mono" style="font-size:12.5px;color:var(--muted)">${(conf*100).toFixed(0)}% · ${edits} edit${edits===1?"":"s"}</span>` +
-      (flipped ? `<span class="no">Flipped by changing only tokens ${ex==="attn"?"attention":ex.toUpperCase()} called unimportant.</span>` : `<span style="color:var(--muted);font-size:13.5px">🔒 = top-20% tokens, locked</span>`);
-    document.getElementById("r-step").disabled = flipped || edits>=e.order.length;
-  }
-  segHandler("r-exp", v=>{ex=v; edits=0; draw();});
-  document.getElementById("r-step").onclick = ()=>{ edits++; draw(); };
-  document.getElementById("r-reset").onclick = ()=>{ edits=0; draw(); };
-  draw();
-}
-
-/* ---------- Atlas ---------- */
-function initAtlas(){
-  const STEPS = ["question","place lookup","tool call","draft answer","number check","user sees"];
-  const S = {
-    ok:{name:"Answerable", bad:-1, st:[
-      ["The user asks","<pre>How many fatal accidents were there in NRW in 2021?</pre>"],
-      ["Fuzzy place lookup","<p>“NRW” is matched to a real region before any query runs. The same tool fixes typos like Muenchen → München.</p><pre>lookup_place(\"NRW\") → Nordrhein-Westfalen</pre>"],
-      ["The agent calls the REST API through MCP","<p>It never touches the database directly. It uses the same API as the dashboard.</p><pre>count_accidents(region=\"Nordrhein-Westfalen\",\n                year=2021, severity=\"fatal\")\n→ {\"count\": 431}</pre>"],
-      ["The LLM writes a draft","<pre>There were 431 fatal accidents in NRW in 2021.</pre>"],
-      ["A separate checker extracts every number","<pre><span class=\"ok\">✓ 431</span>  found in tool result\n<span class=\"ok\">✓ 2021</span> found in tool call</pre><p>Every number is backed by a tool result, so the answer passes.</p>"],
-      ["Shown to the user","<pre>There were 431 fatal accidents in NRW in 2021.</pre><p class=\"ok\">Verified answer.</p>"]
-    ]},
-    calc:{name:"LLM does math", bad:4, st:[
-      ["The user asks","<pre>How did fatal accidents in NRW change from 2020 to 2021?</pre>"],
-      ["Fuzzy place lookup","<pre>lookup_place(\"NRW\") → Nordrhein-Westfalen</pre>"],
-      ["Two tool calls","<pre>count_accidents(..., year=2020) → {\"count\": 452}\ncount_accidents(..., year=2021) → {\"count\": 431}</pre>"],
-      ["The LLM writes a draft","<pre>Fatal accidents fell by 4.6%, from 452 to 431.</pre><p>It calculated a percentage itself, which it isn't allowed to do.</p>"],
-      ["The checker catches it","<pre><span class=\"ok\">✓ 452</span> found in tool result\n<span class=\"ok\">✓ 431</span> found in tool result\n<span class=\"no\">✗ 4.6</span> not in any tool result</pre><p>One number can't be traced, so the answer is corrected before anyone sees it.</p>"],
-      ["Shown to the user","<pre>Fatal accidents went from 452 in 2020 to 431 in 2021.</pre><p class=\"ok\">Corrected: only verified numbers remain.</p>"]
-    ]},
-    guess:{name:"“Just guess”", bad:-1, st:[
-      ["The user pushes for a guess","<pre>Just guess how many there will be in 2026.</pre>"],
-      ["Fuzzy place lookup","<p>No new place in this question. The agent carries NRW over from the conversation.</p>"],
-      ["No tool can answer","<p>The data covers 2016–2024 and no endpoint returns a forecast, so there's nothing to call.</p>"],
-      ["The LLM writes a draft","<pre>I can't estimate that. My data covers 2016 to 2024, and I only report numbers I can look up.</pre>"],
-      ["The checker runs anyway","<pre><span class=\"ok\">✓ 2016, 2024</span> data coverage\n<span class=\"ok\">✓ 2026</span> repeated from the question</pre><p>No new figures, so the answer passes.</p>"],
-      ["Shown to the user","<pre>I can't estimate that. My data covers 2016 to 2024…</pre><p class=\"ok\">Honest refusal. In the 35-question eval, the local model never showed a fabricated number.</p>"]
-    ]}
-  };
-  let sc = "ok", i = 0;
-  const scen = document.getElementById("a-scen"), pipe = document.getElementById("a-pipe"), stage = document.getElementById("a-stage"),
-        prev = document.getElementById("a-prev"), next = document.getElementById("a-next");
-  scen.innerHTML = Object.entries(S).map(([k,v])=>`<button type="button" data-v="${k}" aria-pressed="${k===sc}">${v.name}</button>`).join("");
-  function draw(){
-    const cur = S[sc];
-    pipe.innerHTML = STEPS.map((n,j)=>`${j?'<span class="arr"></span>':""}<button type="button" data-j="${j}" class="${j===i?"cur":j<i?"done":""} ${j===cur.bad&&j<=i?"bad":""}">${n}</button>`).join("");
-    const [k,body] = cur.st[i];
-    stage.innerHTML = `<span class="k">step ${i+1} of ${STEPS.length} · ${STEPS[i]}</span><p><b>${k}</b></p>${body}`;
-    prev.disabled = i===0; next.disabled = i===STEPS.length-1;
-  }
-  segHandler("a-scen", v=>{ sc=v; i=0; draw(); });
-  pipe.addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b) return; i=+b.dataset.j; draw(); });
-  prev.onclick = ()=>{ if(i>0){i--;draw();} };
-  next.onclick = ()=>{ if(i<STEPS.length-1){i++;draw();} };
-  draw();
-}
-
-
-/* ---------- Process Value ---------- */
-function initPV(){
-  const bar=(label,v,max,txt,cls)=>`<div class="b"><span>${label}</span><span class="track"><i class="${cls||""}" style="width:${v/max*100}%;${cls==="alt"?"":"background:var(--pc)"}"></i></span><span>${txt}</span></div>`;
-  let reb=false;
-  const STEPS=[
-    ["mine", ()=>`<h5>Mine the event log</h5><p>pm4py finds every wait, loop-back and variant automatically. The longest waits:</p>
-      <div class="bars">${bar("Goods Receipt",30.1,32,"30.1 h")}${bar("Approve Req.",14.3,32,"14.3 h")}</div>`],
-    ["triage", ()=>`<h5>Separate what you can fix</h5>
-      <div class="bars">${bar("Goods Receipt",30.1,32,"30.1 h","alt")}${bar("Approve Req.",14.3,32,"14.3 h")}</div>
-      <p>Goods Receipt<span class="tagc no">vendor-driven</span> is the slowest step, but it's outside the business's control. Approve Requisition<span class="tagc yes">controllable</span> is the one worth fixing. Its rework touches <b>15.8%</b> of cases, roughly 1 in 6.</p>`],
-    ["root-cause", ()=>`<h5>Go one level deeper</h5><p>"Only two approvers" sounds like a headcount problem. The caseload split says otherwise:</p>
-      <div class="bars">${bar("Approver A",64.6,100,"64.6%")}${bar("Approver B",35.4,100,"35.4%","alt")}</div>
-      <p>Approver A is also <b>106% slower per case</b> on the same task. That's a queueing effect, not a skill gap, so rebalance before hiring.</p>`],
-    ["quantify", ()=>`<h5>Simulate the fix before pitching it</h5>
-      <div class="seg small" id="pv-sim" role="group" aria-label="Scenario"><button type="button" data-v="0" aria-pressed="${!reb}">baseline</button><button type="button" data-v="1" aria-pressed="${reb}">50/50 caseload</button></div>
-      <div class="bars">${bar("Approval wait",reb?8.8:14.3,16,reb?"≈ 8.8 h":"14.3 h")}${bar("Rework rate",15.8,20,"15.8%","alt")}</div>
-      <p>${reb?"Approval wait drops <b>38.5%</b> from a scheduling change, not new hires. Rework stays flat, which shows it's a separate data-quality problem that needs its own fix.":"Switch to the rebalanced scenario to rerun the same generative model with an even split."}</p>`],
-    ["package", ()=>`<h5>Package it for the room</h5><p>The same findings, in three formats for three moments:</p>
-      <div class="outs"><div><b>Dashboard</b><span>Streamlit, for exploring the data</span></div><div><b>Memo</b><span>Written by the Gemini agent for a stakeholder update</span></div><div><b>PDF</b><span>A leave-behind after the meeting</span></div></div>`]
-  ];
-  let i=0;
-  const arc=document.getElementById("pv-arc"), st=document.getElementById("pv-stage"), prev=document.getElementById("pv-prev"), next=document.getElementById("pv-next");
-  function draw(){
-    arc.innerHTML=STEPS.map((x,j)=>`<button type="button" data-j="${j}" class="${j<i?"done":""}" aria-pressed="${j===i}">${j+1} · ${x[0]}</button>`).join("");
-    st.innerHTML=STEPS[i][1]();
-    prev.disabled=i===0; next.disabled=i===STEPS.length-1;
-  }
-  arc.addEventListener("click",e=>{const b=e.target.closest("button"); if(b){i=+b.dataset.j; draw();}});
-  st.addEventListener("click",e=>{const b=e.target.closest("#pv-sim button"); if(b){reb=b.dataset.v==="1"; draw();}});
-  prev.onclick=()=>{if(i>0){i--;draw();}}; next.onclick=()=>{if(i<STEPS.length-1){i++;draw();}};
-  draw();
-}
-
-/* ---------- Traffic ---------- */
-function initTraffic(){
-  const MAE = {lstm:{30:0.1101,60:0.1229}, prophet:{30:0.1519,60:0.1628}};
-  let model = "lstm", H = 30, closed = false;
-  const g = (h,m,s)=>Math.exp(-((h-m)**2)/(2*s*s));
-  const flow = h => Math.min(1, Math.max(0.03, 0.14 + 0.62*g(h,7.75,0.9) + 0.72*g(h,17.25,1.1) + 0.22*g(h,12.5,2) + 0.03*Math.sin(h*7.3) + 0.02*Math.sin(h*13.1)));
-  const W=640, Ht=220, L=36, R=12, T=12, B=26;
-  const x = h => L + (h-5)/(22-5)*(W-L-R);
-  const y = v => T + (1-v/1.1)*(Ht-T-B);
-  const fmt = h => { const hh=Math.floor(h), mm=Math.round((h-hh)*60); return String(hh).padStart(2,"0")+":"+String(mm).padStart(2,"0"); };
-  const svg = document.getElementById("t-chart");
-  function path(pts){ return pts.map((p,k)=>(k?"L":"M")+x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(""); }
-  function draw(){
-    const now = parseFloat(document.getElementById("t-now").value);
-    document.getElementById("t-nowv").textContent = fmt(now);
-    const mae = MAE[model][H], end = now + H/60, step = 5/60;
-    const past=[], fut=[], fc=[], up=[], lo=[];
-    for(let h=5; h<=now+1e-9; h+=step) past.push([h,flow(h)]);
-    for(let h=now; h<=22+1e-9; h+=step) fut.push([h,flow(h)]);
-    for(let h=now; h<=end+1e-9; h+=step){
-      const r = (h-now)/(H/60);
-      const v = flow(h) + mae*0.55*r*Math.sin((h-now)*9 + (model==="prophet"?1.4:0.5));
-      const w = mae*(0.35+0.65*r);
-      fc.push([h,v]); up.push([h,Math.min(1.1,v+w)]); lo.push([h,Math.max(0,v-w)]);
+/* ════════════════════════════ TYPEWRITER (header brand) ════════════════════════════ */
+function typeText(el, text, speed = 70){
+  el.textContent = "";
+  let i = 0;
+  (function step(){
+    if (i <= text.length){
+      el.textContent = text.slice(0, i);
+      i++;
+      setTimeout(step, speed);
     }
-    let s = "";
-    [0,0.5,1].forEach(v=>{ s += `<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${v.toFixed(1)}</text>`; });
-    [6,9,12,15,18,21].forEach(h=>{ s += `<text x="${x(h)}" y="${Ht-8}" text-anchor="middle">${h}:00</text>`; });
-    s += `<path d="${path(fut)}" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 4" opacity=".6"/>`;
-    s += `<path d="${path(up)}L${lo.slice().reverse().map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join("L")}Z" fill="var(--accent)" fill-opacity=".16" stroke="none"/>`;
-    s += `<path d="${path(past)}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
-    s += `<path d="${path(fc)}" fill="none" stroke="var(--accent)" stroke-width="2.4"/>`;
-    s += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${Ht-B}" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 3"/>`;
-    const last = fc[fc.length-1];
-    s += `<circle cx="${x(last[0])}" cy="${y(last[1])}" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`;
-    s += `<text x="${L+6}" y="${T+10}" style="fill:var(--ink)">— observed</text><text x="${L+80}" y="${T+10}" style="fill:var(--accent)">— forecast ± MAE</text><text x="${L+200}" y="${T+10}">- - what actually happened</text>`;
-    svg.innerHTML = s;
-    document.getElementById("t-read").innerHTML =
-      `<b>${model==="lstm"?"LSTM":"Prophet"}</b> predicts a flow of <b>${last[1].toFixed(2)}</b> at <b>${fmt(end)}</b>, ${H} minutes ahead. Its real test-set error at this horizon is <b>MAE ${mae}</b>${model==="prophet"?", wider than the LSTM's":", the best of the two models"}.`;
-    drawBPR(now);
+  })();
+}
+typeText(document.getElementById("typeBrand"), "Meeta Dave");
+
+/* ════════════════════════════ EXPERIENCE ════════════════════════════ */
+/* Real roles/education only — no fabricated details or metrics for
+   confidential work (see body copy for the Goldenbird roles). */
+const EXPERIENCE = [
+  {
+    role: "AI Developer",
+    org: "Goldenbird Automations Pvt. Ltd.",
+    dates: "Jun 2024 – Jun 2025",
+    loc: "Rajkot, Gujarat, India",
+    stats: [{ num: "13", lbl: "months" }, { num: "2nd", lbl: "role" }],
+    body: "Promoted from Software Developer into a dedicated AI Developer role, working on automation, IoT integration, and agentic AI systems. Project specifics are confidential.",
+    tags: ["Automation", "IoT", "Agentic AI Development"]
+  },
+  {
+    role: "Software Developer",
+    org: "Goldenbird Automations Pvt. Ltd.",
+    dates: "Feb 2024 – May 2024",
+    loc: "Rajkot, Gujarat, India",
+    stats: [{ num: "4", lbl: "months" }, { num: "1st", lbl: "role" }],
+    body: "First role at Goldenbird, building software foundations that led to the promotion above. Project specifics are confidential.",
+    tags: ["Software Development"]
+  },
+  {
+    role: "M.Sc. Web Engineering",
+    org: "Technische Universität Chemnitz",
+    dates: "Oct 2025 – Present",
+    loc: "Chemnitz, Germany",
+    stats: [{ num: "2025", lbl: "started" }],
+    body: "Pursuing a Master's in Web Engineering, focused on applied ML, data platforms, and full-stack systems — the foundation for the projects below.",
+    tags: ["Web Engineering", "Applied ML"]
+  },
+  {
+    role: "B.E. Computer Science",
+    org: "Gujarat Technological University",
+    dates: "Sep 2021 – May 2025",
+    loc: "Gujarat, India",
+    stats: [{ num: "4", lbl: "years" }],
+    body: "Bachelor's in Computer Science — the programming, data structures, and systems foundation this portfolio builds on.",
+    tags: ["Computer Science"]
   }
-  function drawBPR(now){
-    const f = flow(now), cap = 1000, t0 = 6;
-    const vA = f*1600, vB = f*1200;
-    const bpr = v => t0*(1+0.15*Math.pow(v/cap,4));
-    const vB2 = closed ? vB + 0.8*vA : vB;
-    const tB = bpr(vB2), tA = closed ? null : bpr(vA);
-    const mx = 45;
-    document.getElementById("t-bpr").innerHTML =
-      `<div class="b"><span>road A</span><span class="track"><i style="width:${closed?0:Math.min(100,tA/mx*100)}%"></i></span><span>${closed?"closed":tA.toFixed(1)+" min"}</span></div>` +
-      `<div class="b"><span>road B</span><span class="track"><i style="width:${Math.min(100,tB/mx*100)}%;${closed?"background:var(--warn)":""}"></i></span><span>${tB.toFixed(1)} min</span></div>`;
+];
+
+/* ════════════════════════════ TECH STACK ════════════════════════════ */
+const STACK = [
+  { cat: "Programming & Backend", items: ["Python", "TypeScript", "SQL", "FastAPI", "REST APIs", "OpenAPI", "WebSocket"] },
+  { cat: "AI & Machine Learning", items: ["PyTorch", "TensorFlow", "scikit-learn", "NumPy", "Computer Vision", "LangChain", "RAG", "Ollama · LLaMA 3", "Prophet", "MLflow"] },
+  { cat: "Data & Visualization", items: ["Pandas", "Tableau", "Grafana", "D3.js", "Leaflet", "Recharts", "React", "Streamlit", "Matplotlib"] },
+  { cat: "Data Eng & DevOps", items: ["Kafka", "MQTT", "SQLite", "TimescaleDB", "InfluxDB", "Vector DB", "Docker", "Git & GitHub"] }
+];
+
+/* ════════════════════════════ PROJECTS ════════════════════════════ */
+/* node kinds: client / api / data / ml / auth / ext  */
+const PROJECTS = [
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/Attribute-Equivalency-Checker",
+    title: "Attribute Equivalency Checker",
+    image: null,
+    desc: "A semantic column-grouping tool that uses a locally-run LLM to detect when differently-named CSV columns mean the same thing — e.g. “fname”, “first_name”, “givenName” — where plain string matching fails.",
+    stack: ["Python", "Streamlit", "Ollama", "LLaMA 3", "Pandas", "Regex"],
+    arch: [
+      { k: "Client", n: "Streamlit UI", info: "Web interface to upload a CSV file; grouped results are shown in the browser and can be exported as CSV." },
+      { k: "Prep", n: "Normalize", info: "Extracts column names and normalizes them with Pandas and regex — handling abbreviations, typos, and case variations." },
+      { k: "ML", n: "Local LLM (LLaMA 3)", info: "LLaMA 3 via Ollama runs entirely on-device and groups columns that mean the same thing semantically — so no data ever leaves the machine." },
+      { k: "Output", n: "JSON + CSV", info: "Produces structured JSON output and exports the grouped result as a downloadable CSV." }
+    ]
+  },
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/AI-Powered-Document-Intelligence-Platform",
+    title: "AI-Powered Document Intelligence Platform",
+    image: "https://raw.githubusercontent.com/davemeeta/AI-Powered-Document-Intelligence-Platform/main/Screenshot.png",
+    desc: "Ask questions about any PDF and get accurate, cited answers instantly — built on a retrieval-augmented (RAG) architecture so every answer is grounded in the source document.",
+    stack: ["Python", "FastAPI", "RAG", "LangChain", "Vector DB", "React"],
+    arch: [
+      { k: "Client", n: "Ask UI", info: "React interface to upload a PDF and ask questions about it in natural language." },
+      { k: "API", n: "FastAPI", info: "Handles uploads, chunks and embeds the text, and orchestrates retrieval plus the LLM call." },
+      { k: "Data", n: "Vector store", info: "Stores document embeddings and returns the most relevant chunks for each question." },
+      { k: "ML", n: "LLM + LangChain", info: "LangChain builds the prompt from the retrieved chunks; the LLM generates an answer with citations back to the source." }
+    ]
+  },
+  {
+    tag: "Data / BI",
+    repo: "https://github.com/davemeeta/Tableau-Sales-Performance-Dashboard",
+    title: "Tableau Sales Performance Dashboard",
+    image: "https://raw.githubusercontent.com/davemeeta/Tableau-Sales-Performance-Dashboard/main/Dashboard.png",
+    desc: "Interactive Tableau dashboard on the Superstore dataset — surfacing pricing inefficiencies, regional profitability, customer segments, and seasonal demand.",
+    stack: ["Tableau", "Business Intelligence", "Data Visualization", "Data Analysis"],
+    arch: [
+      { k: "Source", n: "Superstore data", info: "Raw sales records — orders, products, regions, and customer segments — as the input dataset." },
+      { k: "Prep", n: "Clean & model", info: "Cleaning, joins, and calculated fields (margins, segment splits) to shape the data for analysis." },
+      { k: "Data", n: "Tableau model", info: "Relationships and measures defined once and reused across every view." },
+      { k: "Client", n: "Dashboard", info: "Interactive filters surface the findings: Technology and Office Supplies run ~17% margins while Furniture sits near 2.5%, the Consumer segment drives the most revenue, some high-revenue products show pricing inefficiencies, and demand rises toward year-end." }
+    ]
+  },
+  {
+    tag: "Full Stack · ML",
+    repo: "https://github.com/davemeeta/Smart-Energy-Consumption-Monitoring-Anomaly-Detection-Platform",
+    title: "Smart Energy Monitoring & Anomaly Detection",
+    image: "https://raw.githubusercontent.com/davemeeta/Smart-Energy-Consumption-Monitoring-Anomaly-Detection-Platform/main/dashboard.png",
+    desc: "A real-time IoT energy platform: it streams household power data over MQTT, flags anomalous consumption with an ML ensemble, and tracks CO₂ and cost using German grid factors — on live React and Grafana dashboards.",
+    stack: ["Python", "FastAPI", "WebSocket", "scikit-learn", "PyTorch", "MQTT", "InfluxDB", "React", "Grafana", "Docker"],
+    arch: [
+      { k: "Source", n: "IoT · MQTT", info: "Streams a real household-energy dataset (2M+ UCI readings) over an Eclipse Mosquitto MQTT broker, simulating three live sensors — kitchen, HVAC, and laundry." },
+      { k: "ML", n: "Anomaly ensemble", info: "A Python subscriber runs an Isolation Forest (scikit-learn) and a PyTorch autoencoder; both must agree before flagging an anomaly, which cuts false positives. A calculator converts kWh to CO₂ and € using German grid factors." },
+      { k: "Data", n: "InfluxDB", info: "All time-series readings and results are stored in InfluxDB 2.7 for historical analysis and dashboard queries." },
+      { k: "API", n: "FastAPI + WS", info: "FastAPI exposes a REST API and a WebSocket that streams live readings and anomaly events to the frontend in real time." },
+      { k: "Client", n: "React + Grafana", info: "A React + Recharts dashboard updates every 500ms with live kWh and an anomaly feed; Grafana panels cover the ops views — CO₂ trends, anomaly events, and cost per sensor." }
+    ]
+  },
+  {
+    tag: "Full Stack · ML",
+    repo: "https://github.com/davemeeta/Real-Time-City-Traffic-Mobility-Dashboard",
+    title: "Real-Time City Traffic & Mobility Dashboard",
+    image: "https://raw.githubusercontent.com/davemeeta/Real-Time-City-Traffic-Mobility-Dashboard/main/Output.png",
+    desc: "Live congestion forecasting and a what-if road-closure simulator for Stuttgart and Munich — streams real traffic + weather data, forecasts 30/60 min ahead with LSTM and Prophet, and renders it on an interactive Leaflet + D3 map.",
+    stack: ["Python", "Kafka", "TimescaleDB", "FastAPI", "TensorFlow", "Prophet", "MLflow", "Leaflet", "D3", "Docker"],
+    arch: [
+      { k: "Source", n: "Open data APIs", info: "Polls MobiData BW (real Stuttgart / Baden-Württemberg incidents) and Open-Meteo (weather) every 60 seconds, alongside realistic loop-detector readings." },
+      { k: "Stream", n: "Kafka → TimescaleDB", info: "A Kafka producer/consumer pipeline publishes readings; TimescaleDB stores them in a hypertable partitioned by day and compressed after 7 days." },
+      { k: "ML", n: "LSTM + Prophet", info: "Two forecasters predict congestion 30 and 60 min ahead — Prophet handles German holidays and weather regressors; both tracked in MLflow. MAE lands around 0.11–0.15 on a 0–1 scale." },
+      { k: "API", n: "FastAPI + WS", info: "Async FastAPI serves REST + a WebSocket live feed; a physics-based BPR simulator redistributes traffic for road-closure what-ifs in ~200 ms." },
+      { k: "Client", n: "Leaflet + D3", info: "An interactive map updates sensor colours live; clicking a sensor opens a hand-built D3 chart with history and a 30/60 min forecast confidence band." }
+    ]
+  },
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/Secom-Virtual-Metrology",
+    title: "Semi-Supervised Virtual Metrology",
+    image: "https://raw.githubusercontent.com/davemeeta/Secom-Virtual-Metrology/main/outputs/label_efficiency.png",
+    desc: "A data-driven surrogate model for a semiconductor manufacturing process, built to study accurate yield prediction under limited reference data — the central challenge in data-based methods for semiconductor process control.",
+    stack: ["Python", "scikit-learn", "Pandas", "Streamlit", "Matplotlib"],
+    arch: [
+      { k: "Source", n: "SECOM data", info: "Real UCI SECOM process data: 1,567 wafer runs and 590 in-line sensor signals with a pass/fail label and a heavy ~14:1 class imbalance." },
+      { k: "Prep", n: "Preprocess", info: "Drops the timestamp, maps pass/fail to 0/1, removes constant and near-constant columns, and median-imputes missing values." },
+      { k: "ML", n: "Supervised baseline", info: "Gradient-boosted trees with balanced class weights, evaluated with PR-AUC and failure-class recall rather than accuracy, which is meaningless at 14:1." },
+      { k: "ML", n: "Semi-supervised", info: "Reveals only f% of training labels and compares a supervised model against a self-training model that also exploits the unlabelled runs, sweeping f and averaging over seeds." },
+      { k: "Feature", n: "Process stages", info: "Groups the 590 anonymised signals into process stages by their missing-value signature, then summarises each stage per run (mean/std/min/max/range) and tests raw vs. domain features head-to-head." }
+    ]
+  },
+  {
+    tag: "Full Stack · Data",
+    repo: "https://github.com/davemeeta/German-Accident-Open-Data-Platform",
+    title: "German Accident Open Data Platform",
+    image: "https://raw.githubusercontent.com/davemeeta/German-Accident-Open-Data-Platform/main/outputs/screenshot_dashboard_1.png",
+    desc: "A data-integration platform that harmonises official German road-accident open data across nine annual releases (2016–2024) into a single canonical database, exposed through a documented REST API and an interactive React dashboard.",
+    stack: ["Python", "FastAPI", "SQLite", "Pandas", "React", "Vite", "TypeScript", "Tailwind CSS", "Leaflet", "Recharts"],
+    arch: [
+      { k: "Source", n: "Open data 2016–2024", info: "Official German road-accident open data published as nine separate annual releases, each with its own quirks and schema drift." },
+      { k: "ETL", n: "Harmonise (pandas)", info: "A pandas pipeline reconciles the differing yearly schemas — column names, codes, and types — into one consistent canonical format." },
+      { k: "Data", n: "SQLite", info: "The harmonised records land in a single SQLite database that serves as the canonical source for the API." },
+      { k: "API", n: "FastAPI", info: "FastAPI exposes the data as a documented REST API, with OpenAPI/Swagger docs auto-generated at /docs." },
+      { k: "Client", n: "React + Leaflet", info: "A React + Vite + TypeScript dashboard (Tailwind) maps accidents with Leaflet and charts trends with Recharts." }
+    ]
+  },
+  {
+    tag: "AI / ML",
+    repo: "https://github.com/davemeeta/Multispectral-Land-Cover-Classification-on-Sentinel-2",
+    title: "EuroSAT Land-Cover Classification",
+    image: "https://raw.githubusercontent.com/davemeeta/Multispectral-Land-Cover-Classification-on-Sentinel-2/main/outputs/confusion_matrix.png",
+    desc: "A computer-vision pipeline that classifies multi-spectral Sentinel-2 satellite imagery into land-cover types (forest, crops, water, built-up, and more) using a convolutional neural network — including the NDVI vegetation index, the core signal behind vegetation and deforestation monitoring.",
+    stack: ["Python", "CNN", "NumPy", "GeoTIFF", "scikit-learn", "Matplotlib"],
+    arch: [
+      { k: "Source", n: "Sentinel-2 imagery", info: "13-band multi-spectral Sentinel-2 satellite tiles in .tif raster format, labelled by land-cover type (the EuroSAT benchmark)." },
+      { k: "Prep", n: "Bands + NDVI", info: "Reads the .tif rasters, stacks the spectral bands, and computes the NDVI vegetation index as an extra signal for vegetation and deforestation cues." },
+      { k: "ML", n: "CNN classifier", info: "A convolutional neural network learns to map the multi-spectral image patches to land-cover classes." },
+      { k: "Eval", n: "Per-class metrics", info: "Evaluated with per-class precision and recall rather than overall accuracy alone, so minority land-cover types are judged fairly." }
+    ]
   }
-  document.getElementById("t-now").addEventListener("input", draw);
-  segHandler("t-model", v=>{model=v; draw();});
-  segHandler("t-h", v=>{H=+v; draw();});
-  const cb = document.getElementById("t-close");
-  cb.onclick = ()=>{ closed=!closed; cb.textContent = closed?"Reopen road A":"Close road A"; cb.setAttribute("aria-pressed",closed); draw(); };
-  draw();
+];
+
+/* ════════════════════════════ RENDER ════════════════════════════ */
+function renderExperience(){
+  document.getElementById("ledgerList").innerHTML = EXPERIENCE.map(e => `
+    <article class="tile ledger-card">
+      <div class="ledger-head">
+        <div>
+          <div class="ledger-role">${e.role}</div>
+          <div class="ledger-org">${e.org}</div>
+        </div>
+        <div class="ledger-meta">${e.dates}<br>${e.loc}</div>
+      </div>
+      <div class="ledger-stats">${e.stats.map(s => `<div class="stat-tile"><div class="num">${s.num}</div><div class="slbl">${s.lbl}</div></div>`).join("")}</div>
+      <p class="ledger-body">${e.body}</p>
+      <div class="ledger-tags">${e.tags.map(t => `<span class="chip">${t}</span>`).join("")}</div>
+    </article>`).join("");
 }
 
-/* ---------- MoE ---------- */
-function initMoE(){
-  const E = 4, K = 2;
-  const inp = document.getElementById("moe-in"), cap = document.getElementById("moe-cap"),
-        capv = document.getElementById("moe-capv"), grid = document.getElementById("moe"),
-        util = document.getElementById("util"), stat = document.getElementById("moe-stat");
-  function hash(str){ let h=2166136261; for(const c of str){ h^=c.charCodeAt(0); h=Math.imul(h,16777619);} return h>>>0; }
-  const logits = tok => Array.from({length:E},(_,e)=>((hash(tok.toLowerCase()+"#"+e)%1000)/1000-0.5)*4);
-  function softmax(a){ const m=Math.max(...a), ex=a.map(x=>Math.exp(x-m)), s=ex.reduce((p,q)=>p+q,0); return ex.map(x=>x/s); }
-  function render(){
-    const toks = inp.value.trim().split(/\s+/).filter(Boolean).slice(0,14);
-    const cf = parseFloat(cap.value); capv.textContent = cf.toFixed(2);
-    const capacity = Math.max(1, Math.floor(cf * toks.length * K / E));
-    const load = Array(E).fill(0), wanted = Array(E).fill(0);
-    let dropped = 0, dropTok = 0;
-    const rows = toks.map(t=>{
-      const p = softmax(logits(t));
-      const top = p.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]).slice(0,K).map(x=>x[1]);
-      const kept = [];
-      top.forEach(e=>{ wanted[e]++; if(load[e] < capacity){ load[e]++; kept.push(e);} else dropped++; });
-      if(!kept.length) dropTok++;
-      return {t,p,top,kept};
-    });
-    const esc = s => s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-    let h = `<div></div>` + Array.from({length:E},(_,e)=>`<div class="h">E${e+1}</div>`).join("");
-    rows.forEach(r=>{
-      h += `<div class="tok ${r.kept.length?"":"drop"}" title="${esc(r.t)}">${esc(r.t)}</div>`;
-      r.p.forEach((v,e)=>{
-        const pick = r.top.includes(e), cut = pick && !r.kept.includes(e);
-        h += `<div class="c ${pick?"pick":""} ${cut?"cut":""}" style="--p:${v.toFixed(3)}">${pick?(cut?"full":(v*100).toFixed(0)):""}</div>`;
-      });
-    });
-    grid.style.gridTemplateColumns = `minmax(64px,auto) repeat(${E},minmax(36px,1fr))`;
-    grid.innerHTML = toks.length ? h : `<p class="sub">Type a few words above.</p>`;
-    const maxW = Math.max(capacity, ...wanted, 1);
-    util.innerHTML = wanted.map((w,e)=>`<div><span>E${e+1}</span><span class="bar"><i style="width:${w/maxW*100}%"></i><b style="left:calc(${capacity/maxW*100}% - 1px)"></b></span><span>${Math.min(w,capacity)}/${capacity}</span></div>`).join("");
-    const total = toks.length*K;
-    stat.innerHTML = total ? `Capacity <b>${capacity}</b> per expert. <b>${dropped}</b> of ${total} routes dropped${dropTok?`, and <b>${dropTok}</b> token${dropTok>1?"s":""} lost both experts`:""}.` : "";
-  }
-  inp.addEventListener("input", render); cap.addEventListener("input", render); render();
+function renderStack(){
+  document.getElementById("stackGrid").innerHTML = STACK.map(col => `
+    <div class="stack-col">
+      <h4>${col.cat}</h4>
+      <div class="chips">${col.items.map(i => `<span class="chip">${i}</span>`).join("")}</div>
+    </div>`).join("");
 }
 
-/* ---------- SECOM ---------- */
-function initSecom(){
-  const STAGES = 6, PER = 8, RUNS = 10;
-  // each stage has a missing-run signature
-  const sig = Array.from({length:STAGES},(_,s)=>Array.from({length:RUNS},(_,r)=>((r*7+s*3)%5===0)||((r+s*2)%9===0)));
-  let sensors = [];
-  for(let s=0;s<STAGES;s++) for(let k=0;k<PER;k++) sensors.push({stage:s, miss:sig[s].map((m,r)=>m || ((s*11+k*5+r*3)%29===0))});
-  let seed = 7; const rnd = ()=>((seed = (seed*16807)%2147483647)/2147483647);
-  function shuffle(){ for(let i=sensors.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); [sensors[i],sensors[j]]=[sensors[j],sensors[i]]; } }
-  let grouped = false;
-  const grid = document.getElementById("s-grid"), lbl = document.getElementById("s-lbl");
-  function draw(){
-    const list = grouped ? sensors.slice().sort((a,b)=>a.stage-b.stage) : sensors;
-    grid.innerHTML = list.map((s,i)=>`<div class="s ${grouped && i>0 && list[i-1].stage!==s.stage?"gap":""}">${s.miss.map(m=>`<i class="${m?"m":""}"></i>`).join("")}</div>`).join("");
-    lbl.innerHTML = grouped ? Array.from({length:STAGES},(_,s)=>`<span>stage ${s+1} · 5 summary features</span>`).join("") : `<span>48 sensors, unordered</span>`;
-  }
-  document.getElementById("s-group").onclick = ()=>{ grouped = true; draw(); };
-  document.getElementById("s-shuffle").onclick = ()=>{ grouped = false; shuffle(); draw(); };
-  const F = {raw:{n:474,roc:"0.728",pr:"0.188"}, dom:{n:180,roc:"0.728",pr:"0.155"}};
-  function drawF(k){
-    const f = F[k];
-    document.getElementById("s-cmp").innerHTML =
-      `<div><span class="k">features</span><span class="n">${f.n}</span></div><div><span class="k">ROC-AUC</span><span class="n">${f.roc}</span></div><div><span class="k">PR-AUC</span><span class="n">${f.pr}</span></div>`;
-  }
-  const B = {20:{sup:0.108,self:0.130}, 80:{sup:0.175,self:0.195}};
-  function drawB(k){
-    const b = B[k], mx = 0.22;
-    document.getElementById("s-bars").innerHTML =
-      `<div class="b"><span>supervised</span><span class="track"><i class="alt" style="width:${b.sup/mx*100}%"></i></span><span>${b.sup.toFixed(3)}</span></div>` +
-      `<div class="b"><span>self-training</span><span class="track"><i style="width:${b.self/mx*100}%"></i></span><span>${b.self.toFixed(3)}</span></div>`;
-  }
-  drawF(segHandler("s-feat", drawF)); drawB(segHandler("s-bud", drawB));
-  shuffle(); draw();
-}
-
-/* ---------- Skills ---------- */
-(function(){
-  const LOC = {guardian:["Guardian","#p-guardian"], routelens:["RouteLens","#p-routelens"], atlas:["Unfallatlas + Atlas","#p-atlas"], traffic:["City Traffic Dashboard","#p-traffic"], moe:["MoE Transformer","#p-moe"], secom:["SECOM","#p-secom"], pv:["Process Value Copilot","#p-pv"], askboard:["AskBoard","#m-askboard"],
-    docrag:["Document Intelligence RAG","#m-docrag"], k10:["10-K RAG pipeline","#m-10k"], kg:["Knowledge Graph","#m-kg"], energy:["Smart Energy","#m-energy"], sentinel:["Sentinel-2","#m-sentinel"], rsvp:["CampusRSVP","#m-rsvp"],
-    job:["Goldenbird Automations","#experience"], cert:["Certification",null]};
-  const G = [
-    ["agents & LLMs", {
-      "MCP":[["atlas","Wrapped the REST API as 9 MCP tools for the Atlas agent."]],
-      "Multi-agent systems":[["guardian","Monitor, two Advocates and a Judge decide on retraining."],["routelens","Six agents with a hand-rolled orchestrator and a retry edge."]],
-      "Ollama":[["guardian","All inference local with llama3.2:3b, including in CI."],["routelens","Local LLM judge at temperature 0."],["atlas","Local backend with automatic model fallback."],["docrag","Llama 3.1 8B for document Q&A."]],
-      "RAG":[["docrag","PDF Q&A with page-accurate citations."],["k10","Dense retrieval over SEC 10-K filings."]],
-      "LLM evaluation":[["atlas","35-question suite with adversarial prompts, plus grounding tests in CI."],["routelens","150-run seeded evaluation with bootstrap CIs."]],
-      "LLM deployment":[["job","Containerized LLM inference as a REST microservice."]],
-      "Gemini API":[["pv","Agent that writes the stakeholder memo from mining results."]]
-    }],
-    ["machine learning", {
-      "PyTorch":[["moe","Transformer and MoE layer from primitives."],["guardian","LSTM remaining-useful-life model."],["energy","Autoencoder anomaly detector."],["sentinel","ResNet-18 with 13 input channels."]],
-      "LightGBM":[["guardian","Gradient-boosted RUL baseline."]],
-      "TensorFlow/Keras":[["traffic","2-layer stacked LSTM forecaster."]],
-      "Prophet":[["traffic","With German holidays and weather regressors."]],
-      "scikit-learn":[["secom","Gradient boosting and self-training under 14:1 imbalance."],["energy","Isolation Forest."]],
-      "MLflow":[["guardian","All experiments tracked."],["traffic","Both forecasting models tracked per run."]],
-      "Computer vision":[["job","YOLO inference as a microservice."],["sentinel","94.7% on EuroSAT."]]
-    }],
-    ["explainability", {
-      "SHAP":[["routelens","Explanations scored and attacked for faithfulness."]],
-      "LIME":[["routelens","Cross-checked against SHAP and attention."]],
-      "Attention rollout":[["routelens","Plus per-token expert routing traces."]]
-    }],
-    ["data", {
-      "SQL":[["atlas","6-table schema over 2,098,019 records."],["job","Query refactoring and indexing, ~30% faster APIs."],["rsvp","Row-level locking to prevent overbooking."],["askboard","UNIQUE constraint for anonymous vote de-duplication."]],
-      "ETL & data quality":[["atlas","One-command ETL with 15 automated checks."],["k10","dbt-style checks at every stage."],["job","Pipelines for 100k+ daily unstructured records."]],
-      "Kafka":[["traffic","Producer polling live incidents and weather every 60 s."]],
-      "TimescaleDB":[["traffic","Hypertable partitioned by day, compressed after 7 days."]],
-      "Dagster":[["k10","Partitioned, retriable ingestion per company."]],
-      "Vector DBs":[["k10","Qdrant, 1,812 points."],["docrag","ChromaDB."]],
-      "MQTT / InfluxDB":[["energy","Real-time pipeline over 2M+ readings."]],
-      "Process mining":[["pv","pm4py discovery: variants, wait times, rework loops, process map."]],
-      "RDF / SPARQL":[["kg","Ontology aligned to PMDco, SOSA/SSN and PROV-O."]],
-      "Databricks":[["cert","Databricks Fundamentals Accreditation."]]
-    }],
-    ["backend & infra", {
-      "FastAPI":[["atlas","12-endpoint REST API."],["guardian","Three services."],["traffic","REST + WebSocket with asyncpg."],["kg","Read-only SPARQL query app."]],
-      "Docker":[["guardian","Three services, CPU-only PyTorch image."],["traffic","Full streaming stack."],["k10","Qdrant + Dagster."],["job","YOLO and LLM microservices."],["askboard","PHP, MySQL and phpMyAdmin in one command."]],
-      "GitHub Actions":[["atlas","Grounding tests on every change."],["guardian","Workflow that installs Ollama on the runner."],["job","Validation and unit tests in CI."]],
-      "AWS":[["job","Lambda and IoT Core for real-time inference."]],
-      "pytest":[["routelens","118 passing tests."],["moe","Tests aimed at MoE failure modes."],["guardian","35 unit tests with a stubbed LLM."]]
-    }],
-    ["interfaces", {
-      "React + TypeScript":[["atlas","Dashboard with an embedded chat panel."],["energy","Live dashboard, 500 ms updates."]],
-      "D3.js":[["traffic","Time-series chart with confidence bands, built from primitives."]],
-      "Leaflet":[["atlas","Choropleth and hotspot maps."],["traffic","Live map over WebSockets."]],
-      "Streamlit / Gradio":[["secom","Label-budget explorer."],["pv","Dashboard with memo and PDF preview."],["routelens","Live Gradio dashboard."],["guardian","Audit-trail dashboard."]]
-    }]
-  ];
-  const PCOL = {guardian:1,routelens:1,atlas:1,traffic:1,moe:1,secom:1,pv:1};
-  const all = {}; G.forEach(([_,o])=>Object.assign(all,o));
-  const wrap = document.getElementById("sgroups"), ev = document.getElementById("evidence");
-  wrap.innerHTML = G.map(([name,o])=>`<div class="sgroup"><span class="k">${name}:</span><div class="sk">${Object.entries(o).map(([s,l])=>`<button type="button" data-s="${s}" aria-pressed="false">${s}<span class="pd">${[...new Set(l.map(x=>x[0]))].filter(k=>PCOL[k]).map(k=>`<i style="--pc:var(--c-${k})" title="${LOC[k][0]}"></i>`).join("")}</span><small>${l.length}</small></button>`).join("")}</div></div>`).join("");
-  function pick(s){
-    wrap.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.s===s));
-    const list = all[s];
-    const PC = {guardian:1,routelens:1,atlas:1,traffic:1,moe:1,secom:1,pv:1};
-    ev.innerHTML = `<span class="cnt">used in ${list.length} place${list.length>1?"s":""}</span><h3>${s}</h3><ul>${list.map(([k,t])=>`<li${PC[k]?` style="--pc:var(--c-${k})"`:""}>${LOC[k][1]?`<a href="${LOC[k][1]}" data-go="${LOC[k][1]}">${LOC[k][0]} →</a>`:`<b style="font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--muted)">${LOC[k][0]}</b>`}<span>${t}</span></li>`).join("")}</ul>`;
-  }
-  wrap.addEventListener("click", e=>{ const b=e.target.closest("button"); if(b) pick(b.dataset.s); });
-  ev.addEventListener("click", e=>{
-    const a = e.target.closest("a[data-go]"); if(!a) return;
-    e.preventDefault();
-    const t = document.querySelector(a.dataset.go); if(!t) return;
-    t.scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
-    t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash");
+function renderProjects(){
+  document.getElementById("projectGrid").innerHTML = PROJECTS.map((p, i) => {
+    const shown = p.stack.slice(0, 6);
+    const extra = p.stack.length - shown.length;
+    return `
+    <article class="proj-card" data-proj="${i}" tabindex="0" role="button" aria-label="${p.title}">
+      <div class="proj-media">
+        ${p.image
+          ? `<img src="${p.image}" alt="${p.title} screenshot" loading="lazy" />`
+          : `<span class="proj-media-empty">// preview not available</span>`}
+      </div>
+      <div class="proj-body">
+        <span class="proj-eyebrow">${p.tag}</span>
+        <h3>${p.title}</h3>
+        <span class="status-pill"><i class="dot"></i>Open Source</span>
+        <p class="pdesc">${p.desc}</p>
+        <div class="proj-foot">
+          <div class="chips">${shown.map(s => `<span class="chip">${s}</span>`).join("")}${extra > 0 ? `<span class="chip">+${extra}</span>` : ""}</div>
+          <button class="view-link" data-proj="${i}">View Project →</button>
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+  document.querySelectorAll(".proj-card, .view-link").forEach(el => {
+    const open = () => openModal(+el.dataset.proj);
+    el.addEventListener("click", e => { e.stopPropagation(); open(); });
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
   });
-  pick("Ollama");
-})();
+}
 
-document.addEventListener("click", e=>{
-  const a = e.target.closest('a[href^="#p-"],a[href^="#m-"]'); if(!a || a.dataset.go) return;
-  const t = document.querySelector(a.getAttribute("href")); if(!t) return;
-  e.preventDefault();
-  t.scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
-  t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash");
+/* ════════════════════════════ PROJECT MODAL ════════════════════════════ */
+const modalBg = document.getElementById("modalBg");
+const modal = document.getElementById("modal");
+
+function openModal(i){
+  const p = PROJECTS[i];
+  modal.innerHTML = `
+    <button class="x" id="modalClose">Close ✕</button>
+    <span class="mtag">${p.tag}</span>
+    <h3>${p.title}</h3>
+    <p class="mdesc">${p.desc}</p>
+    <div class="arch-title">Architecture</div>
+    <div class="flow" id="flow">
+      ${p.arch.map((n, idx) => `
+        <button class="node${idx===0?' sel':''}" data-node="${idx}">
+          <div class="nk">${n.k}</div><div class="nn">${n.n}</div>
+        </button>${idx < p.arch.length-1 ? '<span class="arrow">→</span>' : ''}`).join("")}
+    </div>
+    <div class="node-info" id="nodeInfo">
+      <div class="ni-k">${p.arch[0].k}</div>${p.arch[0].info}
+    </div>
+    <div class="mstack">${p.stack.map(s => `<span class="chip">${s}</span>`).join("")}</div>
+    <a class="btn primary" href="${p.repo}" target="_blank" rel="noopener">View code on GitHub ↗</a>
+  `;
+  modalBg.classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("modalClose").onclick = closeModal;
+  modal.querySelectorAll(".node").forEach(node => {
+    node.addEventListener("click", () => {
+      const n = p.arch[+node.dataset.node];
+      modal.querySelectorAll(".node").forEach(x => x.classList.remove("sel"));
+      node.classList.add("sel");
+      document.getElementById("nodeInfo").innerHTML = `<div class="ni-k">${n.k}</div>${n.info}`;
+    });
+  });
+}
+function closeModal(){ modalBg.classList.remove("open"); document.body.style.overflow = ""; }
+modalBg.addEventListener("click", e => { if (e.target === modalBg) closeModal(); });
+
+/* ════════════════════════════ API CONSOLE ════════════════════════════ */
+const out = document.getElementById("consoleOut");
+function line(html, cls=""){ const d = document.createElement("div"); d.className = "ln " + cls; d.innerHTML = html; out.appendChild(d); out.scrollTop = out.scrollHeight; return d; }
+function runEndpoint(ep){
+  out.innerHTML = "";
+  const method = ep === "ping" ? "POST" : "GET";
+  line(`<span class="req">→ ${method} /${ep} … running</span>`);
+  setTimeout(() => {
+    if (ep === "summary"){
+      line(`<span class="status">200 OK</span>`);
+      line(`<span class="str">Hi there! My name is Meeta Dave.</span>`);
+      line("I'm actively looking for working-student roles and internships across Germany in AI / ML, Data Science, and Data Analysis.");
+      line("Fluent in German and English — spoken and written.");
+      line(`&nbsp;`);
+      line(`<span class="req">// tech I've worked with</span>`);
+      STACK.forEach(c => line(`  <span class="key">${c.cat}</span>: ${c.items.slice(0, 4).join(", ")}`));
+      line(`&nbsp;`);
+      line("My projects span applied ML (RAG with local LLMs, semi-supervised learning, and satellite-image computer vision), real-time anomaly detection and time-series forecasting, and the data platforms and dashboards that make it all usable.");
+      line(`&nbsp;`);
+      line(`<span class="req">// Like what you see? Scroll down to Contact — I'd love to hear from you.</span>`);
+      out.scrollTop = out.scrollHeight;
+    } else if (ep === "projects"){
+      line(`<span class="status">200 OK</span>  { <span class="key">"count"</span>: ${PROJECTS.length} }`);
+      PROJECTS.forEach((p, i) => line(`  <span class="key">[${i}]</span> <span class="str">"${p.title}"</span>`));
+      line(`<span class="req">// see the Projects section ↓</span>`);
+      document.getElementById("projects").scrollIntoView({ behavior: "smooth" });
+    } else if (ep === "ping"){
+      const ms = (Math.random()*40 + 8).toFixed(0);
+      line(`<span class="status">200 OK</span>  { <span class="key">"latency"</span>: <span class="str">"${ms}ms"</span> }`);
+      line(`<span class="req">// pong — open to Werkstudent &amp; junior roles</span>`);
+    }
+    const last = out.lastElementChild; if (last) last.classList.add("cursor-blink");
+  }, 480);
+}
+document.querySelectorAll(".ep").forEach(b => b.addEventListener("click", () => runEndpoint(b.dataset.ep)));
+
+/* ════════════════════════════ COPY EMAIL ════════════════════════════ */
+const copyBtn = document.getElementById("copyEmail");
+copyBtn.addEventListener("click", async () => {
+  const email = copyBtn.dataset.email;
+  try { await navigator.clipboard.writeText(email); }
+  catch(e){ const ta = document.createElement("textarea"); ta.value = email; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+  const toast = document.getElementById("copyToast"); toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1600);
 });
 
-/* ---------- token cursor ---------- */
-(function(){
-  if(!matchMedia("(pointer:fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const cv = document.createElement("canvas"); cv.id="tokc"; cv.setAttribute("aria-hidden","true");
-  document.body.appendChild(cv);
-  document.documentElement.classList.add("tok-cursor");
-  const ctx = cv.getContext("2d");
-  let W=0, H=0;
-  function size(){ const d=Math.min(2,devicePixelRatio||1); W=innerWidth; H=innerHeight; cv.width=W*d; cv.height=H*d; ctx.setTransform(d,0,0,d,0,0); }
-  size(); addEventListener("resize", size);
+/* ════════════════════════════ COMMAND PALETTE ════════════════════════════ */
+function scrollToId(id){ const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth" }); }
 
-  const hexToRgb = c => { const m = c.match(/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i); return m ? [parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)] : [138,163,255]; };
-  let tx=0, ty=0, hx=0, hy=0, lx=null, ly=null;          // target, head, last trail point
-  let tcol=[138,163,255], col=[138,163,255];              // target / current colour (eased)
-  let tSize=10, sz=10, tRing=0, ring=0, alpha=0, tAlpha=0;
-  let pressed=0, last=performance.now(), running=false, started=false;
-  const trail=[]; const LIFE=650, GAP=9;
+const COMMANDS = [
+  { label: "Go to Experience", hint: "section", run: () => scrollToId("experience") },
+  { label: "Go to Projects", hint: "section", run: () => scrollToId("projects") },
+  { label: "Go to Tech Stack", hint: "section", run: () => scrollToId("stack") },
+  { label: "Go to Contact", hint: "section", run: () => scrollToId("contact") },
+  { label: "Open GitHub", hint: "external ↗", run: () => window.open("https://github.com/davemeeta", "_blank", "noopener") },
+  { label: "Open LinkedIn", hint: "external ↗", run: () => window.open("https://www.linkedin.com/in/meetadave/", "_blank", "noopener") },
+  { label: "Copy email address", hint: "clipboard", run: () => copyBtn.click() },
+  ...PROJECTS.map((p, i) => ({
+    label: `Open project — ${p.title}`,
+    hint: p.tag,
+    run: () => { scrollToId("projects"); openModal(i); }
+  }))
+];
 
-  function colorFor(el){
-    const h = el && el.closest && el.closest('.proj,[style*="--pc"]');
-    const cs = getComputedStyle(h || document.documentElement);
-    return hexToRgb((h ? cs.getPropertyValue("--pc") : cs.getPropertyValue("--accent")).trim());
-  }
-  function kick(){ if(!running){ running=true; last=performance.now(); requestAnimationFrame(frame); } }
-  addEventListener("pointermove", e=>{
-    if(e.pointerType && e.pointerType!=="mouse") return;
-    tx=e.clientX; ty=e.clientY;
-    if(!started){ hx=tx; hy=ty; lx=hx; ly=hy; started=true; }
-    const t=e.target;
-    tcol = colorFor(t);
-    const isText = t.closest && t.closest('input[type=text]');
-    const isHot = t.closest && t.closest('a,button,input,label,.v,[role=button]');
-    tAlpha = isText ? 0 : 1;
-    tRing = isHot ? 1 : 0;
-    tSize = isHot ? 22 : 10;
-    kick();
-  }, {passive:true});
-  document.addEventListener("mouseleave", ()=>{ tAlpha=0; kick(); });
-  document.addEventListener("mouseenter", ()=>{ tAlpha=1; kick(); });
-  addEventListener("pointerdown", ()=>{ pressed=performance.now(); kick(); });
+const cmdkBg = document.getElementById("cmdkBg");
+const cmdkInput = document.getElementById("cmdkInput");
+const cmdkList = document.getElementById("cmdkList");
+let cmdkFiltered = COMMANDS;
+let cmdkSel = 0;
 
-  const ease = (dt,rate)=>1-Math.exp(-dt*rate);
-  function rr(x,y,s,r){ ctx.beginPath(); if(ctx.roundRect) ctx.roundRect(x-s/2,y-s/2,s,s,r); else ctx.rect(x-s/2,y-s/2,s,s); }
-  const rgba=(c,a)=>`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;
-
-  function frame(now){
-    const dt=Math.min(0.05,(now-last)/1000); last=now;
-    // ease head, colour, size, ring, alpha
-    const kp=ease(dt,22), ks=ease(dt,14), kc=ease(dt,10);
-    hx+=(tx-hx)*kp; hy+=(ty-hy)*kp;
-    for(let i=0;i<3;i++) col[i]+=(tcol[i]-col[i])*kc;
-    sz+=(tSize-sz)*ks; ring+=(tRing-ring)*ks; alpha+=(tAlpha-alpha)*ks;
-    // lay tokens evenly along the head's smooth path
-    if(lx!==null){
-      let dx=hx-lx, dy=hy-ly, d=Math.hypot(dx,dy);
-      while(d>=GAP){ lx+=dx/d*GAP; ly+=dy/d*GAP; trail.push({x:lx,y:ly,t:now,c:col.slice()}); dx=hx-lx; dy=hy-ly; d=Math.hypot(dx,dy); }
-    }
-    while(trail.length && now-trail[0].t>LIFE) trail.shift();
-    if(trail.length>60) trail.splice(0,trail.length-60);
-
-    ctx.clearRect(0,0,W,H);
-    for(const p of trail){
-      const k=1-(now-p.t)/LIFE, e=k*k*(3-2*k);            // smoothstep fade
-      ctx.fillStyle=rgba(p.c,0.42*e*Math.max(alpha,.4));
-      rr(p.x,p.y,2+6*e,1.5+1.5*e); ctx.fill();
-    }
-    if(alpha>0.01){
-      const pk=Math.max(0,1-(now-pressed)/260), press=1-0.28*Math.sin(Math.PI*Math.min(1,(now-pressed)/260))*(pk>0);
-      const s=sz*press;
-      // soft glow
-      ctx.fillStyle=rgba(col,0.10*alpha); rr(hx,hy,s+10,8); ctx.fill();
-      // fill fades out as it becomes a ring
-      ctx.fillStyle=rgba(col,alpha*(1-ring*0.84)); rr(hx,hy,s,3+3*ring); ctx.fill();
-      if(ring>0.02){ ctx.strokeStyle=rgba(col,alpha*ring); ctx.lineWidth=1.6; rr(hx,hy,s,3+3*ring); ctx.stroke();
-        ctx.fillStyle=rgba(col,alpha*ring); rr(hx,hy,4,1.5); ctx.fill(); }
-    }
-    const settled = Math.hypot(tx-hx,ty-hy)<0.1 && Math.abs(tSize-sz)<0.05 && Math.abs(tAlpha-alpha)<0.01 && !trail.length && (now-pressed)>300;
-    if(settled){ running=false; return; }
-    requestAnimationFrame(frame);
-  }
-})();
-
-/* ---------- brag videos ---------- */
-document.addEventListener("play", e=>{ document.querySelectorAll(".vplayer video").forEach(o=>{ if(o!==e.target) o.pause(); }); }, true);
-
-/* ---------- tooltips ---------- */
-(function(){
-  const tip = document.getElementById("tip");
-  let pinned = null;
-  function show(el){
-    tip.innerHTML = `<span class="t">✓ ${el.dataset.t||"source"}</span>${el.dataset.n||""}`;
-    tip.classList.add("show");
-    const r = el.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
-    const x = Math.min(Math.max(8, r.left + r.width/2 - tw/2), innerWidth - tw - 8);
-    let y = r.top - th - 8; if(y < 8) y = r.bottom + 8;
-    tip.style.left = x+"px"; tip.style.top = y+"px";
-  }
-  function hide(){ tip.classList.remove("show"); pinned = null; }
-  document.addEventListener("mouseover", e=>{ const v=e.target.closest(".v"); if(v) show(v); });
-  document.addEventListener("mouseout", e=>{ if(e.target.closest(".v") && !pinned) tip.classList.remove("show"); });
-  document.addEventListener("focusin", e=>{ const v=e.target.closest(".v"); if(v) show(v); });
-  document.addEventListener("focusout", e=>{ if(e.target.closest(".v")) hide(); });
-  document.addEventListener("click", e=>{
-    const v = e.target.closest(".v");
-    if(v){ if(pinned===v) hide(); else { show(v); pinned=v; } }
-    else if(pinned) hide();
+function renderCmdkList(){
+  cmdkList.innerHTML = cmdkFiltered.length ? cmdkFiltered.map((c, i) => `
+    <button class="cmdk-item${i === cmdkSel ? " sel" : ""}" data-i="${i}">
+      <span>${c.label}</span><span class="hint">${c.hint}</span>
+    </button>`).join("") : `<div class="cmdk-empty">No matching commands</div>`;
+  cmdkList.querySelectorAll(".cmdk-item").forEach(btn => {
+    btn.addEventListener("click", () => runCmdk(+btn.dataset.i));
+    btn.addEventListener("mouseenter", () => { cmdkSel = +btn.dataset.i; renderCmdkList(); });
   });
-  addEventListener("scroll", ()=>{ if(tip.classList.contains("show")) hide(); }, {passive:true});
-})();
+}
+function runCmdk(i){
+  const c = cmdkFiltered[i];
+  if (!c) return;
+  closeCmdk();
+  c.run();
+}
+function openCmdk(){
+  cmdkBg.classList.add("open");
+  cmdkInput.value = "";
+  cmdkFiltered = COMMANDS;
+  cmdkSel = 0;
+  renderCmdkList();
+  document.body.style.overflow = "hidden";
+  setTimeout(() => cmdkInput.focus(), 10);
+}
+function closeCmdk(){
+  cmdkBg.classList.remove("open");
+  document.body.style.overflow = "";
+}
+cmdkInput.addEventListener("input", () => {
+  const q = cmdkInput.value.toLowerCase();
+  cmdkFiltered = COMMANDS.filter(c => c.label.toLowerCase().includes(q));
+  cmdkSel = 0;
+  renderCmdkList();
+});
+cmdkInput.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown"){ e.preventDefault(); cmdkSel = Math.min(cmdkSel + 1, cmdkFiltered.length - 1); renderCmdkList(); }
+  else if (e.key === "ArrowUp"){ e.preventDefault(); cmdkSel = Math.max(cmdkSel - 1, 0); renderCmdkList(); }
+  else if (e.key === "Enter"){ e.preventDefault(); runCmdk(cmdkSel); }
+});
+cmdkBg.addEventListener("click", e => { if (e.target === cmdkBg) closeCmdk(); });
+document.getElementById("cmdkBtn").addEventListener("click", openCmdk);
+
+document.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){
+    e.preventDefault();
+    cmdkBg.classList.contains("open") ? closeCmdk() : openCmdk();
+  } else if (e.key === "Escape"){
+    closeCmdk();
+    closeModal();
+  }
+});
+
+renderExperience();
+renderStack();
+renderProjects();
 </script>
 </body>
 </html>
