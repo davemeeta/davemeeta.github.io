@@ -455,8 +455,8 @@ section:not(.contact)::before{content:"";position:absolute;left:0;top:0;width:10
         <a href="https://github.com/davemeeta/AI-Powered-Document-Intelligence-Platform" target="_blank" rel="noopener">github →</a>
       </div>
       <div class="mini" id="m-10k">
-        <h4>10-K RAG pipeline <span class="tag">in progress · phase 2/5</span></h4>
-        <p>Dagster-orchestrated ingestion over SEC filings with data-quality checks at every stage. Clean rebuild matched the baseline at exactly <span class="v" tabindex="0" data-t="Qdrant point count" data-n="1,812 indexed points across 6 companies after a from-scratch rebuild of all 24 stage/partition combos.">1,812</span> points.</p>
+        <h4>10-K RAG system</h4>
+        <p>RAG over SEC 10-K filings with a Dagster-orchestrated ingestion pipeline and quality checks at every stage. Compared 4 chunking × retrieval setups on a 24-question eval (fixed-size + dense won, <span class="v" tabindex="0" data-t="Retrieval eval" data-n="precision@5 0.93, MRR 1.00, faithfulness 4.83/5 (LLM judge) on 24 hand-written questions.">precision@5 0.93</span>), added a confidence gate that refuses off-topic questions, and serves it through FastAPI.</p>
         <a href="https://github.com/davemeeta/rag-system-with-orchestrated-ingestion" target="_blank" rel="noopener">github →</a>
       </div>
       <div class="mini" id="m-kg">
